@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Meetings\" />
     <Folder Include="Pins\" />
     <Folder Include="Users\" />
   </ItemGroup>

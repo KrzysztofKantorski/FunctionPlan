@@ -15,7 +15,6 @@ namespace Domain.Meetings
         public DateTime ScheduledFor { get; private set; }
         public int OrganizerId { get; private set; }
         public MeetingStatus Status { get; private set; }
-
         public Coordinates Location {  get; private set; }
         public DateTime Created { get; private set; }
 

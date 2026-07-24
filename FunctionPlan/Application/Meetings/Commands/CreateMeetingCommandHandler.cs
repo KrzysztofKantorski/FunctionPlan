@@ -6,10 +6,12 @@ namespace Application.Meetings.Commands
     internal sealed class CreateMeetingCommandHandler: IRequestHandler<CreateMeetingCommand, int>
     {
         private readonly IMeetingRepository _meetingRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateMeetingCommandHandler(IMeetingRepository meetingRepository)
+        public CreateMeetingCommandHandler(IMeetingRepository meetingRepository, IUnitOfWork unitOfWork)
         {
-           _meetingRepository = meetingRepository;
+            _meetingRepository = meetingRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> Handle(CreateMeetingCommand request, CancellationToken cancellationToken)
@@ -23,8 +25,10 @@ namespace Application.Meetings.Commands
                 location
             );
 
-            await _meetingRepository.AddAsync( meeting );
-
+            await _meetingRepository.AddAsync(meeting, cancellationToken);
+            
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            
             return meeting.Id;
         }
     }

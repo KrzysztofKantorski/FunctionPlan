@@ -23,6 +23,27 @@ namespace Domain.Meetings
 
         public Meeting(string title, DateTime scheduledFor, int organizerId, double latitude, double longitude)
         {
+            if (string.IsNullOrEmpty(title))
+            {
+                throw new ArgumentNullException("Title cannot be empty");
+            }
+
+            if(title.Length > 100)
+            {
+                throw new ArgumentException("Incorrect title content");
+            }
+
+            if(scheduledFor < DateTime.UtcNow)
+            {
+                throw new InvalidMeetingDateException("Incorrect meeting date: " + scheduledFor);
+            }
+
+            if (organizerId < 0) 
+            {
+                throw new ArgumentException("Meeting organizer does not exist");
+            }
+
+
             Title = title;
             ScheduledFor = scheduledFor;
             OrganizerId = organizerId;
@@ -37,7 +58,7 @@ namespace Domain.Meetings
         {
             if (newDate < DateTime.UtcNow)
             {
-                throw new Exception("Provided date is invalid");
+                throw new InvalidMeetingDateException("Provided date is invalid");
             }
 
             ScheduledFor = newDate;
@@ -49,7 +70,7 @@ namespace Domain.Meetings
         {
             if (Status == MeetingStatus.Completed)
             {
-                throw new Exception("Cannot cancell meeting that ended");
+                throw new InvalidMeetingStatus("Cannot cancell meeting that ended");
             }
 
             Status = MeetingStatus.Cancelled;

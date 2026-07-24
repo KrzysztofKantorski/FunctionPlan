@@ -74,5 +74,11 @@ namespace Domain.Meetings
             Status = MeetingStatus.Cancelled;
         }
 
+
+        //Change coordinates
+        public void ChengeLocation(Coordinates newLocation)
+        {
+            Location = newLocation ?? throw new ArgumentNullException(nameof(newLocation));
+        }
     }
 }

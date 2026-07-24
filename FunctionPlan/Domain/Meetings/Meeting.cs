@@ -15,13 +15,13 @@ namespace Domain.Meetings
         public DateTime ScheduledFor { get; private set; }
         public int OrganizerId { get; private set; }
         public MeetingStatus Status { get; private set; }
-        public double Latitude { get; private set; }
-        public double Longitude { get; private set; }
+
+        public Coordinates Location {  get; private set; }
         public DateTime Created { get; private set; }
 
         private Meeting() { }
 
-        public Meeting(string title, DateTime scheduledFor, int organizerId, double latitude, double longitude)
+        public Meeting(string title, DateTime scheduledFor, int organizerId, Coordinates location)
         {
             if (string.IsNullOrEmpty(title))
             {
@@ -47,8 +47,7 @@ namespace Domain.Meetings
             Title = title;
             ScheduledFor = scheduledFor;
             OrganizerId = organizerId;
-            Latitude = latitude;
-            Longitude = longitude;
+            Location = location;
             Status = MeetingStatus.Planned;
             Created = DateTime.UtcNow;
         }

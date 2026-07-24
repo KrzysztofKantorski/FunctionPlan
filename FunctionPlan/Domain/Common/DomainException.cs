@@ -1,6 +1,10 @@
 ﻿namespace Domain.Common
 {
-    internal class DomainException
+    public abstract class DomainException: Entity
     {
+        protected DomainException(string message) 
+        {
+            
+        }
     }
 }

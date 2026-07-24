@@ -8,6 +8,7 @@ namespace Domain.Meetings
         Completed,
         Cancelled
     }
+
     public sealed class Meeting : Entity
     {
         public string Title { get; private set; }

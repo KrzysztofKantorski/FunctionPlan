@@ -1,0 +1,23 @@
+﻿using Application.Behaviors;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Application
+{
+    public static class DependencyInjection
+    {
+        public static IServiceCollection AddApplication(this IServiceCollection services)
+        {
+            //MediatR
+            services.AddMediatR(config => {
+                config.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            });
+
+            //FluentValidation
+            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+
+            return services;
+        }
+    }
+}

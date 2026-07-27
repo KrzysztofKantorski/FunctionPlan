@@ -64,7 +64,7 @@ namespace Domain.Meetings
 
 
         //Cancell meeting
-        public void Cancell()
+        public void Cancel()
         {
             if (Status == MeetingStatus.Completed)
             {
@@ -76,7 +76,7 @@ namespace Domain.Meetings
 
 
         //Change coordinates
-        public void ChengeLocation(Coordinates newLocation)
+        public void ChangeLocation(Coordinates newLocation)
         {
             Location = newLocation ?? throw new ArgumentNullException(nameof(newLocation));
         }

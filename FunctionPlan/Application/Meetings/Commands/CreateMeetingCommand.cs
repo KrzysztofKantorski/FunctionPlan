@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Abstractions.Messaging;
+using MediatR;
 
 namespace Application.Meetings.Commands
 {
@@ -8,6 +9,6 @@ namespace Application.Meetings.Commands
         int OrganizerId,
         double Latitude,
         double Longitude
-    ): IRequest<int>;
+    ): ICommand<int>;
 
 }

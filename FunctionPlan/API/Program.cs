@@ -1,7 +1,9 @@
 using API.Middlewares;
-using Application;     
+using Application;
+using DotNetEnv;
 using Infrastructure;
 
+Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

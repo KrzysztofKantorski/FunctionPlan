@@ -2,11 +2,14 @@
 using Application.Meetings.Queries.GetMeetingById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace API.Controllers
 {
-    [Route("api/meetings")]
     [ApiController]
+    [Route("api/meetings")]
+    [EnableRateLimiting("GlobalLimit")] 
+    
     public sealed class MeetingsController : ControllerBase
     {
         private ISender _sender;

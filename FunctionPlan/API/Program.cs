@@ -35,6 +35,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("GlobalPolicy");
+
 app.UseRateLimiter();
 
 app.UseExceptionHandler();

@@ -1,4 +1,5 @@
 ﻿using Application.Meetings.Commands;
+using Application.Meetings.Queries.GetMeetingById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,17 @@ namespace API.Controllers
         {
             int meetingId = await _sender.Send(command, cancellationToken);
             return CreatedAtAction(nameof(CreateMeeting), new { id = meetingId }, meetingId);
+        }
+
+        [HttpGet("/{MeetingID}")]
+        public async Task<IActionResult> GetMeetingById(
+            [FromRoute] int MeetingId
+
+            )
+        {
+            var result = await _sender.Send(new GetMeetingByIdQuery(MeetingId));
+
+            return Ok(result);
         }
     }
 }

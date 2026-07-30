@@ -1,6 +1,8 @@
-﻿using Domain.Common;
+﻿using Application.Abstractions.Data;
+using Domain.Common;
 using Domain.Meetings;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Data;
 using Infrastructure.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +27,7 @@ namespace Infrastructure
 
             services.AddScoped<IMeetingRepository, MeetingRepository>();
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
+            services.AddScoped<ISqlConnectionFactory>(_ => new SqlConnectionFactory(connectionString));
             return services;
         }
     }

@@ -46,6 +46,23 @@ namespace API.Middlewares
             }
 
 
+            //Domain layer exceptions
+
+            if (exception is Domain.Common.DomainException domainException) 
+            { 
+                httpContext.Response.StatusCode = domainException.StatusCode;
+                var customDetails = new ProblemDetails
+                {
+                    Status = domainException.StatusCode,
+                    Title = domainException.GetType().Name, 
+                    Detail = domainException.Message
+                };
+
+                await httpContext.Response.WriteAsJsonAsync(customDetails, cancellationToken);
+                return true;
+            }
+
+
             //Server errors
             httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
 

@@ -28,7 +28,7 @@ namespace API.Controllers
             return CreatedAtAction(nameof(CreateMeeting), new { id = meetingId }, meetingId);
         }
 
-        [HttpGet("/{MeetingID}")]
+        [HttpGet("{MeetingID}")]
         public async Task<IActionResult> GetMeetingById(
             [FromRoute] int MeetingId
 

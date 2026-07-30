@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.RateLimiting;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 
 namespace API.Extensions
@@ -20,6 +21,20 @@ namespace API.Extensions
                 });
 
                 options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+                //Add error message
+                options.OnRejected = async (context, cancellationToken) =>
+                {
+                    context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+                    var problemDetails = new ProblemDetails
+                    {
+                        Status = StatusCodes.Status429TooManyRequests,
+                        Title = "Too Many Requests",
+                        Detail = "Request limit has been exceeded."
+                    };
+
+                    await context.HttpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+                };
             });
 
             return services;

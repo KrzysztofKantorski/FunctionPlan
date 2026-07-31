@@ -46,6 +46,25 @@ namespace API.Middlewares
             }
 
 
+
+            //Application layer errors (handlers)
+
+            if (exception is AppException appException) 
+            { 
+                httpContext.Response.StatusCode = appException.StatusCode;
+
+                var response = new 
+                { 
+                    tatus = appException.StatusCode, 
+                    Error = appException.Message 
+                };
+
+                await httpContext.Response.WriteAsJsonAsync(response, cancellationToken);
+                return true;
+            }
+
+
+
             //Domain layer exceptions
 
             if (exception is Domain.Common.DomainException domainException) 

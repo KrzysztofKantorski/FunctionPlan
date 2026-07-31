@@ -20,7 +20,8 @@ namespace Infrastructure.Persistence.Configurations
                .IsRequired();
 
             builder.Property(m => m.Role)
-              .IsRequired();
+              .IsRequired()
+              .HasConversion<string>();
         }
     }
 }

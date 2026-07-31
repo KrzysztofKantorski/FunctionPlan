@@ -1,8 +1,8 @@
 ﻿using Application.Abstractions.Security;
+using Application.Exceptions;
 using Domain.Common;
 using Domain.Users;
 using MediatR;
-using System.ComponentModel.DataAnnotations;
 
 namespace Application.Auth.Commands
 {
@@ -26,7 +26,7 @@ namespace Application.Auth.Commands
 
             if (existingUser != null)
             {
-                throw new ValidationException("User with provided credentials alerdy exists");
+                throw new ConflictException("User with provided credentials alerdy exists");
             }
 
             //Hash user password

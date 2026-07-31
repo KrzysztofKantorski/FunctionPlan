@@ -8,6 +8,9 @@
         //Get user by email address (email + password auth)
         Task<User?> GetByEmailAddressAsync(string email, CancellationToken cancellationToken = default);
 
+        //Get username to check if it is unique
+        Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken = default);
+
         //Get user by google id
         Task<User?> GetByGoogleSubjectIdAsync(string googleSubjectId, CancellationToken cancellationToken = default);
 

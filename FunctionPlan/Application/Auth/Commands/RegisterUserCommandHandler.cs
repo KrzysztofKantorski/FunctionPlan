@@ -21,12 +21,20 @@ namespace Application.Auth.Commands
 
         public async Task<int> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            //Check if user with provided credentials alerdy exists
-            var existingUser = await _userRepository.GetByEmailAddressAsync(request.Email);
+            //Check if user with provided email alerdy exists
+            var existingEmail = await _userRepository.GetByEmailAddressAsync(request.Email);
 
-            if (existingUser != null)
+            if (existingEmail != null)
             {
-                throw new ConflictException("User with provided credentials alerdy exists");
+                throw new ConflictException("User with provided email alerdy exists");
+            }
+
+            //Check if user provided unique username
+            var existingUsername = await _userRepository.GetByUsernameAsync(request.Username);
+
+            if (existingUsername != null) 
+            {
+                throw new ConflictException("User with provided username alerdy exists");
             }
 
             //Hash user password

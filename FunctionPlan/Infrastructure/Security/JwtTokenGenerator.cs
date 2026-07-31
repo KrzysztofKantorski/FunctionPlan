@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Security;
 using Domain.Users;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,12 +9,16 @@ using System.Text;
 
 namespace Infrastructure.Security
 {
-    internal sealed class JwtTokenGenerator
-        (JwtSettings settings): IJwtProvider
+    internal sealed class JwtTokenGenerator: IJwtProvider
     {
+        private readonly JwtSettings _settings;
+        public JwtTokenGenerator(IOptions<JwtSettings> options)
+        {
+            _settings = options.Value;
+        }
         public string GenerateToken(User user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.Secret));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.Secret));
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -34,10 +39,10 @@ namespace Infrastructure.Security
 
 
             var token = new JwtSecurityToken(
-                issuer: settings.Issuer,
-                audience: settings.Audience,
+                issuer: _settings.Issuer,
+                audience: _settings.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(settings.ExpiryMinutes),
+                expires: DateTime.UtcNow.AddMinutes(_settings.ExpiryMinutes),
                 signingCredentials: credentials
             );
 

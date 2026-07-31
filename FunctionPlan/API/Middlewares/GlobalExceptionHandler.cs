@@ -36,10 +36,12 @@ namespace API.Middlewares
                     Title = "Validation error"
                 };
 
-                foreach (var error in validationException.Errors)
-                {
-                    validationProblemDetails.Errors.Add(error.PropertyName, new[] { error.ErrorMessage });
-                }
+                validationProblemDetails.Errors = validationException.Errors
+                    .GroupBy(x => x.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(x => x.ErrorMessage).ToArray()
+                    );
 
                 await httpContext.Response.WriteAsJsonAsync(validationProblemDetails, cancellationToken);
                 return true;

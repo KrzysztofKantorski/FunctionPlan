@@ -1,9 +1,9 @@
 ﻿namespace Application.Exceptions
 {
-    public abstract class ApplicationException: Exception
+    public abstract class AppException: Exception
     {
         public int StatusCode { get; }
-        protected ApplicationException(string message, int statusCode): base(message) 
+        protected AppException(string message, int statusCode): base(message) 
         { 
             StatusCode = statusCode;
         }

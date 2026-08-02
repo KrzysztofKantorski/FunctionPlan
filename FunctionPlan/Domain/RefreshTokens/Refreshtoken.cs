@@ -2,7 +2,7 @@
 
 namespace Domain.RefreshTokens
 {
-    internal class Refreshtoken
+    public sealed class RefreshToken
     {
         public int Id { get; private set; }
         public int UserId { get; private set; }
@@ -14,8 +14,8 @@ namespace Domain.RefreshTokens
         //Relationship with User entity
         public User User { get; private set; }
 
-        private Refreshtoken() { }
-        public Refreshtoken(string token, DateTime expiresAt, int userId)
+        private RefreshToken() { }
+        public RefreshToken(string token, DateTime expiresAt, int userId)
         {
             if (string.IsNullOrEmpty(token))
             {

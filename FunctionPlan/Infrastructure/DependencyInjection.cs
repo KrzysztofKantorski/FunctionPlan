@@ -59,6 +59,7 @@ namespace Infrastructure
             //Register services
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<IJwtProvider, JwtTokenGenerator>();
+            services.AddSingleton<IRefreshTokenGenerator, RefreshTokenGenerator>();
 
 
             return services;

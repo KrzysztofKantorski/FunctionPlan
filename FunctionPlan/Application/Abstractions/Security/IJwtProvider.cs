@@ -5,6 +5,5 @@ namespace Application.Abstractions.Security
     public interface IJwtProvider
     {
         public string GenerateToken(User user);
-        public string GenerateRefreshToken();
     }
 }

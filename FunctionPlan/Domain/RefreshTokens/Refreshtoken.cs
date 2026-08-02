@@ -19,17 +19,17 @@ namespace Domain.RefreshTokens
         {
             if (string.IsNullOrEmpty(token))
             {
-                throw new ArgumentException("Token cannot be null or empty.");
+                throw new InvalidUserDataException("Token cannot be null or empty.");
             }
 
             if (expiresAt <= DateTime.UtcNow)
             {
-                throw new ArgumentException("Incorrect token expiry date.");
+                throw new InvalidUserDataException("Incorrect token expiry date.");
             }
 
             if (userId <= 0) 
             { 
-                throw new ArgumentException("Incorrect userId value");
+                throw new InvalidUserDataException("Incorrect userId value");
             }
 
             Token = token;

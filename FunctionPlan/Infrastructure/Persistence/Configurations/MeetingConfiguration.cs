@@ -14,6 +14,12 @@ namespace Infrastructure.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(100);
 
+            //Relation with user
+            builder.HasOne(m => m.Organizer)
+               .WithMany() 
+               .HasForeignKey(m => m.OrganizerId)
+               .OnDelete(DeleteBehavior.Restrict);
+
             //Map Coordinates object to table columns
             builder.OwnsOne(m => m.Location, locationBuilder =>
             {

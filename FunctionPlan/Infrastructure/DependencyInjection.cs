@@ -56,6 +56,16 @@ namespace Infrastructure
             });
 
 
+            //Refresh token
+            services.Configure<RefreshTokenSettings>(options =>
+            {
+                if (int.TryParse(configuration["REFRESH_TOKEN_EXPIRY_DAYS"], out int expiry))
+                {
+                    options.ExpiryDays = expiry;
+                }
+            });
+
+
             //Register services
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<IJwtProvider, JwtTokenGenerator>();

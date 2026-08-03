@@ -1,7 +1,10 @@
-﻿using Application.Auth.Commands.RegisterUser;
+﻿using Application.Auth.Commands.Login;
+using Application.Auth.Commands.RegisterUser;
+using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Options;
 
 namespace API.Controllers
 {
@@ -11,9 +14,11 @@ namespace API.Controllers
     public class AuthController : ControllerBase
     {
         private ISender _sender;
-        public AuthController(ISender sender)
+        private readonly RefreshTokenSettings _refreshTokenSettings;
+        public AuthController(ISender sender, IOptions<RefreshTokenSettings> refreshTokenSettings)
         {
             _sender = sender;
+            _refreshTokenSettings = refreshTokenSettings.Value;
         }
 
         [HttpPost("register")]
@@ -23,6 +28,27 @@ namespace API.Controllers
         {
             int userId = await _sender.Send(command, cancellationToken);
             return Created("", new { Id = userId });
+        }
+
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(
+            [FromBody] LoginUserCommand command,
+            CancellationToken cancellationToken)
+        {
+            var tokenResponse = await _sender.Send(command, cancellationToken);
+
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true, 
+                Secure = true, 
+                SameSite = SameSiteMode.Strict, 
+                Expires = DateTime.UtcNow.AddDays(_refreshTokenSettings.ExpiryDays) 
+            };
+
+            Response.Cookies.Append("refreshToken", tokenResponse.RefreshToken, cookieOptions);
+
+            return Ok(new { AccessToken = tokenResponse.AccessToken });
         }
     }
 }

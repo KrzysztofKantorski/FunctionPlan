@@ -1,6 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 
-namespace Application.Auth.Commands
+namespace Application.Auth.Commands.RegisterUser
 {
     public sealed record RegisterUserCommand(
         string Username,

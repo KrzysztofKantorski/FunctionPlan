@@ -1,4 +1,4 @@
-﻿using Application.Auth.Commands;
+﻿using Application.Auth.Commands.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;

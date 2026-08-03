@@ -4,7 +4,7 @@ using Domain.Common;
 using Domain.Users;
 using MediatR;
 
-namespace Application.Auth.Commands
+namespace Application.Auth.Commands.RegisterUser
 {
     internal sealed class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, int>
     {

@@ -33,8 +33,9 @@ namespace Domain.RefreshTokens
             }
 
             Token = token;
-            CreatedAt = expiresAt;
+            ExpiresAt = expiresAt;
             UserId = userId;
+            CreatedAt = DateTime.UtcNow;
         }
 
 

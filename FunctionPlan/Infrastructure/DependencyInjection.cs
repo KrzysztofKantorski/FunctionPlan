@@ -2,6 +2,7 @@
 using Application.Abstractions.Security;
 using Domain.Common;
 using Domain.Meetings;
+using Domain.RefreshTokens;
 using Domain.Users;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Data;
@@ -34,6 +35,7 @@ namespace Infrastructure
             //Repositories
             services.AddScoped<IMeetingRepository, MeetingRepository>();
             services.AddScoped<IUserRepository, AuthRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 
             //SQL

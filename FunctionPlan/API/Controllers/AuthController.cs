@@ -1,4 +1,5 @@
 ﻿using Application.Auth.Commands.Login;
+using Application.Auth.Commands.Logout;
 using Application.Auth.Commands.RegisterUser;
 using Infrastructure.Security;
 using MediatR;
@@ -49,6 +50,24 @@ namespace API.Controllers
             Response.Cookies.Append("refreshToken", tokenResponse.RefreshToken, cookieOptions);
 
             return Ok(new { AccessToken = tokenResponse.AccessToken });
+        }
+
+
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout(CancellationToken cancellationToken)
+        {
+            //Get refresh token from cookie
+            var refreshToken = Request.Cookies["refreshToken"];
+
+            var command = new LogoutUserCommand(refreshToken);
+
+            await _sender.Send(command, cancellationToken);
+
+            // Remove the refresh token cookie
+            Response.Cookies.Delete("refreshToken");
+
+            return NoContent();
         }
     }
 }

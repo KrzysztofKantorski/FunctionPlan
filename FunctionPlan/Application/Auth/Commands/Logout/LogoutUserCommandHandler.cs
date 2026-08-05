@@ -1,4 +1,5 @@
-﻿using Domain.Common;
+﻿using Application.Exceptions;
+using Domain.Common;
 using Domain.RefreshTokens;
 using MediatR;
 
@@ -20,7 +21,7 @@ namespace Application.Auth.Commands.Logout
             //Check if  refresh token is valid
             if (request.refreshToken == null)
             {
-                throw new Exception("Incorrect token");
+                throw new RefreshTokenNotFoundException("Incorrect token");
             }
 
             //Check if refresh token exists in db

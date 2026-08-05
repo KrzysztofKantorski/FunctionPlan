@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace Application.Auth.Commands.Refresh
 {
-    internal sealed class RefreshUserTokensCommandHandler: IRequestHandler<RefreshUserTokensCommand, AccessTokenResponseDto>
+    internal sealed class RefreshUserTokensCommandHandler: IRequestHandler<RefreshUserTokensCommand, TokenResponseDto>
     {
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IJwtProvider _jwtProvider;
@@ -29,7 +29,7 @@ namespace Application.Auth.Commands.Refresh
             _userRepository = userRepository;
         }
 
-        public async Task<AccessTokenResponseDto> Handle(RefreshUserTokensCommand request, CancellationToken cancellationToken)
+        public async Task<TokenResponseDto> Handle(RefreshUserTokensCommand request, CancellationToken cancellationToken)
         {
             //check if refresh token is valid
             var refreshToken = await _refreshTokenRepository.GetByTokenAsync(request.refreshToken);
@@ -74,7 +74,7 @@ namespace Application.Auth.Commands.Refresh
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
 
-            return new AccessTokenResponseDto(newAccessToken, newRefreshToken);
+            return new TokenResponseDto(newAccessToken, newRefreshToken);
         }
     }
 }

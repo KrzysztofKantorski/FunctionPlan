@@ -1,5 +1,6 @@
 ﻿using Application.Auth.Commands.Login;
 using Application.Auth.Commands.Logout;
+using Application.Auth.Commands.Refresh;
 using Application.Auth.Commands.RegisterUser;
 using Infrastructure.Security;
 using MediatR;
@@ -68,6 +69,36 @@ namespace API.Controllers
             Response.Cookies.Delete("refreshToken");
 
             return NoContent();
+        }
+
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> RefreshTokens(CancellationToken cancellationToken)
+        {
+            //Get refresh token from cookie
+            var oldRefreshToken = Request.Cookies["refreshToken"];
+
+            if (string.IsNullOrWhiteSpace(oldRefreshToken))
+            {
+                return Unauthorized("Refresh token is missing.");
+            }
+
+            var command = new RefreshUserTokensCommand(oldRefreshToken);
+
+            var tokenResponse = await _sender.Send(command, cancellationToken);
+
+            //Save new cookie
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddDays(_refreshTokenSettings.ExpiryDays)
+            };
+
+            Response.Cookies.Append("refreshToken", tokenResponse.refreshToken, cookieOptions);
+
+            return Ok(new { AccessToken = tokenResponse.accessToken });
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Security;
+using Application.Exceptions;
 using Domain.Common;
 using Domain.RefreshTokens;
 using Domain.Users;
@@ -39,13 +40,13 @@ namespace Application.Auth.Commands.Login
 
             if (existingUser == null) 
             { 
-                throw new ArgumentException("User not found");
+                throw new UserNotFoundException("User not found");
             }
 
             //Check if user is registered with Google account
             if (existingUser.GoogleSubjectId != null)
             {
-                throw new ArgumentException("User is registered with Google. Please use Google login.");
+                throw new InvalidRequestData("User is registered with Google. Please use Google login.");
             }
           
             string existingPassword = existingUser.PasswordHash!;
@@ -55,7 +56,7 @@ namespace Application.Auth.Commands.Login
 
             if(!isPasswordValid)
             {
-                throw new ArgumentException("Invalid password");
+                throw new InvalidRequestData("Invalid password");
             }
 
             //generate access token

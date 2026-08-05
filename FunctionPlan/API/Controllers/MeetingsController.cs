@@ -1,6 +1,7 @@
 ﻿using Application.Meetings.Commands;
 using Application.Meetings.Queries.GetMeetingById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
@@ -28,6 +29,7 @@ namespace API.Controllers
             return CreatedAtAction(nameof(CreateMeeting), new { id = meetingId }, meetingId);
         }
 
+        [Authorize]
         [HttpGet("{MeetingID}")]
         public async Task<IActionResult> GetMeetingById(
             [FromRoute] int MeetingId

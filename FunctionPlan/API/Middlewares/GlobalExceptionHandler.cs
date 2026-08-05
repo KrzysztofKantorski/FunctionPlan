@@ -57,7 +57,7 @@ namespace API.Middlewares
 
                 var response = new 
                 { 
-                    tatus = appException.StatusCode, 
+                    Status = appException.StatusCode, 
                     Error = appException.Message 
                 };
 

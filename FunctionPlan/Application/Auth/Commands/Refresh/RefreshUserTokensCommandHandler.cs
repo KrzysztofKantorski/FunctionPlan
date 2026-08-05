@@ -10,12 +10,6 @@ namespace Application.Auth.Commands.Refresh
 {
     internal sealed class RefreshUserTokensCommandHandler: IRequestHandler<RefreshUserTokensCommand, AccessTokenResponseDto>
     {
-        //What do i neet
-        //refreshtokens - revoke all user tokens and generate new one
-        //1. refreshtokens repository - for genereting new token
-        //2. Get user id - for new access token
-        //2. jwt service - for generating new access token
-
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IJwtProvider _jwtProvider;
         private readonly IUnitOfWork _unitOfWork;

@@ -71,6 +71,7 @@ namespace Infrastructure
                 options.SmtpPassword = configuration["SMTP_PASSWORD"] ?? string.Empty;
                 options.SenderUsername = configuration["SENDER_USERNAME"] ?? string.Empty;
                 options.SenderEmail = configuration["SENDER_EMAIL"] ?? string.Empty;
+                options.SmtpUsername = configuration["SMTP_USERNAME"] ?? string.Empty;
             });
 
             //Refresh token

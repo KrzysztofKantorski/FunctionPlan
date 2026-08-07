@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Security;
+using Application.Exceptions;
 using Domain.Common;
 using Domain.RefreshTokens;
 using Domain.Users;
@@ -36,13 +37,13 @@ namespace Application.Auth.Commands.Refresh
 
             if (refreshToken == null) 
             { 
-                throw new UnauthorizedAccessException("Invalid refresh token.");
+                throw new InvalidRequestData("Invalid refresh token.");
             }
 
             //Check if refresh token is expired
             if (refreshToken.ExpiresAt < DateTime.UtcNow || refreshToken.IsRevoked)
             {
-                throw new UnauthorizedAccessException("Refresh token is expired or revoked.");
+                throw new InvalidRequestData("Refresh token is expired or revoked.");
             }
 
             //Revoke current refresh token
@@ -56,7 +57,7 @@ namespace Application.Auth.Commands.Refresh
 
             if (user == null) 
             { 
-                throw new UnauthorizedAccessException("User not found.");
+                throw new UserNotFoundException("User not found.");
             }
 
             //Generate new refresh token

@@ -1,4 +1,5 @@
-﻿using Application.Auth.Commands.Login;
+﻿using Application.Auth.Commands.Email;
+using Application.Auth.Commands.Login;
 using Application.Auth.Commands.Logout;
 using Application.Auth.Commands.Refresh;
 using Application.Auth.Commands.RegisterUser;
@@ -99,6 +100,17 @@ namespace API.Controllers
             Response.Cookies.Append("refreshToken", tokenResponse.refreshToken, cookieOptions);
 
             return Ok(new { AccessToken = tokenResponse.accessToken });
+        }
+
+
+
+        [HttpPost("sendEmail")]
+        public async Task<IActionResult> SendTestEmail(
+            [FromBody] SendTestEmailCommand command,
+            CancellationToken cancellationToken)
+        {
+            await _sender.Send(command, cancellationToken);
+            return Ok("Email sent successfully.");
         }
     }
 }

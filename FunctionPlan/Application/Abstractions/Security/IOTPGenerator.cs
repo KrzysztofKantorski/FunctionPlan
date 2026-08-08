@@ -1,6 +1,6 @@
 ﻿namespace Application.Abstractions.Security
 {
-    internal interface IOTPGenerator
+    public interface IOTPGenerator
     {
         string GenerateOTP();
     }

@@ -3,6 +3,7 @@ using Application.Abstractions.Data;
 using Application.Abstractions.Email;
 using Application.Abstractions.Mail;
 using Application.Abstractions.Security;
+using Application.Abstractions.Security.Tokens;
 using Domain.Common;
 using Domain.Meetings;
 using Domain.RefreshTokens;

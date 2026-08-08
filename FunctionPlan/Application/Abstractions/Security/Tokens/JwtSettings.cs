@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Security
+﻿namespace Application.Abstractions.Security.Tokens
 {
     public class JwtSettings
     {

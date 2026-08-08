@@ -1,4 +1,4 @@
-﻿namespace Application.Abstractions.Security
+﻿namespace Application.Abstractions.Security.Tokens
 {
     public interface IRefreshTokenGenerator
     {

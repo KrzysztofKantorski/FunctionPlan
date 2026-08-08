@@ -1,9 +1,8 @@
-﻿using Application.Abstractions.Security;
+﻿using Application.Abstractions.Security.Tokens;
 using Application.Exceptions;
 using Domain.Common;
 using Domain.RefreshTokens;
 using Domain.Users;
-using Infrastructure.Security;
 using MediatR;
 using Microsoft.Extensions.Options;
 

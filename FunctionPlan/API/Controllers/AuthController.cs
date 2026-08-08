@@ -1,9 +1,9 @@
-﻿using Application.Auth.Commands.Email;
+﻿using Application.Abstractions.Security.Tokens;
+using Application.Auth.Commands.Email;
 using Application.Auth.Commands.Login;
 using Application.Auth.Commands.Logout;
 using Application.Auth.Commands.Refresh;
 using Application.Auth.Commands.RegisterUser;
-using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;

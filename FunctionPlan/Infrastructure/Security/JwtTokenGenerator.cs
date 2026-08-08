@@ -1,4 +1,4 @@
-﻿using Application.Abstractions.Security;
+﻿using Application.Abstractions.Security.Tokens;
 using Domain.Users;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

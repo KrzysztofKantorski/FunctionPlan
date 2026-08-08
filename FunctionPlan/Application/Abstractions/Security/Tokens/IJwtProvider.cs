@@ -1,6 +1,6 @@
 ﻿using Domain.Users;
 
-namespace Application.Abstractions.Security
+namespace Application.Abstractions.Security.Tokens
 {
     public interface IJwtProvider
     {

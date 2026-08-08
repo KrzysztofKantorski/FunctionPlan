@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Cache;
 using Application.Abstractions.Mail;
 using Application.Abstractions.Security;
+using Application.Exceptions;
 using Domain.Users;
 using MediatR;
 namespace Application.Auth.Commands.UserVerification
@@ -25,17 +26,17 @@ namespace Application.Auth.Commands.UserVerification
         {
 
             //Check if user is registered
-            var existingUser = await _userRepository.GetByEmailAddressAsync(request.email, cancellationToken);
+            var existingUser = await _userRepository.GetByEmailAddressAsync(request.Email, cancellationToken);
 
             if(existingUser == null)
             {
-                throw new Exception("This user does not exist");
+                throw new UserNotFoundException("This user does not exist");
             }
 
             //Check if user is verified
             if(existingUser.IsVerified)
             {
-                throw new Exception("This user is already verified");
+                throw new InvalidUserDataException("This user is already verified");
             }
 
             //Generate OTP

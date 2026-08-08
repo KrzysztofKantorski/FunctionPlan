@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Security;
+using Application.Auth.Events;
 using Application.Exceptions;
 using Domain.Common;
 using Domain.Users;
@@ -11,12 +12,14 @@ namespace Application.Auth.Commands.RegisterUser
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IUnitOfWork _unitOfWork;
-
-        public RegisterUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IUnitOfWork unitOfWork)
+        private readonly IPublisher _publisher;
+        public RegisterUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, 
+            IUnitOfWork unitOfWork, IPublisher publisher)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _unitOfWork = unitOfWork;
+            _publisher = publisher;
         }
 
         public async Task<int> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -53,6 +56,9 @@ namespace Application.Auth.Commands.RegisterUser
             await _userRepository.AddAsync(user, cancellationToken);
 
             await _unitOfWork.SaveChangesAsync();
+
+            //Notify email verification service
+            await _publisher.Publish(new UserRegisteredEvent(user.Email), cancellationToken);
 
             return user.Id;
         }

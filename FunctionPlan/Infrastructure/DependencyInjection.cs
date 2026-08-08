@@ -1,4 +1,5 @@
-﻿using Application.Abstractions.Data;
+﻿using Application.Abstractions.Cache;
+using Application.Abstractions.Data;
 using Application.Abstractions.Email;
 using Application.Abstractions.Mail;
 using Application.Abstractions.Security;
@@ -6,6 +7,7 @@ using Domain.Common;
 using Domain.Meetings;
 using Domain.RefreshTokens;
 using Domain.Users;
+using Infrastructure.Cache;
 using Infrastructure.Email;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Data;
@@ -44,6 +46,13 @@ namespace Infrastructure
             //SQL
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
             services.AddScoped<ISqlConnectionFactory>(_ => new SqlConnectionFactory(connectionString));
+
+
+            //Redis
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = configuration["REDIS_CONN_STRING"] ?? string.Empty;
+            });
 
 
             //JWT
@@ -89,6 +98,7 @@ namespace Infrastructure
             services.AddSingleton<IJwtProvider, JwtTokenGenerator>();
             services.AddSingleton<IRefreshTokenGenerator, RefreshTokenGenerator>();
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<ICacheService, CacheService>();
 
             return services;
         }

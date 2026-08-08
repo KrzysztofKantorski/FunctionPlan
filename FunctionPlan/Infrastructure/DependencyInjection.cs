@@ -100,6 +100,7 @@ namespace Infrastructure
             services.AddSingleton<IRefreshTokenGenerator, RefreshTokenGenerator>();
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton<ICacheService, CacheService>();
+            services.AddSingleton<IOTPGenerator, OTPGenerator>();
 
             return services;
         }

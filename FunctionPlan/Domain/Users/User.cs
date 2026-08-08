@@ -19,7 +19,7 @@ namespace Domain.Users
         public bool IsBanned { get; private set; }
         public string? ProfilePictureUrl { get; private set; } 
         public string? GoogleSubjectId { get; private set; }
-
+        public bool IsVerified { get; private set; }
         private User() { }
 
         private User(string username, string email, UserRole role, string? passwordHash, string? googleSubjectId)
@@ -42,9 +42,19 @@ namespace Domain.Users
             Created = DateTime.UtcNow;
             IsBanned = false;
             GoogleSubjectId = googleSubjectId;
+            IsVerified = false;
         }
 
+        //Check if user verified email address 
+        public void verify()
+        {
+            if (IsVerified)
+            {
+                throw new InvalidUserCredentialsException("Incorrect user credentials");
+            }
 
+            IsVerified = true;
+        }
 
 
         //Method for local registration (email + password)
@@ -52,7 +62,7 @@ namespace Domain.Users
         {
             if(string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                throw new InvalidUserDataException("Incorrect email address");
+                throw new InvalidUserCredentialsException("Incorrect email address");
             }
 
             if(string.IsNullOrWhiteSpace(passwordHash) || passwordHash.Length < 5)

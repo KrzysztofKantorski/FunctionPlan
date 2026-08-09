@@ -16,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddGlobalRateLimiting();
+builder.Services.AddAuthRateLimiter();
 
 //Global exception handler
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();

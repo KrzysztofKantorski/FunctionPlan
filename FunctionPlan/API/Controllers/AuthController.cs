@@ -4,6 +4,7 @@ using Application.Auth.Commands.Login;
 using Application.Auth.Commands.Logout;
 using Application.Auth.Commands.Refresh;
 using Application.Auth.Commands.RegisterUser;
+using Application.Auth.Commands.VerifyUserEmail;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -111,6 +112,17 @@ namespace API.Controllers
         {
             await _sender.Send(command, cancellationToken);
             return Ok("Email sent successfully.");
+        }
+
+
+        [HttpPost("verify")]
+        public async Task<IActionResult> VerifyUserOTP(
+            [FromBody] VerifyUserEmailCommand command,
+            CancellationToken cancellationToken
+            )
+        {
+            await _sender.Send(command, cancellationToken);
+            return Ok("OTP verified");
         }
     }
 }

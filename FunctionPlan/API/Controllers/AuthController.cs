@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 namespace API.Controllers
 {
     [Route("api/auth")]
-    [EnableRateLimiting("GlobalLimit")]
+    
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -25,6 +25,7 @@ namespace API.Controllers
             _refreshTokenSettings = refreshTokenSettings.Value;
         }
 
+        [EnableRateLimiting("OtpRegisterLimit")]
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser(
            [FromBody] RegisterUserCommand command,
@@ -34,7 +35,7 @@ namespace API.Controllers
             return Created("", new { Id = userId });
         }
 
-
+        [EnableRateLimiting("LoginLimit")]
         [HttpPost("login")]
         public async Task<IActionResult> Login(
             [FromBody] LoginUserCommand command,
@@ -56,7 +57,7 @@ namespace API.Controllers
         }
 
 
-
+        [EnableRateLimiting("OtpRegisterLimit")]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout(CancellationToken cancellationToken)
         {
@@ -73,7 +74,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-
+        [EnableRateLimiting("GlobalLimit")]
         [HttpPost("refresh")]
         public async Task<IActionResult> RefreshTokens(CancellationToken cancellationToken)
         {
@@ -104,7 +105,7 @@ namespace API.Controllers
         }
 
 
-
+        [EnableRateLimiting("OtpRegisterLimit")]
         [HttpPost("sendEmail")]
         public async Task<IActionResult> SendTestEmail(
             [FromBody] SendTestEmailCommand command,
@@ -115,6 +116,7 @@ namespace API.Controllers
         }
 
 
+        [EnableRateLimiting("OtpRegisterLimit")]
         [HttpPost("verify")]
         public async Task<IActionResult> VerifyUserOTP(
             [FromBody] VerifyUserEmailCommand command,

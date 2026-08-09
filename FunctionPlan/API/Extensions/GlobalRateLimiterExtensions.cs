@@ -4,9 +4,9 @@ using System.Threading.RateLimiting;
 
 namespace API.Extensions
 {
-    public static class RateLimiterExtensions
+    public static class GlobalRateLimiterExtensions
     {
-        public static IServiceCollection AddRateLimiting(this IServiceCollection services) 
+        public static IServiceCollection AddGlobalRateLimiting(this IServiceCollection services) 
         {
             services.AddRateLimiter(options =>
             {

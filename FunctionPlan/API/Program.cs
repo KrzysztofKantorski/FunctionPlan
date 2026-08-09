@@ -15,7 +15,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddRateLimiting();
+builder.Services.AddGlobalRateLimiting();
 
 //Global exception handler
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();

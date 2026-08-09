@@ -122,7 +122,7 @@ namespace API.Controllers
             )
         {
             await _sender.Send(command, cancellationToken);
-            return Ok("OTP verified");
+            return Ok();
         }
     }
 }

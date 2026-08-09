@@ -31,7 +31,7 @@ namespace Application.Auth.Commands.VerifyUserEmail
             //Check if user is alerdy verified
             if (user.IsVerified)
             {
-                throw new Exception("User alerdy verified");
+                throw new UserAlerdyVerifiedException("User alerdy verified");
             }
 
 
@@ -42,7 +42,7 @@ namespace Application.Auth.Commands.VerifyUserEmail
 
             if(savedOtp is null || request.OTP != savedOtp)
             {
-                throw new Exception("Incorrect or expired verification code");
+                throw new InvalidUserDataException("Incorrect or expired verification code");
             }
 
 

@@ -76,6 +76,11 @@ namespace Domain.Meetings
                 throw new InvalidMeetingStatus("Cannot cancell meeting that ended");
             }
 
+            if (Status == MeetingStatus.Cancelled)
+            {
+                throw new InvalidMeetingStatus("Meeting is already cancelled.");
+            }
+
             Status = MeetingStatus.Cancelled;
         }
 

@@ -1,4 +1,5 @@
-﻿using Application.Meetings.Commands.CreateMeetingCommand;
+﻿using Application.Meetings.Commands.CancellMeetingCommand;
+using Application.Meetings.Commands.CreateMeetingCommand;
 using Application.Meetings.Commands.RescheduleMeetingCommand;
 using Application.Meetings.Queries.GetMeetingById;
 using Domain.Meetings;
@@ -22,6 +23,8 @@ namespace API.Controllers
             _sender = sender;
         }
 
+
+        //Create meeting
 
         [HttpPost]
         public async Task<IActionResult> CreateMeeting(
@@ -50,6 +53,7 @@ namespace API.Controllers
         }
 
 
+        //Get meeting by id
 
         [HttpGet("{MeetingID}")]
         public async Task<IActionResult> GetMeetingById(
@@ -63,7 +67,7 @@ namespace API.Controllers
         }
 
 
-
+        //Reschedule
 
         [HttpPatch("{MeetingId}/reschedule")]
         public async Task<IActionResult> ReacheduleMeeting(
@@ -89,5 +93,31 @@ namespace API.Controllers
 
             return NoContent();
         }
+
+
+        //Cancel
+        [HttpPatch("{MeetingId}/cancel")]
+        public async Task<IActionResult> CancelMeeting(
+            [FromRoute] int MeetingId,
+            CancellationToken cancellationToken
+            ) 
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (!int.TryParse(userId, out int organizerId))
+            {
+                return Unauthorized("Incorrect token");
+            }
+
+            var command = new CancelMeetingCommand(
+                MeetingId,
+                organizerId
+            );
+
+            await _sender.Send(command, cancellationToken);
+
+            return NoContent();
+        }
+
     }
 }

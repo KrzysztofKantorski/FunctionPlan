@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.RateLimiting;
 namespace API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/meetings")]
     [EnableRateLimiting("GlobalLimit")] 
     
@@ -22,10 +23,27 @@ namespace API.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateMeeting(
-            [FromBody] CreateMeetingCommand command,
+            [FromBody] MeetingRequestDto request,
             CancellationToken cancellationToken)
         {
+
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (!int.TryParse(userId, out int organizerId))
+            {
+                return Unauthorized("Incorrect token");
+            }
+
+            var command = new CreateMeetingCommand(
+                request.Title,
+                request.ScheduledFor,
+                organizerId,
+                request.Latitude,
+                request.Longitude
+            );
+
             int meetingId = await _sender.Send(command, cancellationToken);
+
             return CreatedAtAction(nameof(CreateMeeting), new { id = meetingId }, meetingId);
         }
 

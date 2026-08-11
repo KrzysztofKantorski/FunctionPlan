@@ -85,5 +85,29 @@ namespace Domain.Meetings
         {
             Location = newLocation ?? throw new ArgumentNullException(nameof(newLocation));
         }
+
+
+        //Confirm attendence
+        public void ConfirmAttendence(User user)
+        {
+            if(user is null)
+            {
+                throw new ArgumentNullException("Incorrect user");
+            }
+
+            //Chcek if user alerdy confirmed attendence
+            if(_users.Any(u => u.Id == user.Id))
+            {
+                throw new ArgumentException("User alerdy assigned to meeting");
+            }
+
+            //Check if user is organizer
+            if(user.Id == OrganizerId)
+            {
+                throw new ArgumentException("Organizer is alerdy in meeting");
+            }
+
+            _users.Add(user);
+        }
     }
 }

@@ -18,7 +18,12 @@ namespace Application.Meetings.Queries.GetMeetingById
 
             var sql =
                 """
-                SELECT "Id", "Title", "ScheduledFor", "Latitude", "Longitude" FROM "Meetings" WHERE  "Id" = @MeetingId
+                    SELECT 
+                    m."Id", m."Title", m."ScheduledFor", m."Latitude", m."Longitude",
+                    u."Id", u."Name"
+                    FROM "Meetings" m
+                    INNER JOIN "Users" u ON m."OrganizerId" = u."Id"
+                    WHERE m."Id" == @MeetingId
                 """;
 
             return await connection.QueryFirstOrDefaultAsync<MeetingDto>(sql, new { request.MeetingId });

@@ -44,7 +44,7 @@ namespace Domain.Meetings
 
             if (organizerId < 0) 
             {
-                throw new ArgumentException("Meeting organizer does not exist");
+                throw new InvalidUserException("Meeting organizer does not exist");
             }
 
 
@@ -83,7 +83,7 @@ namespace Domain.Meetings
         //Change coordinates
         public void ChangeLocation(Coordinates newLocation)
         {
-            Location = newLocation ?? throw new ArgumentNullException(nameof(newLocation));
+            Location = newLocation ?? throw new IncorrectLocationException(nameof(newLocation));
         }
 
 
@@ -92,19 +92,19 @@ namespace Domain.Meetings
         {
             if(user is null)
             {
-                throw new ArgumentNullException("Incorrect user");
+                throw new InvalidUserException("Incorrect user");
             }
 
             //Chcek if user alerdy confirmed attendence
             if(_users.Any(u => u.Id == user.Id))
             {
-                throw new ArgumentException("User alerdy assigned to meeting");
+                throw new InvalidUserException("User alerdy assigned to meeting");
             }
 
             //Check if user is organizer
             if(user.Id == OrganizerId)
             {
-                throw new ArgumentException("Organizer is alerdy in meeting");
+                throw new InvalidUserException("Organizer is alerdy in meeting");
             }
 
             _users.Add(user);

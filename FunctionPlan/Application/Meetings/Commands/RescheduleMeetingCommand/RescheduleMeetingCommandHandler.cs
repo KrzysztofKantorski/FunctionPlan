@@ -1,4 +1,5 @@
-﻿using Domain.Common;
+﻿using Application.Exceptions;
+using Domain.Common;
 using Domain.Meetings;
 using MediatR;
 
@@ -23,7 +24,7 @@ namespace Application.Meetings.Commands.RescheduleMeetingCommand
 
             if (meetingToReschedule is null) 
             {
-                throw new Exception("Meeting not found");
+                throw new MeetingNotFoundException("Meeting not found");
             }
 
             //Check if user is organizer
@@ -31,7 +32,7 @@ namespace Application.Meetings.Commands.RescheduleMeetingCommand
 
             if(request.OrganizerId != meetingOrganizer)
             {
-                throw new Exception("You dont have permision to reschedule meeting");
+                throw new UserWithoutPermisionException("You dont have permision to reschedule meeting");
             }
 
             //Check date

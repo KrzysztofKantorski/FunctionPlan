@@ -18,11 +18,6 @@ namespace Application.Meetings.Commands.ChangeCoordinates
 
         public async Task Handle(ChangeCoordinatesCommand request, CancellationToken cancellationToken)
         {
-            //What we need
-            //Check if meeting exists
-            //Check if user is Organizer
-            //Create coordinates object (validated in constructor)
-            //Call method, save changes
             
             var meetingToUpdate = await _meetingRepository.GetByIdAsync(request.MeetingId, cancellationToken);
 

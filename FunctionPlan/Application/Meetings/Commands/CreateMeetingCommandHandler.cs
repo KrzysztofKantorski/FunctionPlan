@@ -29,11 +29,15 @@ namespace Application.Meetings.Commands
                 throw new UserNotFoundException($"Organizer with ID {request.OrganizerId} was not found.");
             }
 
+            var scheduledForUtc = request.ScheduledFor.Kind == DateTimeKind.Utc
+                ? request.ScheduledFor
+                : request.ScheduledFor.ToUniversalTime();
+
             var location = new Coordinates(request.Latitude, request.Longitude);
 
             var meeting = new Meeting(
                 request.Title,
-                request.ScheduledFor,
+                scheduledForUtc,
                 request.OrganizerId,
                 location
             );

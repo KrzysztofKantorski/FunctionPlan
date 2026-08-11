@@ -1,5 +1,7 @@
 ﻿using Application.Meetings.Commands.CreateMeetingCommand;
+using Application.Meetings.Commands.RescheduleMeetingCommand;
 using Application.Meetings.Queries.GetMeetingById;
+using Domain.Meetings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +49,8 @@ namespace API.Controllers
             return CreatedAtAction(nameof(CreateMeeting), new { id = meetingId }, meetingId);
         }
 
-        [Authorize]
+
+
         [HttpGet("{MeetingID}")]
         public async Task<IActionResult> GetMeetingById(
             [FromRoute] int MeetingId
@@ -56,7 +59,35 @@ namespace API.Controllers
         {
             var result = await _sender.Send(new GetMeetingByIdQuery(MeetingId));
 
-            return Ok(result);
+            return Ok(new { id = result });
+        }
+
+
+
+
+        [HttpPatch("{MeetingId}/reschedule")]
+        public async Task<IActionResult> ReacheduleMeeting(
+            [FromRoute] int MeetingId,
+            [FromBody] RescheduleMeetingRequest request,
+            CancellationToken cancellationToken
+            )
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (!int.TryParse(userId, out int organizerId))
+            {
+                return Unauthorized("Incorrect token");
+            }
+
+            var command = new RescheduleMeetingCommand(
+                MeetingId,
+                organizerId,
+                request.ScheduledFor
+            );
+
+            await _sender.Send(command, cancellationToken);
+
+            return NoContent();
         }
     }
 }

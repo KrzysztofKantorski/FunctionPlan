@@ -3,7 +3,7 @@ using Domain.Common;
 using Domain.Meetings;
 using Domain.Users;
 using Application.Exceptions;
-namespace Application.Meetings.Commands
+namespace Application.Meetings.Commands.CreateMeetingCommand
 {
     internal sealed class CreateMeetingCommandHandler: IRequestHandler<CreateMeetingCommand, int>
     {

@@ -1,7 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using MediatR;
 
-namespace Application.Meetings.Commands
+namespace Application.Meetings.Commands.CreateMeetingCommand
 {
     public sealed record CreateMeetingCommand(
         string Title,

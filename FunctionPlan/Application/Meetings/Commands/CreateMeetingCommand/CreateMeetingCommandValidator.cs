@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.Meetings.Commands
+namespace Application.Meetings.Commands.CreateMeetingCommand
 {
     public sealed class CreateMeetingCommandValidator: AbstractValidator<CreateMeetingCommand>
     {

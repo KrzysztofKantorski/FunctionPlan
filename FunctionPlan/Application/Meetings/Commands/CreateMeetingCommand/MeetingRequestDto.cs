@@ -1,4 +1,4 @@
-﻿namespace Application.Meetings.Commands
+﻿namespace Application.Meetings.Commands.CreateMeetingCommand
 {
     public sealed record MeetingRequestDto
     (

@@ -1,4 +1,4 @@
-﻿using Application.Meetings.Commands;
+﻿using Application.Meetings.Commands.CreateMeetingCommand;
 using Application.Meetings.Queries.GetMeetingById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

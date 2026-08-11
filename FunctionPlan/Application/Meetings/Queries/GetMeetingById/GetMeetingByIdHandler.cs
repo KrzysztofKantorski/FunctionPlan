@@ -23,10 +23,21 @@ namespace Application.Meetings.Queries.GetMeetingById
                     u."Id", u."Name"
                     FROM "Meetings" m
                     INNER JOIN "Users" u ON m."OrganizerId" = u."Id"
-                    WHERE m."Id" == @MeetingId
+                    WHERE m."Id" = @MeetingId
                 """;
 
-            return await connection.QueryFirstOrDefaultAsync<MeetingDto>(sql, new { request.MeetingId });
+
+            var result = await connection.QueryAsync<MeetingDto, OrganizerDto, MeetingDto>(
+                sql,
+                (meeting, organizer) =>
+                {
+                    return meeting with { Organizer = organizer };
+                },
+                new {request.MeetingId},
+                splitOn: "Id"
+            );
+
+            return result.FirstOrDefault();
         }
     }
 }

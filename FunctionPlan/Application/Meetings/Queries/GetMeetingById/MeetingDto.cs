@@ -1,4 +1,6 @@
-﻿namespace Application.Meetings.Queries.GetMeetingById
+﻿using Domain.Users;
+
+namespace Application.Meetings.Queries.GetMeetingById
 {
     public sealed record MeetingDto
     (
@@ -6,6 +8,7 @@
         string Title,
         DateTime ScheduledFor,
         double Latitude,
-        double Longitude
+        double Longitude,
+        OrganizerDto Organizer
     );
 }

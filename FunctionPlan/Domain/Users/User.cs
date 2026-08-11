@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Meetings;
 using System.Text.RegularExpressions;
 
 namespace Domain.Users
@@ -21,6 +22,10 @@ namespace Domain.Users
         public string? GoogleSubjectId { get; private set; }
         public bool IsVerified { get; private set; }
         private User() { }
+
+        private readonly List<Meeting> _meetings = new();
+
+        public IReadOnlyCollection<Meeting> Meetings => _meetings.AsReadOnly();
 
         private User(string username, string email, UserRole role, string? passwordHash, string? googleSubjectId)
         {

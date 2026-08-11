@@ -20,6 +20,9 @@ namespace Domain.Meetings
         public Coordinates Location {  get; private set; }
         public DateTime Created { get; private set; }
 
+        private readonly List<User> _users = new();
+
+        public IReadOnlyCollection<User> Users => _users.AsReadOnly();
         private Meeting() { }
 
         public Meeting(string title, DateTime scheduledFor, int organizerId, Coordinates location)

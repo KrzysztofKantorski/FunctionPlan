@@ -3,6 +3,6 @@
     public sealed record OrganizerDto
     (
         int Id,
-        string Name
+        string Username
     );
 }

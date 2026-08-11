@@ -20,7 +20,7 @@ namespace Application.Meetings.Queries.GetMeetingById
                 """
                     SELECT 
                     m."Id", m."Title", m."ScheduledFor", m."Latitude", m."Longitude",
-                    u."Id", u."Name"
+                    u."Id", u."Username"
                     FROM "Meetings" m
                     INNER JOIN "Users" u ON m."OrganizerId" = u."Id"
                     WHERE m."Id" = @MeetingId
@@ -31,7 +31,8 @@ namespace Application.Meetings.Queries.GetMeetingById
                 sql,
                 (meeting, organizer) =>
                 {
-                    return meeting with { Organizer = organizer };
+                    meeting.Organizer = organizer; 
+                    return meeting;
                 },
                 new {request.MeetingId},
                 splitOn: "Id"

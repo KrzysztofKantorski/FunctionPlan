@@ -52,13 +52,13 @@ namespace Application.Auth.Commands.Login
             //Check if user is banned
             if (existingUser.IsBanned)
             {
-                throw new Exception("Your account has been banned.");
+                throw new UserBannedException("Your account has been banned.");
             }
 
             //Check if user verified email address
             if (!existingUser.IsVerified)
             {
-                throw new Exception("Please verify your email address before logging in.");
+                throw new UserNotVerifiedException("Please verify your email address before logging in.");
             }
 
 

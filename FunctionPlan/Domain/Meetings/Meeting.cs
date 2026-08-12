@@ -100,8 +100,13 @@ namespace Domain.Meetings
                 throw new InvalidUserException("Incorrect user");
             }
 
+            if (Status == MeetingStatus.Completed || Status == MeetingStatus.Cancelled)
+            {
+                throw new InvalidMeetingStatus("Cannot change attendance for a completed or cancelled meeting");
+            }
+
             //Chcek if user alerdy confirmed attendence
-            if(_users.Any(u => u.Id == user.Id))
+            if (_users.Any(u => u.Id == user.Id))
             {
                 throw new InvalidUserException("User alerdy assigned to meeting");
             }
@@ -113,6 +118,43 @@ namespace Domain.Meetings
             }
 
             _users.Add(user);
+        }
+
+
+        //Cancel attendence
+        public void CancelAttendence(User user)
+        {
+            if (user is null)
+            {
+                throw new InvalidUserException("Incorrect user");
+            }
+
+            if (Status == MeetingStatus.Completed || Status == MeetingStatus.Cancelled)
+            {
+                throw new InvalidMeetingStatus("Cannot change attendance for a completed or cancelled meeting");
+            }
+
+            //Check if user is organizer
+            if (user.Id == OrganizerId)
+            {
+                throw new InvalidUserException("Organizer cannot leave meeting");
+            }
+
+            //Chcek if user alerdy confirmed attendence
+            if (!_users.Any(u => u.Id == user.Id))
+            {
+                throw new InvalidUserException("User is not assigned to meeting");
+            }
+
+
+            var userToRemove = _users.FirstOrDefault(u => u.Id == user.Id);
+
+            if (userToRemove is null)
+            {
+                throw new InvalidUserException("User is not assigned to this meeting");
+            }
+
+            _users.Remove(userToRemove);
         }
     }
 }

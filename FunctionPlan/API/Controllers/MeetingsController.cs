@@ -1,5 +1,6 @@
 ﻿using Application.Meetings.Commands.CancellMeetingCommand;
 using Application.Meetings.Commands.ChangeCoordinates;
+using Application.Meetings.Commands.ConfirmAttendenceCommand;
 using Application.Meetings.Commands.CreateMeetingCommand;
 using Application.Meetings.Commands.RescheduleMeetingCommand;
 using Application.Meetings.Queries.GetMeetingById;
@@ -141,6 +142,31 @@ namespace API.Controllers
                 organizerId,
                 request.Longitude,
                 request.Latitude
+            );
+
+            await _sender.Send(command, cancellationToken);
+
+            return NoContent();
+        }
+
+
+        //Confirm meeting attendance
+        [HttpPost("{MeetingId}/attendees")]
+        public async Task<IActionResult> ConfirmAttendence(
+            [FromRoute] int MeetingId,
+            CancellationToken cancellationToken
+            )
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (!int.TryParse(userId, out int UserId))
+            {
+                return Unauthorized("Incorrect token");
+            }
+
+            var command = new ConfirmAttendenceCommand(
+                MeetingId,
+                UserId
             );
 
             await _sender.Send(command, cancellationToken);

@@ -20,13 +20,18 @@ namespace Infrastructure.Persistence.Repository
         }
 
 
-        public async Task<Meeting> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Meeting?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Set<Meeting>()
                  .FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
         }
-
-
+        public async Task<Meeting?> GetByIdWithUsersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<Meeting>()
+                .Include(m => m.Users)
+                .FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
+        }
+       
         public async Task AddAsync(Meeting meeting, CancellationToken cancellationToken = default)
         {
             await _dbContext.Set<Meeting>()

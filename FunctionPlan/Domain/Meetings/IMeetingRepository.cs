@@ -6,7 +6,10 @@
         Task<IEnumerable<Meeting>> GetByTitleAsync(string title, CancellationToken cancellationToken = default);
 
         //Display info about specific meeting
-        Task<Meeting> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<Meeting?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+
+        //Get meeting with users
+        Task<Meeting?> GetByIdWithUsersAsync(int id, CancellationToken cancellationToken = default);
 
         Task AddAsync(Meeting meeting, CancellationToken cancellationToken = default);
 

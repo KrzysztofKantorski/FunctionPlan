@@ -29,7 +29,7 @@ namespace Application.Meetings.Commands.ConfirmAttendenceCommand
                 throw new UserNotFoundException("User not found");
             }
 
-            var meetingToJoin = await _meetingRepository.GetByIdAsync(request.MeetingId, cancellationToken);
+            var meetingToJoin = await _meetingRepository.GetByIdWithUsersAsync(request.MeetingId, cancellationToken);
 
             if (meetingToJoin == null) 
             {

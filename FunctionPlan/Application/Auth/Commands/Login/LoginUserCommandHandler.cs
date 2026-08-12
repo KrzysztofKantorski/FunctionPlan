@@ -48,7 +48,20 @@ namespace Application.Auth.Commands.Login
             {
                 throw new InvalidRequestData("User is registered with Google. Please use Google login.");
             }
-          
+
+            //Check if user is banned
+            if (existingUser.IsBanned)
+            {
+                throw new Exception("Your account has been banned.");
+            }
+
+            //Check if user verified email address
+            if (!existingUser.IsVerified)
+            {
+                throw new Exception("Please verify your email address before logging in.");
+            }
+
+
             string existingPassword = existingUser.PasswordHash!;
 
             //Check password

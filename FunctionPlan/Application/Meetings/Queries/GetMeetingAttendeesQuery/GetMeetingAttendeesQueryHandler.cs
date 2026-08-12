@@ -19,9 +19,9 @@ namespace Application.Meetings.Queries.GetMeetingAttendeesQuery
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateDbConnection();
 
-            var sql = 
+            var sql =
                 """
-                    SELECT u."Username", u."Id"
+                    SELECT u."Id", u."Username"
                     FROM "Users" u
                     INNER JOIN "MeetingUser" mu ON u."Id" = mu."UsersId"
                     WHERE mu."MeetingsId" = @MeetingId

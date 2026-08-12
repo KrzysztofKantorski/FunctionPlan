@@ -21,7 +21,7 @@ namespace Application.Meetings.Queries.GetMeetingAttendeesQuery
 
             var sql = 
                 """
-                    SELECT u."Username", u."Id",
+                    SELECT u."Username", u."Id"
                     FROM "Users" u
                     INNER JOIN "MeetingUser" mu ON u."Id" = mu."UsersId"
                     WHERE mu."MeetingsId" = @MeetingId

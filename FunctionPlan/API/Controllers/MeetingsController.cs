@@ -3,6 +3,7 @@ using Application.Meetings.Commands.ChangeCoordinates;
 using Application.Meetings.Commands.ConfirmAttendenceCommand;
 using Application.Meetings.Commands.CreateMeetingCommand;
 using Application.Meetings.Commands.RescheduleMeetingCommand;
+using Application.Meetings.Queries.GetMeetingAttendeesQuery;
 using Application.Meetings.Queries.GetMeetingById;
 using Domain.Meetings;
 using MediatR;
@@ -63,9 +64,50 @@ namespace API.Controllers
 
             )
         {
+
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (!int.TryParse(userId, out int UserId))
+            {
+                return Unauthorized("Incorrect token");
+            }
+
+            if(UserId < 0)
+            {
+                return Unauthorized("Incorrect token");
+            }
+
+
             var result = await _sender.Send(new GetMeetingByIdQuery(MeetingId));
 
             return Ok(new { id = result });
+        }
+
+
+        //Get meeting attendees
+        [HttpGet("{MeetingID}/attendees")]
+        public async Task<IActionResult> MeetingAttendees(
+            [FromRoute] int MeetingId,
+            CancellationToken cancellationToken
+            )
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (!int.TryParse(userId, out int UserId))
+            {
+                return Unauthorized("Incorrect token");
+            }
+
+            if (UserId < 0)
+            {
+                return Unauthorized("Incorrect token");
+            }
+
+
+            var command = new GetMeetingAttendeesQuery(MeetingId);
+            var result = await _sender.Send(command, cancellationToken);
+
+            return Ok(result);
         }
 
 

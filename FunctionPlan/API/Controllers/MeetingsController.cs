@@ -1,4 +1,5 @@
 ﻿using Application.Meetings.Commands.CancellMeetingCommand;
+using Application.Meetings.Commands.CancelMeetingAttendance.cs;
 using Application.Meetings.Commands.ChangeCoordinates;
 using Application.Meetings.Commands.ConfirmAttendenceCommand;
 using Application.Meetings.Commands.CreateMeetingCommand;
@@ -213,6 +214,30 @@ namespace API.Controllers
 
             await _sender.Send(command, cancellationToken);
 
+            return NoContent();
+        }
+
+
+        //Cancel meeting attendance
+        [HttpDelete("{MeetingId}/attendees")]
+        public async Task<IActionResult> CancelAttendance(
+            [FromRoute] int MeetingId,
+            CancellationToken cancellationToken
+            ) 
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (!int.TryParse(userId, out int UserId))
+            {
+                return Unauthorized("Incorrect token");
+            }
+
+            var command = new CancelMeetingAttendanceCommand(
+                MeetingId,
+                UserId
+            );
+
+            await _sender.Send(command, cancellationToken);
             return NoContent();
         }
     }

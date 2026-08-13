@@ -1,4 +1,5 @@
-﻿using Application.Meetings.Commands.CancellMeetingCommand;
+﻿using API.Extensions;
+using Application.Meetings.Commands.CancellMeetingCommand;
 using Application.Meetings.Commands.CancelMeetingAttendance.cs;
 using Application.Meetings.Commands.ChangeCoordinates;
 using Application.Meetings.Commands.ConfirmAttendenceCommand;
@@ -121,16 +122,10 @@ namespace API.Controllers
             CancellationToken cancellationToken
             )
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-
-            if (!int.TryParse(userId, out int organizerId))
-            {
-                return Unauthorized("Incorrect token");
-            }
-
+           
             var command = new RescheduleMeetingCommand(
                 MeetingId,
-                organizerId,
+                User.GetUserId(),
                 request.ScheduledFor
             );
 
@@ -147,16 +142,10 @@ namespace API.Controllers
             CancellationToken cancellationToken
             ) 
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-
-            if (!int.TryParse(userId, out int organizerId))
-            {
-                return Unauthorized("Incorrect token");
-            }
 
             var command = new CancelMeetingCommand(
                 MeetingId,
-                organizerId
+                User.GetUserId()
             );
 
             await _sender.Send(command, cancellationToken);
@@ -173,16 +162,10 @@ namespace API.Controllers
             CancellationToken cancellationToken
             )
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-
-            if (!int.TryParse(userId, out int organizerId))
-            {
-                return Unauthorized("Incorrect token");
-            }
 
             var command = new ChangeCoordinatesCommand(
                 MeetingId,
-                organizerId,
+                User.GetUserId(),
                 request.Longitude,
                 request.Latitude
             );
@@ -200,16 +183,10 @@ namespace API.Controllers
             CancellationToken cancellationToken
             )
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-
-            if (!int.TryParse(userId, out int UserId))
-            {
-                return Unauthorized("Incorrect token");
-            }
 
             var command = new ConfirmAttendenceCommand(
                 MeetingId,
-                UserId
+                User.GetUserId()
             );
 
             await _sender.Send(command, cancellationToken);
@@ -225,16 +202,10 @@ namespace API.Controllers
             CancellationToken cancellationToken
             ) 
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-
-            if (!int.TryParse(userId, out int UserId))
-            {
-                return Unauthorized("Incorrect token");
-            }
 
             var command = new CancelMeetingAttendanceCommand(
                 MeetingId,
-                UserId
+                User.GetUserId()
             );
 
             await _sender.Send(command, cancellationToken);

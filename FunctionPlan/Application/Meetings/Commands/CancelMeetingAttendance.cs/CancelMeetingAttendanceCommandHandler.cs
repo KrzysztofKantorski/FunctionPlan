@@ -29,7 +29,7 @@ namespace Application.Meetings.Commands.CancelMeetingAttendance.cs
                 throw new UserNotFoundException("User not found");
             }
 
-            var meeting = await _meetingRepository.GetByIdAsync(request.MeetingId, cancellationToken);
+            var meeting = await _meetingRepository.GetByIdWithUsersAsync(request.MeetingId, cancellationToken);
 
             if (meeting == null) 
             {

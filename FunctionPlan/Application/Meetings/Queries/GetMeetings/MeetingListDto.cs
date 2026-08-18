@@ -4,6 +4,7 @@
         int Id,
         string Title,
         DateTime ScheduledFor,
-        int OrganizerId
+        int OrganizerId,
+        string OrganizerName
     );
 }

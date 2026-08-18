@@ -5,5 +5,5 @@ namespace Application.Meetings.Queries.GetMeetings
     public sealed record GetMeetingsQuery(
         string? SearchTerm,
         string? SortOrder
-    ): ICommand<MeetingListDto>;
+    ): ICommand<List<MeetingListDto>>;
 }

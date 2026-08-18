@@ -7,11 +7,15 @@ using Application.Meetings.Commands.CreateMeetingCommand;
 using Application.Meetings.Commands.RescheduleMeetingCommand;
 using Application.Meetings.Queries.GetMeetingAttendeesQuery;
 using Application.Meetings.Queries.GetMeetingById;
+using Application.Meetings.Queries.GetMeetings;
 using Domain.Meetings;
+using MailKit.Search;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Superpower.Model;
+using System.Threading;
 
 namespace API.Controllers
 {
@@ -60,6 +64,21 @@ namespace API.Controllers
             )
         {
             var result = await _sender.Send(new GetMeetingByIdQuery(MeetingId));
+
+            return Ok(new { id = result });
+        }
+
+        //Get meetings with filters
+        [HttpGet]
+        public async Task<IActionResult> GetMeetings(
+            [FromQuery] string? SearchTerm,
+            [FromQuery] string? sortOrder,
+            CancellationToken cancellation
+            )
+        {
+            var query = new GetMeetingsQuery(SearchTerm, sortOrder);
+
+            var result = await _sender.Send(query);
 
             return Ok(new { id = result });
         }

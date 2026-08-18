@@ -20,7 +20,7 @@ namespace Application.Meetings.Queries.GetMeetings
             using IDbConnection connection = _sqlConnectionFactory.CreateDbConnection();
 
             var sql = """
-                SELECT m."Id", m."Title", m."ScheduledFor", m."OrganizerId"
+                SELECT m."Id", m."Title", m."ScheduledFor", m."OrganizerId", u."Username" AS "OrganizerName"
                 FROM "Meetings" m
                 INNER JOIN "Users" u ON m."OrganizerId" = u."Id"
                 """;

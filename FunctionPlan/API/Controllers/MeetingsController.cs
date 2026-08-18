@@ -80,7 +80,7 @@ namespace API.Controllers
 
             var result = await _sender.Send(query);
 
-            return Ok(new { id = result });
+            return Ok(result);
         }
 
 

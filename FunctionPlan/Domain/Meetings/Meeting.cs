@@ -85,6 +85,25 @@ namespace Domain.Meetings
         }
 
 
+
+        //Mark meeting as completed
+        public void MarkAsCompleted()
+        {
+            if (Status == MeetingStatus.Cancelled)
+            {
+                throw new InvalidMeetingStatus("Cannot complete cancelled meeting");
+            }
+
+            if (Status == MeetingStatus.Completed)
+            {
+                throw new InvalidMeetingStatus("Cannot complete alerdy completed meeting");
+            }
+
+            Status = MeetingStatus.Completed;
+        }
+
+
+
         //Change coordinates
         public void ChangeLocation(Coordinates newLocation)
         {

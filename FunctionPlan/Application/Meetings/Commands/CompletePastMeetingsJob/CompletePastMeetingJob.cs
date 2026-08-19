@@ -2,6 +2,6 @@
 
 namespace Application.Meetings.Commands.CompletePastMeetingsJob
 {
-    internal sealed record CompletePastMeetingJob
+    public sealed record CompletePastMeetingJob
     ():ICommand;
 }

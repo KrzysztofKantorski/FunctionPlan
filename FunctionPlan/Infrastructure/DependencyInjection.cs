@@ -4,6 +4,7 @@ using Application.Abstractions.Email;
 using Application.Abstractions.Mail;
 using Application.Abstractions.Security;
 using Application.Abstractions.Security.Tokens;
+using Application.Meetings.Commands.CompletePastMeetingsJob;
 using Domain.Common;
 using Domain.Meetings;
 using Domain.RefreshTokens;
@@ -17,6 +18,7 @@ using Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 
 namespace Infrastructure
 {
@@ -54,6 +56,30 @@ namespace Infrastructure
             {
                 options.Configuration = configuration["REDIS_CONN_STRING"] ?? string.Empty;
             });
+
+
+            //Quartz
+            services.AddQuartz(options =>
+            {
+                var jobKey = JobKey.Create(nameof(CompletePastMeetingJob));
+                options.AddJob<CompletePastMeetingJob>(jobKey);
+
+                options.AddTrigger(
+                    trigger => trigger
+                    .ForJob(jobKey)
+                    .WithIdentity($"{jobKey}-trigger")
+                    .WithSimpleSchedule(schedule => schedule
+                        .WithIntervalInHours(1)
+                        .RepeatForever()
+                    )
+                );
+            });
+
+            services.AddQuartzHostedService(options =>
+            {
+                options.WaitForJobsToComplete = true;
+            });
+
 
 
             //JWT

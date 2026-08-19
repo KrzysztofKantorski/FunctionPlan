@@ -20,6 +20,15 @@ namespace Infrastructure.Persistence.Repository
         }
 
 
+        public async Task<List<Meeting>> GetUncompletedPastMeetings(DateTime referenceDate, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Set<Meeting>()
+                .Where(m => (m.Status == MeetingStatus.Planned || m.Status == MeetingStatus.InProgress)
+                    && m.ScheduledFor < referenceDate)
+                .ToListAsync(cancellationToken);
+        }
+
+
         public async Task<Meeting?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Set<Meeting>()

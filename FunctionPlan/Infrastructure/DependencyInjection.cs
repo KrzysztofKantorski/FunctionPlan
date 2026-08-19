@@ -9,6 +9,7 @@ using Domain.Common;
 using Domain.Meetings;
 using Domain.RefreshTokens;
 using Domain.Users;
+using Infrastructure.BackgroundJob;
 using Infrastructure.Cache;
 using Infrastructure.Email;
 using Infrastructure.Persistence;
@@ -61,8 +62,8 @@ namespace Infrastructure
             //Quartz
             services.AddQuartz(options =>
             {
-                var jobKey = JobKey.Create(nameof(CompletePastMeetingJob));
-                options.AddJob<CompletePastMeetingJob>(jobKey);
+                var jobKey = JobKey.Create(nameof(ClearPastMeetingsJob));
+                options.AddJob<ClearPastMeetingsJob>(jobKey);
 
                 options.AddTrigger(
                     trigger => trigger

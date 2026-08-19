@@ -13,7 +13,9 @@ namespace Infrastructure.BackgroundJob
         public Task Execute(IJobExecutionContext context)
         {
             //Complete past meetings
-            return _sender.Send(new CompletePastMeetingJob(), context.CancellationToken);
+            _sender.Send(new CompletePastMeetingJob(), context.CancellationToken);
+
+            return Task.CompletedTask;
         }
     }
 }

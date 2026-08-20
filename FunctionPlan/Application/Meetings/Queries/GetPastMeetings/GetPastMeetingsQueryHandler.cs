@@ -30,10 +30,29 @@ namespace Application.Meetings.Queries.GetPastMeetings
             var conditions = new List<string>();
             var parameters = new DynamicParameters();
 
-            //Get cancelled and completed meetings
-            conditions.Add("m.\"Status\" IN (@Cancelled, @Completed)");
-            parameters.Add("Cancelled", (int)MeetingStatus.Planned);
-            parameters.Add("Completed", (int)MeetingStatus.InProgress);
+            //Get allowed meeting statuses
+            var allowedStatuses = new List<int> { (int)MeetingStatus.Completed, (int)MeetingStatus.Cancelled };
+
+            if (request.Status.HasValue)
+            {
+                if (allowedStatuses.Contains(request.Status.Value))
+                {
+                    conditions.Add("m.\"Status\" = @RequestedStatus");
+                    parameters.Add("RequestedStatus", request.Status.Value);
+                }
+                else
+                {
+                    throw new Exception("Incorrect meeting status");
+                }
+            }
+            else
+            {
+                //Get cancelled and completed meetings
+                conditions.Add("m.\"Status\" IN (@Cancelled, @Completed)");
+                parameters.Add("Cancelled", (int)MeetingStatus.Planned);
+                parameters.Add("Completed", (int)MeetingStatus.InProgress);
+            }
+
 
             //Get meetings with proper date
             conditions.Add("m.\"ScheduledFor\" < @Now");

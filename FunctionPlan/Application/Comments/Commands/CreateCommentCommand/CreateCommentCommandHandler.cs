@@ -48,7 +48,7 @@ namespace Application.Comments.Commands.CreateCommentCommand
 
                 if (parentComment == null) 
                 {
-                    throw new Exception("Parent comment not found");
+                    throw new CommentNotFoundException("Parent comment not found");
                 }
             }
 

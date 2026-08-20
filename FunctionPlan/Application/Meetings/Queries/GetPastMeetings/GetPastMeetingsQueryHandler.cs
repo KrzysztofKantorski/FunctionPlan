@@ -49,19 +49,15 @@ namespace Application.Meetings.Queries.GetPastMeetings
             {
                 //Get cancelled and completed meetings
                 conditions.Add("m.\"Status\" IN (@Cancelled, @Completed)");
-                parameters.Add("Cancelled", (int)MeetingStatus.Planned);
-                parameters.Add("Completed", (int)MeetingStatus.InProgress);
+                parameters.Add("Cancelled", (int)MeetingStatus.Cancelled);
+                parameters.Add("Completed", (int)MeetingStatus.Completed);
             }
 
-
-            //Get meetings with proper date
-            conditions.Add("m.\"ScheduledFor\" < @Now");
-            parameters.Add("Now", DateTime.UtcNow);
 
             //Search by meeting title
             if (!string.IsNullOrWhiteSpace(request.SearchTerm))
             {
-                conditions.Add("\"Title\" ILIKE @SearchTerm");
+                conditions.Add("m.\"Title\" ILIKE @SearchTerm");
                 parameters.Add("SearchTerm", $"%{request.SearchTerm}%");
             }
 
@@ -73,7 +69,7 @@ namespace Application.Meetings.Queries.GetPastMeetings
 
             //Sorting type
             var sortDirection = request.SortOrder?.ToLower() == "desc" ? "DESC" : "ASC";
-            sql += $"\nORDER BY \"ScheduledFor\" {sortDirection}";
+            sql += $"\nORDER BY m.\"ScheduledFor\" {sortDirection}";
 
             var meetings = await connection.QueryAsync<MeetingListDto>(sql, parameters);
             return meetings.ToList();

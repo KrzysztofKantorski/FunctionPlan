@@ -61,7 +61,7 @@ namespace Application.Meetings.Queries.GetMeetings
             //Search by meeting title
             if (!string.IsNullOrWhiteSpace(request.SearchTerm))
             {
-                conditions.Add("\"Title\" ILIKE @SearchTerm");
+                conditions.Add("m.\"Title\" ILIKE @SearchTerm");
                 parameters.Add("SearchTerm", $"%{request.SearchTerm}%");
             }
 
@@ -73,7 +73,7 @@ namespace Application.Meetings.Queries.GetMeetings
 
             //Sorting type
             var sortDirection = request.SortOrder?.ToLower() == "desc" ? "DESC" : "ASC";
-            sql += $"\nORDER BY \"ScheduledFor\" {sortDirection}";
+            sql += $"\nORDER BY m.\"ScheduledFor\" {sortDirection}";
 
             var meetings = await connection.QueryAsync<MeetingListDto>(sql, parameters);
             return meetings.ToList();

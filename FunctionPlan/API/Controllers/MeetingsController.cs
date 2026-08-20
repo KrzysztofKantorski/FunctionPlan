@@ -8,14 +8,12 @@ using Application.Meetings.Commands.RescheduleMeetingCommand;
 using Application.Meetings.Queries.GetMeetingAttendeesQuery;
 using Application.Meetings.Queries.GetMeetingById;
 using Application.Meetings.Queries.GetMeetings;
-using Domain.Meetings;
-using MailKit.Search;
+using Application.Meetings.Queries.GetPastMeetings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using Superpower.Model;
-using System.Threading;
+
 
 namespace API.Controllers
 {
@@ -78,6 +76,23 @@ namespace API.Controllers
             )
         {
             var query = new GetMeetingsQuery(SearchTerm, SortOrder, Status);
+
+            var result = await _sender.Send(query);
+
+            return Ok(result);
+        }
+
+
+        //Get meeting history (only completed and cancelled)
+        [HttpGet("history")]
+        public async Task<IActionResult> GetMeetingsHistory(
+           [FromQuery] string? SearchTerm,
+           [FromQuery] string? SortOrder,
+           [FromQuery] int? Status,
+           CancellationToken cancellation
+           )
+        {
+            var query = new GetPastMeetingsQuery(SearchTerm, SortOrder, Status);
 
             var result = await _sender.Send(query);
 

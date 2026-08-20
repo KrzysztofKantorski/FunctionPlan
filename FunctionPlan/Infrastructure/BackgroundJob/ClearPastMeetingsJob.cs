@@ -10,12 +10,10 @@ namespace Infrastructure.BackgroundJob
         {
             _sender = sender;
         }
-        public Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
             //Complete past meetings
-            _sender.Send(new CompletePastMeetingJob(), context.CancellationToken);
-
-            return Task.CompletedTask;
+            await _sender.Send(new CompletePastMeetingJob(), context.CancellationToken);
         }
     }
 }

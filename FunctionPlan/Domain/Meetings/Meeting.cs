@@ -1,4 +1,5 @@
-﻿using Domain.Common;
+﻿using Domain.Comments;
+using Domain.Common;
 using Domain.Users;
 namespace Domain.Meetings
 {
@@ -23,6 +24,9 @@ namespace Domain.Meetings
         private readonly List<User> _users = new();
 
         public IReadOnlyCollection<User> Users => _users.AsReadOnly();
+
+        private readonly List<Comment> _comments = new();
+        public IReadOnlyCollection<Comment> Comments => _comments.AsReadOnly();
         private Meeting() { }
 
         public Meeting(string title, DateTime scheduledFor, int organizerId, Coordinates location)

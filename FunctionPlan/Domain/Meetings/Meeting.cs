@@ -179,5 +179,19 @@ namespace Domain.Meetings
 
             _users.Remove(userToRemove);
         }
+
+
+        //Add comment
+        public void AddComment(User user, string content, int? parentCommentId = null)
+        {
+            if(user is null)
+            {
+                throw new InvalidUserException("Incorrect user");
+            }
+
+            var comment = new Comment(this.Id, user.Id, content, parentCommentId);
+
+            _comments.Add(comment);
+        }
     }
 }

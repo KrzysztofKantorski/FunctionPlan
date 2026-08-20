@@ -46,5 +46,12 @@ namespace Domain.Comments
             CreatedAt = DateTime.UtcNow;
             IsHidden = false;
         }
+
+
+        //Hide comment
+        public void Hide() 
+        { 
+            IsHidden = true;
+        }
     }
 }

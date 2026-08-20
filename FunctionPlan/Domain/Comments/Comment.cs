@@ -25,17 +25,17 @@ namespace Domain.Comments
         {
             if(meetingId < 0)
             {
-                throw new Exception("Incorrect meeting");
+                throw new InvalidMeetingException("Incorrect meeting");
             }
 
             if (authorId < 0)
             {
-                throw new Exception("Incorrect autho");
+                throw new InvalidAuthorException("Incorrect author");
             }
 
             if (string.IsNullOrWhiteSpace(content))
             {
-                throw new Exception("omment cannot be empty");
+                throw new Exception("comment cannot be empty");
             }
 
           
@@ -51,6 +51,11 @@ namespace Domain.Comments
         //Hide comment
         public void Hide() 
         { 
+            if(IsHidden == true)
+            {
+                throw new Exception("Cannot hide alerdy hidden comment");
+            }
+
             IsHidden = true;
         }
     }

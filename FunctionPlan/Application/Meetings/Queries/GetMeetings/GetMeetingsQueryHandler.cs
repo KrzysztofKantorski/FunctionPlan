@@ -25,15 +25,33 @@ namespace Application.Meetings.Queries.GetMeetings
                 INNER JOIN "Users" u ON m."OrganizerId" = u."Id"
                 """;
 
+
             //Values from query parameters
             var conditions = new List<string>();
             var parameters = new DynamicParameters();
 
-            //Get meetings in progress and planned
-            conditions.Add("m.\"Status\" IN (@Planned, @InProgress)");
-            parameters.Add("Planned", (int)MeetingStatus.Planned);
-            parameters.Add("InProgress", (int)MeetingStatus.InProgress);
+            //Get allowed meeting statuses
+            var allowedStatuses = new List<int> { (int)MeetingStatus.Planned, (int)MeetingStatus.InProgress };
 
+            if (request.Status.HasValue)
+            {
+                if (allowedStatuses.Contains(request.Status.Value))
+                {
+                    conditions.Add("m.\"Status\" = @RequestedStatus");
+                    parameters.Add("RequestedStatus", request.Status.Value);
+                }
+                else
+                {
+                    throw new Exception("Incorrect meeting status");
+                }
+            }
+            else
+            {
+                //Get meetings in progress and planned
+                conditions.Add("m.\"Status\" IN (@Planned, @InProgress)");
+                parameters.Add("Planned", (int)MeetingStatus.Planned);
+                parameters.Add("InProgress", (int)MeetingStatus.InProgress);
+            }
 
             //Get meetings with proper date
             conditions.Add("m.\"ScheduledFor\" > @Now");
@@ -46,7 +64,6 @@ namespace Application.Meetings.Queries.GetMeetings
                 conditions.Add("\"Title\" ILIKE @SearchTerm");
                 parameters.Add("SearchTerm", $"%{request.SearchTerm}%");
             }
-
 
             //Add conditions
             if (conditions.Any())

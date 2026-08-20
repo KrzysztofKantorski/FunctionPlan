@@ -72,11 +72,12 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMeetings(
             [FromQuery] string? SearchTerm,
-            [FromQuery] string? sortOrder,
+            [FromQuery] string? SortOrder,
+            [FromQuery] int? Status,
             CancellationToken cancellation
             )
         {
-            var query = new GetMeetingsQuery(SearchTerm, sortOrder);
+            var query = new GetMeetingsQuery(SearchTerm, SortOrder, Status);
 
             var result = await _sender.Send(query);
 

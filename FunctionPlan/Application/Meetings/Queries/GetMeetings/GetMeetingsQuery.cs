@@ -4,6 +4,7 @@ namespace Application.Meetings.Queries.GetMeetings
 {
     public sealed record GetMeetingsQuery(
         string? SearchTerm,
-        string? SortOrder
+        string? SortOrder,
+        int? Status
     ): ICommand<List<MeetingListDto>>;
 }

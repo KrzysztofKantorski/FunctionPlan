@@ -23,16 +23,15 @@ namespace API.Controllers
         [HttpPost("{MeetingId}/comments")]
         public async Task<IActionResult> CreateComment(
             [FromRoute] int MeetingId,
-            [FromBody] string Content,
-            [FromBody] int? ParentCommentId,
+            [FromBody] CreateCommentUserRequest request,
             CancellationToken cancellationToken
             )
         {
             var command = new CreateCommentCommand(
                 MeetingId,
                 User.GetUserId(),
-                Content,
-                ParentCommentId
+                request.Content,
+                request.ParentCommentId
             );
 
             await _sender.Send(command, cancellationToken);

@@ -5,6 +5,7 @@ using Application.Abstractions.Mail;
 using Application.Abstractions.Security;
 using Application.Abstractions.Security.Tokens;
 using Application.Meetings.Commands.CompletePastMeetingsJob;
+using Domain.Comments;
 using Domain.Common;
 using Domain.Meetings;
 using Domain.RefreshTokens;
@@ -45,6 +46,7 @@ namespace Infrastructure
             services.AddScoped<IMeetingRepository, MeetingRepository>();
             services.AddScoped<IUserRepository, AuthRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
 
 
             //SQL

@@ -1,9 +1,10 @@
-﻿using Application.Abstractions.Messaging;
+﻿
+using MediatR;
 
 
 namespace Application.Comments.Queries.GetMeetingCommentsQuery
 {
     public sealed record GetMeetingCommentsQuery(
         int MeetingId
-    ):ICommand<List<CommentDto>>;
+    ):IRequest<List<CommentDto>>;
 }

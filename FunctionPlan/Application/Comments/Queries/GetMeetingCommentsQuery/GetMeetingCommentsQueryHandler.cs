@@ -26,11 +26,12 @@ namespace Application.Comments.Queries.GetMeetingCommentsQuery
                     c."Content",
                     c."CreatedAt", 
                     c."ParentCommentId",
-                    u."Username", 
+                    u."Username" 
                     FROM "Comments" c
                     INNER JOIN "Users" u ON c."AuthorId" = u."Id"
                     WHERE c."MeetingId" = @MeetingId
                         AND c."IsHidden" = FALSE
+                    ORDER BY c."CreatedAt" ASC
                 """;
 
             var flatComments = await connection.QueryAsync<CommentDto>(

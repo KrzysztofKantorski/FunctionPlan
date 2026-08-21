@@ -1,5 +1,6 @@
 ﻿using API.Extensions;
 using Application.Comments.Commands.CreateCommentCommand;
+using Application.Comments.Queries.GetMeetingCommentsQuery;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,8 @@ namespace API.Controllers
             _sender = sender;
         }
 
+
+        //Create comment
         [HttpPost("{MeetingId}/comments")]
         public async Task<IActionResult> CreateComment(
             [FromRoute] int MeetingId,
@@ -37,6 +40,19 @@ namespace API.Controllers
             await _sender.Send(command, cancellationToken);
 
             return NoContent();
+        }
+
+
+        [HttpGet("{MeetingId}/comments")]
+        public async Task<IActionResult> GetMeetingComments(
+            [FromRoute] int MeetingId,
+            CancellationToken cancellationToken
+        )
+        {
+            var query = new GetMeetingCommentsQuery(MeetingId);
+            var comments = await _sender.Send(query, cancellationToken);
+
+            return Ok(comments);
         }
 
     }

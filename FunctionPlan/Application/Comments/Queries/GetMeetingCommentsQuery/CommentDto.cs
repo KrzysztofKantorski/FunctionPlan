@@ -7,6 +7,6 @@
         public string Content { get; init; }
         public DateTime CreatedAt { get; init; }
         public int? ParentCommentId { get; init; }
-        public List<CommentDto>? Replies { get; init; }
+        public List<CommentDto> Replies { get; set; } = new();
     }
 }

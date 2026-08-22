@@ -4,5 +4,5 @@ namespace Application.Users.Queries
 {
     public sealed record GetUserDetailsQuery(
         int UserId
-    ): ICommand;
+    ): ICommand<UserProfileDetailsDto>;
 }

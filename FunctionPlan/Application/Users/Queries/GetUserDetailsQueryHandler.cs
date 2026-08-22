@@ -18,9 +18,10 @@ namespace Application.Users.Queries
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateDbConnection();
 
-            var sql = """
-                SELECT "Id", "Username", "Email", "ProfilePictureUrl"
-                FROM Users WHERE Users."Id" = @UserId
+            var sql = 
+                """
+                    SELECT u."Id", u."Username", u."Email", u."ProfilePictureUrl"
+                    FROM "Users" u WHERE u."Id" = @UserId
                 """;
 
             var userDetails = await connection.QueryAsync<UserProfileDetailsDto>(

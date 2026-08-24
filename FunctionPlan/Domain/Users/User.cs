@@ -97,5 +97,17 @@ namespace Domain.Users
 
             return NewUser;
         }
+
+
+        //Add avatar image to user
+        public void SetUserImage( string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new Exception("Incorrect image url");
+            }
+
+            ProfilePictureUrl = fileName;
+        }
     }
 }

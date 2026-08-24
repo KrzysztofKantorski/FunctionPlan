@@ -104,7 +104,7 @@ namespace Domain.Users
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
-                throw new Exception("Incorrect image url");
+                throw new InvalidUserImageException("Incorrect image url");
             }
 
             ProfilePictureUrl = fileName;

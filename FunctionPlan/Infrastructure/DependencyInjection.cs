@@ -6,6 +6,7 @@ using Application.Abstractions.Security;
 using Application.Abstractions.Security.Tokens;
 using Application.Abstractions.Storage;
 using Application.Meetings.Commands.CompletePastMeetingsJob;
+using Azure.Storage.Blobs;
 using Domain.Comments;
 using Domain.Common;
 using Domain.Meetings;
@@ -141,6 +142,14 @@ namespace Infrastructure
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton<ICacheService, CacheService>();
             services.AddSingleton<IOTPGenerator, OTPGenerator>();
+
+            //Register azure client
+            services.AddSingleton(provider =>
+            {
+                var connectionString = configuration["BLOB_CONNECTION_STRING"] ?? string.Empty;
+                return new BlobServiceClient(connectionString);
+            });
+
             services.AddSingleton<IBlobService, BlobService>();
 
 

@@ -1,4 +1,5 @@
 ﻿using API.Extensions;
+using Application.Users.Commands.UploadUserImage;
 using Application.Users.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +24,7 @@ namespace API.Controllers
 
 
 
-        //Get meeting by id
+        //Get user by id
         [HttpGet("me")]
         public async Task<IActionResult> GetMeetingById(
             CancellationToken cancellationToken
@@ -35,5 +36,36 @@ namespace API.Controllers
             return Ok(result);
         }
 
+
+        //Upload user avatar
+        [HttpPost("uploadImage")]
+        public async Task<IActionResult> UploadUserImage(
+            IFormFile file,
+            CancellationToken cancelToken
+            )
+        {
+
+            if (file is null || file.Length == 0)
+            {
+                return BadRequest("File is required.");
+            }
+
+            using var stream = file.OpenReadStream();
+
+            var fileDto = new FileDto(
+                stream,
+                file.FileName,
+                file.ContentType
+            );
+
+            var command = new UploadUserImageCommand
+            (
+                fileDto,
+                User.GetUserId()
+            );
+
+            await _sender.Send(command, cancelToken);
+            return NoContent();
+        }
     }
 }

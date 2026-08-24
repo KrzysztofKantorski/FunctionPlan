@@ -4,6 +4,7 @@ using Application.Abstractions.Email;
 using Application.Abstractions.Mail;
 using Application.Abstractions.Security;
 using Application.Abstractions.Security.Tokens;
+using Application.Abstractions.Storage;
 using Application.Meetings.Commands.CompletePastMeetingsJob;
 using Domain.Comments;
 using Domain.Common;
@@ -17,6 +18,7 @@ using Infrastructure.Persistence;
 using Infrastructure.Persistence.Data;
 using Infrastructure.Persistence.Repository;
 using Infrastructure.Security;
+using Infrastructure.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,6 +60,15 @@ namespace Infrastructure
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = configuration["REDIS_CONN_STRING"] ?? string.Empty;
+            });
+
+
+
+            //Blob
+            services.Configure<BlobSettings>(options =>
+            {
+                options.ConnectionString = configuration["BLOB_CONNECTION_STRING"] ?? string.Empty;
+                options.AvatarsContainerName = configuration["BLOB_AVATARS_CONTAINER"] ?? string.Empty;
             });
 
 
@@ -130,6 +141,8 @@ namespace Infrastructure
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton<ICacheService, CacheService>();
             services.AddSingleton<IOTPGenerator, OTPGenerator>();
+            services.AddSingleton<IBlobService, BlobService>();
+
 
             return services;
         }

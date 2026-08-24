@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System.Reflection.PortableExecutable;
 
 namespace Application.Users.Commands.UploadUserImage
 {
@@ -36,6 +37,12 @@ namespace Application.Users.Commands.UploadUserImage
                 RuleFor(x => x.UploadedImage.Filename)
                 .Must(IsValidImageFormat)
                 .WithMessage("Incorrect image format");
+
+
+                //Check magic numbers to make sure the file is actually an image
+                RuleFor(x => x.UploadedImage.Stream)
+                .Must(IsValidImage)
+                .WithMessage("Incorrect image file");
             });
         }
 
@@ -68,6 +75,40 @@ namespace Application.Users.Commands.UploadUserImage
             }
 
             return _allowedExtensions.Contains(ext.ToLowerInvariant());
+        }
+
+
+        //Check file bytes (image magic numbers)
+        private bool IsValidImage(Stream stream)
+        {
+            if (stream == null || !stream.CanRead || stream.Length < 4)
+            {
+                return false;
+            }
+
+            var originalPosition = stream.Position;
+            stream.Position = 0;
+
+            using var reader = new BinaryReader(stream, System.Text.Encoding.UTF8, leaveOpen: true);
+
+            //Read first 4 bytes
+            var headerBytes = reader.ReadBytes(4);
+            stream.Position = originalPosition;
+
+
+            //Validate .jpg
+            if (headerBytes[0] == 0xFF && headerBytes[1] == 0xD8 && headerBytes[2] == 0xFF)
+            {
+                return true;
+            }
+
+            //Validate .png
+            if (headerBytes[0] == 0x89 && headerBytes[1] == 0x50 && headerBytes[2] == 0x4E && headerBytes[3] == 0x47)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

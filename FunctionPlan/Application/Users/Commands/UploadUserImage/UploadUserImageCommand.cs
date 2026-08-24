@@ -4,7 +4,7 @@ namespace Application.Users.Commands.UploadUserImage
 {
     public sealed record UploadUserImageCommand
     (
-        Stream UploadedImage,
+        FileDto UploadedImage,
         int UserId
     ):ICommand;
 }

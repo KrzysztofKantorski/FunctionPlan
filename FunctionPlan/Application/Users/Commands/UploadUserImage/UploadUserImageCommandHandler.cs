@@ -44,7 +44,7 @@ namespace Application.Users.Commands.UploadUserImage
 
 
             //Upload image
-            await _blobService.UploadFileAsync(fileId, request.UploadedImage, request.UploadedImage.ContentType, cancellationToken);
+            await _blobService.UploadFileAsync(fileId, request.UploadedImage.Stream, request.UploadedImage.ContentType, cancellationToken);
 
 
             //Update metadata

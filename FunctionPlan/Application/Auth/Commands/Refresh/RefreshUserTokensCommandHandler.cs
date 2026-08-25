@@ -47,17 +47,30 @@ namespace Application.Auth.Commands.Refresh
 
             //Revoke current refresh token
             refreshToken.Revoke();
-            _refreshTokenRepository.Update(refreshToken);
 
             //Find user for JWT generation
             var userId = refreshToken.UserId;
 
             var user = await _userRepository.GetByIdAsync(userId, cancellationToken);
 
-            if (user == null) 
-            { 
+            if (user == null)
+            {
                 throw new UserNotFoundException("User not found.");
             }
+
+            //Check if user is banned
+            if(user.IsBanned)
+            {
+                throw new Exception("User is banned");
+            }
+
+            //Check if user is verified
+            if (!user.IsVerified)
+            {
+                throw new Exception("user is not verified");
+            }
+
+            _refreshTokenRepository.Update(refreshToken);
 
             //Generate new refresh token
             var newRefreshToken = _refreshTokenGenerator.GenerateRefreshToken();

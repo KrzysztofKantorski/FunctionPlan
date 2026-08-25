@@ -61,13 +61,13 @@ namespace Application.Auth.Commands.Refresh
             //Check if user is banned
             if(user.IsBanned)
             {
-                throw new Exception("User is banned");
+                throw new UserBannedException("User is banned");
             }
 
             //Check if user is verified
             if (!user.IsVerified)
             {
-                throw new Exception("user is not verified");
+                throw new UserNotVerifiedException("user is not verified");
             }
 
             _refreshTokenRepository.Update(refreshToken);

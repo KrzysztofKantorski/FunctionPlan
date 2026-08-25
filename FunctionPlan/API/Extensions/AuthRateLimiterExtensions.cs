@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 
 namespace API.Extensions
@@ -12,22 +11,37 @@ namespace API.Extensions
             {
 
                 //Login limit
-                options.AddFixedWindowLimiter("LoginLimit", opt =>
+                options.AddPolicy("LoginLimit", options =>
                 {
-                    opt.PermitLimit = 5;
-                    opt.Window = TimeSpan.FromMinutes(10);
-                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                    opt.QueueLimit = 0;
+                    //Get user ip
+                    var clientIp = options.Connection.RemoteIpAddress?.ToString() ?? "unknown-ip";
+
+                    return RateLimitPartition.GetFixedWindowLimiter(partitionKey: clientIp, factory: _ =>
+                        new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 5,
+                            Window = TimeSpan.FromMinutes(10),
+                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                            QueueLimit = 0
+                        });
+
                 });
 
 
                 //Register and OTP limit
-                options.AddFixedWindowLimiter("OtpRegisterLimit", opt =>
+                options.AddPolicy("OtpRegisterLimit", options =>
                 {
-                    opt.PermitLimit = 3;
-                    opt.Window = TimeSpan.FromMinutes(15);
-                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                    opt.QueueLimit = 0;
+                    var clientIp = options.Connection.RemoteIpAddress?.ToString() ?? "unknown-ip";
+
+                    return RateLimitPartition.GetFixedWindowLimiter(partitionKey: clientIp, factory: _ =>
+                        new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 3,
+                            Window = TimeSpan.FromMinutes(15),
+                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                            QueueLimit = 0
+                        });
+
                 });
 
 

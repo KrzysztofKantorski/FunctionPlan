@@ -1,6 +1,7 @@
 ﻿using API.Extensions;
 using Application.Users.Commands.UploadUserImage;
-using Application.Users.Queries;
+using Application.Users.Queries.GetUserDetailsQuery;
+using Application.Users.Queries.GetUserImageQuery;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,8 +38,23 @@ namespace API.Controllers
         }
 
 
+        //Get user avatar
+        [HttpGet("avatar")]
+        public async Task<IActionResult> GetUserImage(
+            CancellationToken cancellationToken
+            )
+        {
+            int userId = User.GetUserId();
+
+            var query = new GetUserImageQuery(userId);
+
+            var fileResponse = await _sender.Send(query, cancellationToken);
+
+            return File(fileResponse.Stream, fileResponse.ContentType);
+        }
+
         //Upload user avatar
-        [HttpPost("uploadImage")]
+        [HttpPost("avatar")]
         public async Task<IActionResult> UploadUserImage(
             IFormFile file,
             CancellationToken cancelToken

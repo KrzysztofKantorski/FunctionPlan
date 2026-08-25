@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Data;
 using Application.Abstractions.Storage;
+using Application.Exceptions;
 using Dapper;
 using MediatR;
 using System.Data;
@@ -36,7 +37,7 @@ namespace Application.Users.Queries.GetUserImageQuery
             //Check if image exists
             if(string.IsNullOrWhiteSpace(imageId) || !Guid.TryParse(imageId, out var fileId))
             {
-                throw new Exception("User image not found");
+                throw new ImageNotFound("User image not found");
             }
 
             //Get file from azure blob

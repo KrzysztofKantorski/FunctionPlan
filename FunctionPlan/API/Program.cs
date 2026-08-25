@@ -17,6 +17,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddGlobalRateLimiting();
 builder.Services.AddAuthRateLimiter();
+builder.Services.AddAvatarUploaderRateLimiterExtensions();
 
 //Global exception handler
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -40,12 +41,13 @@ app.UseHttpsRedirection();
 
 app.UseCors("GlobalPolicy");
 
-app.UseRateLimiter();
 
 app.UseExceptionHandler();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRateLimiter();
 
 
 app.MapControllers();

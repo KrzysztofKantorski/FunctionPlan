@@ -54,6 +54,7 @@ namespace API.Controllers
         }
 
         //Upload user avatar
+        [EnableRateLimiting("AvatarUploader")]
         [HttpPost("avatar")]
         public async Task<IActionResult> UploadUserImage(
             IFormFile file,

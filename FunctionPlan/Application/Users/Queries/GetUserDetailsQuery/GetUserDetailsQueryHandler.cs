@@ -3,7 +3,7 @@ using Dapper;
 using MediatR;
 using System.Data;
 
-namespace Application.Users.Queries
+namespace Application.Users.Queries.GetUserDetailsQuery
 {
     internal sealed class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, UserProfileDetailsDto>
     {

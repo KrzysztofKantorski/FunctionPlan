@@ -1,4 +1,4 @@
-﻿namespace Application.Users.Queries
+﻿namespace Application.Users.Queries.GetUserDetailsQuery
 {
     public sealed class UserProfileDetailsDto
     {

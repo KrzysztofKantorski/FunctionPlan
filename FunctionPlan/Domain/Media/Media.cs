@@ -19,22 +19,22 @@ namespace Domain.Media
         {
             if(meetingId < 0)
             {
-                throw new Exception("Incorrect meeting id");
+                throw new IncorrectMeetingException("Incorrect meeting id");
             }
 
             if (uploaderId < 0)
             {
-                throw new Exception("Incorrect uploader id");
+                throw new IncorrectUserException("Incorrect uploader id");
             }
 
             if (string.IsNullOrWhiteSpace(fileName))
             {
-                throw new Exception("Incorrect image url");
+                throw new IncorrectFileName("Incorrect image url");
             }
 
             if (description != null && description.Length > 200)
             {
-                throw new Exception("Incorrect image description");
+                throw new IncorrectImageDescription("Incorrect image description");
             }
 
             MeetingId = meetingId;
@@ -50,7 +50,7 @@ namespace Domain.Media
         {
             if (string.IsNullOrWhiteSpace(newDescription) || newDescription.Length > 200)
             {
-                throw new Exception("Incorrect image description");
+                throw new IncorrectImageDescription("Incorrect image description");
             }
 
             Description = newDescription;

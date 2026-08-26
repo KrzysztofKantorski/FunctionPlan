@@ -28,9 +28,9 @@ namespace Application.Media.Commands.AddMediaFile
 
         public async Task Handle(AddMediaFileCommand request, CancellationToken cancellationToken)
         {
-            var uplaoder = await _userRepository.GetByIdAsync(request.UploaderId);
+            var uploader = await _userRepository.GetByIdAsync(request.UploaderId);
 
-            if (uplaoder == null)
+            if (uploader == null)
             {
                 throw new UserNotFoundException("User not found");
             }
@@ -46,7 +46,7 @@ namespace Application.Media.Commands.AddMediaFile
             var fileName = Guid.NewGuid();
 
             //Call domain metohod
-            meeting.AddMedia();
+            meeting.AddMedia(uploader, fileName, request.Description);
 
             //Save file to azure storage
             await _blobService.UploadFileAsync(fileName, request.File.Stream, request.File.ContentType, cancellationToken);

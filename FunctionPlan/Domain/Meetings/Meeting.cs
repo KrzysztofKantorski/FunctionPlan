@@ -197,5 +197,31 @@ namespace Domain.Meetings
 
             _comments.Add(comment);
         }
+
+
+        //Add media
+        public void AddMedia(User user, Guid fileName, string? description)
+        {
+            
+            if(user is null)
+            {
+                throw new InvalidUserException("incorrect user id");
+            }
+
+            if (fileName == Guid.Empty)
+            {
+                throw new IncorrectFileName("incorrect file name");
+            }
+
+            //Check if user belongs to meeting
+            if (!(user.Id == OrganizerId) && !_users.Any(x=> x.Id == user.Id)) 
+            {
+                throw new InvalidUserException("User does not belong to meeting");    
+            }
+
+            var newMediaFile = new MediaFile(this.Id, user.Id, fileName, description);
+
+            _mediaFiles.Add(newMediaFile);
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace API.Controllers
     [ApiController]
     [Authorize]
     [EnableRateLimiting("GlobalLimit")]
-    [Route("api/meetings/media")]
+    [Route("api/meetings")]
     public class MeetingMediaController : ControllerBase
     {
         private ISender _sender;
@@ -20,10 +20,10 @@ namespace API.Controllers
             _sender = sender;
         }
 
-        [HttpPost("{MeetingId}")]
+        [HttpPost("{MeetingId}/media")]
         public async Task<IActionResult> AddMedia(
             [FromRoute] int MeetingId,
-            [FromBody] string? Description,
+            [FromForm] string? Description,
             IFormFile file,
             CancellationToken cancellationToken
             )

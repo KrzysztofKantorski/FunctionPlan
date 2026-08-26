@@ -1,4 +1,4 @@
-﻿namespace Application.Media.Commands.AddMediaFile
+﻿namespace Application.Common.Dto
 {
     public sealed record FileDto
     (

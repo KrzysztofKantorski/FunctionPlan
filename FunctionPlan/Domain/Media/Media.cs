@@ -43,5 +43,17 @@ namespace Domain.Media
             Description = description;
             CreatedAt = DateTime.UtcNow;
         }
+
+
+        //Update media description
+        public void updateMediaDescription(string newDescription)
+        {
+            if (string.IsNullOrWhiteSpace(newDescription) || newDescription.Length > 200)
+            {
+                throw new Exception("Incorrect image description");
+            }
+
+            Description = newDescription;
+        }
     }
 }

@@ -213,13 +213,15 @@ namespace Domain.Meetings
                 throw new IncorrectFileName("incorrect file name");
             }
 
+            string fileNameString = fileName.ToString();
+
             //Check if user belongs to meeting
             if (!(user.Id == OrganizerId) && !_users.Any(x=> x.Id == user.Id)) 
             {
                 throw new InvalidUserException("User does not belong to meeting");    
             }
 
-            var newMediaFile = new MediaFile(this.Id, user.Id, fileName, description);
+            var newMediaFile = new MediaFile(this.Id, user.Id, fileNameString, description);
 
             _mediaFiles.Add(newMediaFile);
         }

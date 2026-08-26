@@ -1,5 +1,6 @@
 ﻿using Domain.Comments;
 using Domain.Common;
+using Domain.Media;
 using Domain.Users;
 namespace Domain.Meetings
 {
@@ -27,6 +28,9 @@ namespace Domain.Meetings
 
         private readonly List<Comment> _comments = new();
         public IReadOnlyCollection<Comment> Comments => _comments.AsReadOnly();
+
+        private readonly List<MediaFile> _mediaFiles = new();
+        public IReadOnlyCollection<MediaFile> MediaFiles => _mediaFiles.AsReadOnly();
         private Meeting() { }
 
         public Meeting(string title, DateTime scheduledFor, int organizerId, Coordinates location)

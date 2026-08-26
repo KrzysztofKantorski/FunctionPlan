@@ -4,7 +4,7 @@ using Domain.Users;
 
 namespace Domain.Media
 {
-    public sealed class Media: Entity
+    public sealed class MediaFile: Entity
     {
         public int MeetingId { get; private set; }
         public Meeting Meeting { get; private set; }
@@ -13,9 +13,9 @@ namespace Domain.Media
         public string FileName { get; private set; }
         public string? Description { get; private set; }
         public DateTime CreatedAt { get; private set; }
-        private Media() { }
+        private MediaFile() { }
 
-        public Media(int meetingId, int uploaderId, string fileName, string? description)
+        public MediaFile(int meetingId, int uploaderId, string fileName, string? description)
         {
             if(meetingId < 0)
             {

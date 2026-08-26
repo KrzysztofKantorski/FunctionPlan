@@ -1,4 +1,5 @@
 ﻿using Domain.Comments;
+using Domain.Media;
 using Domain.Common;
 using Domain.Meetings;
 using System.Text.RegularExpressions;
@@ -29,6 +30,10 @@ namespace Domain.Users
 
         private readonly List<Comment> _comments = new();
         public IReadOnlyCollection<Comment> Comments => _comments.AsReadOnly();
+
+
+        private readonly List<MediaFile> _mediaFiles = new();
+        public IReadOnlyCollection<MediaFile> MediaFiles => _mediaFiles.AsReadOnly();
 
         private User(string username, string email, UserRole role, string? passwordHash, string? googleSubjectId)
         {

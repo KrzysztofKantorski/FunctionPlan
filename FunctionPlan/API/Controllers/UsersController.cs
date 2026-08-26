@@ -1,4 +1,5 @@
 ﻿using API.Extensions;
+using Application.Common.Dto;
 using Application.Users.Commands.UploadUserImage;
 using Application.Users.Queries.GetUserDetailsQuery;
 using Application.Users.Queries.GetUserImageQuery;

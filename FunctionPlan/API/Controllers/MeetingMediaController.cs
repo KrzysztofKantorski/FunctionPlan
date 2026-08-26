@@ -1,0 +1,56 @@
+﻿using API.Extensions;
+using Application.Common.Dto;
+using Application.Media.Commands.AddMediaFile;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
+
+namespace API.Controllers
+{
+    [ApiController]
+    [Authorize]
+    [EnableRateLimiting("GlobalLimit")]
+    [Route("api/meetings/media")]
+    public class MeetingMediaController : ControllerBase
+    {
+        private ISender _sender;
+        public MeetingMediaController(ISender sender)
+        {
+            _sender = sender;
+        }
+
+        [HttpPost("{MeetingId}")]
+        public async Task<IActionResult> AddMedia(
+            [FromRoute] int MeetingId,
+            [FromBody] string? Description,
+            IFormFile file,
+            CancellationToken cancellationToken
+            )
+        {
+            if (file is null || file.Length == 0)
+            {
+                return BadRequest("File is required.");
+            }
+
+            using var stream = file.OpenReadStream();
+
+            var fileDto = new FileDto(
+                stream,
+                file.FileName,
+                file.ContentType
+            );
+
+            var command = new AddMediaFileCommand
+            (
+                User.GetUserId(),
+                MeetingId,
+                Description,
+                fileDto
+            );
+
+            await _sender.Send(command, cancellationToken);
+            return NoContent();
+        }
+    }
+}

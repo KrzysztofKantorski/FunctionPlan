@@ -13,16 +13,14 @@ namespace Application.Media.Commands.AddMediaFile
         private readonly IUserRepository _userRepository;
         private readonly IMeetingRepository _meetingRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMediaRepository _mediaRepository;
         private readonly IBlobService _blobService;
 
         public AddMediaFileCommandHandler (IUserRepository userRepository, IMeetingRepository meetingRepository, IUnitOfWork unitOfWork,
-            IMediaRepository mediaRepository, IBlobService blobService)
+             IBlobService blobService)
         {
             _userRepository = userRepository;
             _meetingRepository = meetingRepository;
             _unitOfWork = unitOfWork;
-            _mediaRepository = mediaRepository;
             _blobService = blobService;
         }
 
@@ -35,7 +33,7 @@ namespace Application.Media.Commands.AddMediaFile
                 throw new UserNotFoundException("User not found");
             }
 
-            var meeting = await _meetingRepository.GetByIdAsync(request.MeetingId);
+            var meeting = await _meetingRepository.GetByIdWithUsersAsync(request.MeetingId);
 
             if (meeting == null)
             {

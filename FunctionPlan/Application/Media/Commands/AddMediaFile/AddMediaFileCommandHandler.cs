@@ -1,7 +1,6 @@
 ﻿using Application.Abstractions.Storage;
 using Application.Exceptions;
 using Domain.Common;
-using Domain.Media;
 using Domain.Meetings;
 using Domain.Users;
 using MediatR;
@@ -14,14 +13,15 @@ namespace Application.Media.Commands.AddMediaFile
         private readonly IMeetingRepository _meetingRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBlobService _blobService;
-
+        private readonly BlobSettings _blobSettings;
         public AddMediaFileCommandHandler (IUserRepository userRepository, IMeetingRepository meetingRepository, IUnitOfWork unitOfWork,
-             IBlobService blobService)
+             IBlobService blobService, BlobSettings blobSettings)
         {
             _userRepository = userRepository;
             _meetingRepository = meetingRepository;
             _unitOfWork = unitOfWork;
             _blobService = blobService;
+            _blobSettings = blobSettings;
         }
 
         public async Task Handle(AddMediaFileCommand request, CancellationToken cancellationToken)
@@ -46,8 +46,14 @@ namespace Application.Media.Commands.AddMediaFile
             //Call domain metohod
             meeting.AddMedia(uploader, fileName, request.Description);
 
+
             //Save file to azure storage
-            await _blobService.UploadFileAsync(fileName, request.File.Stream, request.File.ContentType, cancellationToken);
+            await _blobService.UploadFileAsync(
+                _blobSettings.MeetingsContainerName,
+                fileName, 
+                request.File.Stream, 
+                request.File.ContentType, 
+                cancellationToken);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }

@@ -6,6 +6,7 @@ namespace Application.Media.Commands.ChangeImageDescription
     (
         int MeetingId,
         int UserId,
-        string ImageId
+        string ImageId, 
+        string Description
     ):ICommand;
 }

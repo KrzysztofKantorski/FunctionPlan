@@ -34,7 +34,7 @@ namespace Application.Media.Commands.ChangeImageDescription
             }
 
 
-            meeting.UpdateImageDescription(fileId, request.UserId);
+            meeting.UpdateImageDescription(fileId, request.UserId, request.Description);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }

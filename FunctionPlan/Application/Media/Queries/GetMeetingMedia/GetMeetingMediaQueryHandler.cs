@@ -8,16 +8,16 @@ using System.Data;
 
 namespace Application.Media.Queries.GetMeetingMedia
 {
-    internal sealed class GetMeetingMediaCommandHandler : IRequestHandler<GetMeetingMediaCommand, List<MeetingMediaDto>>
+    internal sealed class GetMeetingMediaQueryHandler : IRequestHandler<GetMeetingMediaQuery, List<MeetingMediaDto>>
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
-        public GetMeetingMediaCommandHandler(ISqlConnectionFactory sqlConnectionFactory)
+        public GetMeetingMediaQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
         {
             _sqlConnectionFactory = sqlConnectionFactory;
         }
 
-        public async Task<List<MeetingMediaDto>> Handle(GetMeetingMediaCommand request, CancellationToken cancellationToken)
+        public async Task<List<MeetingMediaDto>> Handle(GetMeetingMediaQuery request, CancellationToken cancellationToken)
         {
 
             using IDbConnection connection = _sqlConnectionFactory.CreateDbConnection();

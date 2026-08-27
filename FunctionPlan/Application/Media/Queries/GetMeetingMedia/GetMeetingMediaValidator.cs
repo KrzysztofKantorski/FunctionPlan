@@ -2,7 +2,7 @@
 
 namespace Application.Media.Queries.GetMeetingMedia
 {
-    public sealed class GetMeetingMediaValidator: AbstractValidator<GetMeetingMediaCommand>
+    public sealed class GetMeetingMediaValidator: AbstractValidator<GetMeetingMediaQuery>
     {
         public GetMeetingMediaValidator() 
         {

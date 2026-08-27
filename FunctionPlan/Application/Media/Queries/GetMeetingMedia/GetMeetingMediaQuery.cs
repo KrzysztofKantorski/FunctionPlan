@@ -2,7 +2,7 @@
 
 namespace Application.Media.Queries.GetMeetingMedia
 {
-    public sealed record GetMeetingMediaCommand
+    public sealed record GetMeetingMediaQuery
     (
         int UserId,
         int MeetingId

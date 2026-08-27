@@ -64,7 +64,7 @@ namespace API.Controllers
             CancellationToken cancellationToken
             )
         {
-            var command = new GetMeetingMediaCommand
+            var command = new GetMeetingMediaQuery
             (
                 User.GetUserId(),
                 MeetingId

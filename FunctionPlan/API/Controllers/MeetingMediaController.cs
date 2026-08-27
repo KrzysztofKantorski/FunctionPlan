@@ -124,11 +124,11 @@ namespace API.Controllers
         public async Task<IActionResult> ChangeImageDescription(
             [FromRoute] int MeetingId,
             [FromRoute] string ImageId,
-            [FromBody] ChangeDescriptionRequest Description,
+            [FromBody] ChangeDescriptionRequest request,
             CancellationToken cancellationToken
             )
         {
-            string description = Description.ToString();
+            string description = request.Description;
 
             var command = new ChangeMediaDescriptionCommand
             (

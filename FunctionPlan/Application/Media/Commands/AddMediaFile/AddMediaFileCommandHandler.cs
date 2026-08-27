@@ -4,6 +4,7 @@ using Domain.Common;
 using Domain.Meetings;
 using Domain.Users;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace Application.Media.Commands.AddMediaFile
 {
@@ -14,14 +15,15 @@ namespace Application.Media.Commands.AddMediaFile
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBlobService _blobService;
         private readonly BlobSettings _blobSettings;
+
         public AddMediaFileCommandHandler (IUserRepository userRepository, IMeetingRepository meetingRepository, IUnitOfWork unitOfWork,
-             IBlobService blobService, BlobSettings blobSettings)
+             IBlobService blobService, IOptions<BlobSettings> blobOptions)
         {
             _userRepository = userRepository;
             _meetingRepository = meetingRepository;
             _unitOfWork = unitOfWork;
             _blobService = blobService;
-            _blobSettings = blobSettings;
+            _blobSettings = blobOptions.Value;
         }
 
         public async Task Handle(AddMediaFileCommand request, CancellationToken cancellationToken)

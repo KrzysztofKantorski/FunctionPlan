@@ -11,6 +11,9 @@
         //Get meeting with users
         Task<Meeting?> GetByIdWithUsersAsync(int id, CancellationToken cancellationToken = default);
 
+        //Get meeting with images
+        Task<Meeting?> GetByIdWithMediaAsync(int id, CancellationToken cancellationToken = default);
+
         //Get meetings to mark as completed
         Task<List<Meeting>> GetUncompletedPastMeetings(DateTime referenceDate, CancellationToken cancellationToken);
 

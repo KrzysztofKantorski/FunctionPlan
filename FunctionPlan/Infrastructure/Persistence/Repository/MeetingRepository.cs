@@ -40,7 +40,14 @@ namespace Infrastructure.Persistence.Repository
                 .Include(m => m.Users)
                 .FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
         }
-       
+
+        public async Task<Meeting?> GetByIdWithMediaAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<Meeting>()
+                .Include(m => m.MediaFiles)
+                .FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
+        }
+
         public async Task AddAsync(Meeting meeting, CancellationToken cancellationToken = default)
         {
             await _dbContext.Set<Meeting>()

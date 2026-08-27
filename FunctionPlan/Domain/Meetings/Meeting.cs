@@ -225,5 +225,32 @@ namespace Domain.Meetings
 
             _mediaFiles.Add(newMediaFile);
         }
+
+
+        //Remove media
+        public void Remove(Guid fileId, int userId)
+        {
+
+            if (fileId == Guid.Empty)
+            {
+                throw new IncorrectFileName("Incorrect file");
+            }
+
+            string fileNameString = fileId.ToString();
+
+            var fileToRemove = _mediaFiles.FirstOrDefault(x => x.FileName == fileNameString);
+
+            if(fileToRemove is null)
+            {
+                throw new Exception("File does not exist");
+            }
+
+            if(OrganizerId != userId && fileToRemove.UploaderId!=userId)
+            {
+                throw new Exception("You dont have permision to delete this file");
+            }
+
+            _mediaFiles.Remove(fileToRemove);
+        }
     }
 }

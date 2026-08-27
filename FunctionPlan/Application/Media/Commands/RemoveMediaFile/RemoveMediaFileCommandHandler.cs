@@ -47,7 +47,6 @@ namespace Application.Media.Commands.RemoveMediaFile
                 fileId,
                 cancellationToken);
 
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

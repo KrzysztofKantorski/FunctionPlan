@@ -1,13 +1,10 @@
 ﻿using Application.Abstractions.Data;
 using Application.Abstractions.Storage;
 using Application.Exceptions;
-using Application.Media.Queries.GetMeetingMedia;
 using Dapper;
-using Domain.Common;
 using MediatR;
 using Microsoft.Extensions.Options;
 using System.Data;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Application.Media.Queries.GetMeetingMediaByImageId
 {

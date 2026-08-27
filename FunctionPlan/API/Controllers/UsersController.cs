@@ -89,16 +89,14 @@ namespace API.Controllers
 
 
         //Get meeting attendees info (username, avatar)
-        [HttpGet("{MeetingId}/avatars/{AvatarId}")]
+        [HttpGet("avatars/{AvatarId}")]
         public async Task<IActionResult> GetMeetingMediaAvatars
             (
-            [FromRoute] int MeetingId,
             [FromRoute] string AvatarId,
             CancellationToken cancellationToken
             )
         {
             var query = new GetUsersAvatarsQuery(
-                MeetingId,
                 User.GetUserId(),
                 AvatarId
             );

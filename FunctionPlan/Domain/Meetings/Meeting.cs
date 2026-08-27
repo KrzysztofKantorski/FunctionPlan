@@ -277,7 +277,7 @@ namespace Domain.Meetings
             }
 
 
-            file.UpdateDescription(description);
+            file.UpdateMediaDescription(description);
 
         }
 

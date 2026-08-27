@@ -46,7 +46,7 @@ namespace Domain.Media
 
 
         //Update media description
-        public void updateMediaDescription(string newDescription)
+        public void UpdateMediaDescription(string newDescription)
         {
             if (string.IsNullOrWhiteSpace(newDescription) || newDescription.Length > 200)
             {

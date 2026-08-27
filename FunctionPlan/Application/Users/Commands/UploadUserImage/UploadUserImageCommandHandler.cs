@@ -3,6 +3,7 @@ using Application.Exceptions;
 using Domain.Common;
 using Domain.Users;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace Application.Users.Commands.UploadUserImage
 {
@@ -11,12 +12,15 @@ namespace Application.Users.Commands.UploadUserImage
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBlobService _blobService;
+        private readonly BlobSettings _blobSettings;
 
-        public UploadUserImageCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, IBlobService blobService)
+        public UploadUserImageCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, IBlobService blobService,
+            , IOptions<BlobSettings> blobOptions)
         {
             _userRepository = userRepository;
             _blobService = blobService;
             _unitOfWork = unitOfWork;
+            _blobSettings = blobOptions.Value;
 
         }
 
@@ -38,13 +42,23 @@ namespace Application.Users.Commands.UploadUserImage
             {
                 if (Guid.TryParse(user.ProfilePictureUrl, out var oldPictureId)) 
                 {
-                    await _blobService.DeleteFileAsync(oldPictureId, cancellationToken);
+                    await _blobService.DeleteFileAsync(
+                        _blobSettings.AvatarsContainerName, 
+                        oldPictureId, 
+                        cancellationToken
+                    );
                 }
             }
 
 
             //Upload image
-            await _blobService.UploadFileAsync(fileId, request.UploadedImage.Stream, request.UploadedImage.ContentType, cancellationToken);
+            await _blobService.UploadFileAsync(
+                _blobSettings.AvatarsContainerName, 
+                fileId, 
+                request.UploadedImage.Stream, 
+                request.UploadedImage.ContentType, 
+                cancellationToken
+            );
 
 
             //Update metadata

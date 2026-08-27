@@ -37,7 +37,7 @@ namespace Application.Media.Commands.RemoveMediaFile
                 throw new MeetingNotFoundException("Meeting does not exist");
             }
 
-            meeting.Remove();
+            meeting.RemoveMedia(fileId, request.UserId);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

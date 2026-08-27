@@ -228,7 +228,7 @@ namespace Domain.Meetings
 
 
         //Remove media
-        public void Remove(Guid fileId, int userId)
+        public void RemoveMedia(Guid fileId, int userId)
         {
 
             if (fileId == Guid.Empty)

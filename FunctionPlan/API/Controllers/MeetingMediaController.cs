@@ -1,6 +1,7 @@
 ﻿using API.Extensions;
 using Application.Common.Dto;
 using Application.Media.Commands.AddMediaFile;
+using Application.Media.Commands.ChangeImageDescription;
 using Application.Media.Commands.RemoveMediaFile;
 using Application.Media.Queries.GetMeetingMedia;
 using Application.Media.Queries.GetMeetingMediaByImageId;
@@ -111,6 +112,28 @@ namespace API.Controllers
                 MeetingId,
                 User.GetUserId(),
                 ImageId
+            );
+
+            await _sender.Send(command, cancellationToken);
+            return NoContent();
+        }
+
+
+        //Change meeting image description
+        [HttpPatch("{MeetingId}/media/{ImageId}")]
+        public async Task<IActionResult> ChangeImageDescription(
+            [FromRoute] int MeetingId,
+            [FromRoute] string ImageId,
+            [FromBody] string Description,
+            CancellationToken cancellationToken
+            )
+        {
+            var command = new ChangeMediaDescriptionCommand
+            (
+                MeetingId,
+                User.GetUserId(),
+                ImageId,
+                Description
             );
 
             await _sender.Send(command, cancellationToken);

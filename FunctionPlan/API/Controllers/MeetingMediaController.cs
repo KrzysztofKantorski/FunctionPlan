@@ -1,6 +1,7 @@
 ﻿using API.Extensions;
 using Application.Common.Dto;
 using Application.Media.Commands.AddMediaFile;
+using Application.Media.Commands.RemoveMediaFile;
 using Application.Media.Queries.GetMeetingMedia;
 using Application.Media.Queries.GetMeetingMediaByImageId;
 using MediatR;
@@ -94,6 +95,26 @@ namespace API.Controllers
             var image = await _sender.Send(query, cancellationToken);
 
             return File(image.Stream, image.ContentType);
+        }
+
+
+        //Remove media from meeting
+        [HttpDelete("{MeetingId}/media/{ImageId}")]
+        public async Task<IActionResult> RemoveMeetingFile(
+            [FromRoute] int MeetingId,
+            [FromRoute] string ImageId,
+            CancellationToken cancellationToken
+            )
+        {
+            var command = new RemoveMediaFileCommand
+            (
+                MeetingId,
+                User.GetUserId(),
+                ImageId
+            );
+
+            await _sender.Send(command, cancellationToken);
+            return NoContent();
         }
     }
 }

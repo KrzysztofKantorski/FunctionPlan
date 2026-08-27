@@ -2,6 +2,7 @@
 using Application.Common.Dto;
 using Application.Media.Commands.AddMediaFile;
 using Application.Media.Queries.GetMeetingMedia;
+using Application.Media.Queries.GetMeetingMediaByImageId;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -64,15 +65,35 @@ namespace API.Controllers
             CancellationToken cancellationToken
             )
         {
-            var command = new GetMeetingMediaQuery
+            var query = new GetMeetingMediaQuery
             (
                 User.GetUserId(),
                 MeetingId
             );
 
-            var meetingMediaData = await _sender.Send(command, cancellationToken);
+            var meetingMediaData = await _sender.Send(query, cancellationToken);
 
             return Ok(meetingMediaData);
+        }
+
+
+        //Get meeting media (specific image)
+        [HttpGet("{MeetingId}/media/{ImageId}")]
+        public async Task<IActionResult> GetMeetingImage(
+            [FromRoute] int MeetingId,
+            [FromRoute] string ImageId,
+            CancellationToken cancellationToken
+        )
+        {
+            var query = new GetMeetingMediaByImageQuery(
+                User.GetUserId(),
+                MeetingId,
+                ImageId
+            );
+
+            var image = await _sender.Send(query, cancellationToken);
+
+            return File(image.Stream, image.ContentType);
         }
     }
 }

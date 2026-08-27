@@ -33,11 +33,11 @@ namespace Application.Media.Queries.GetMeetingMediaByImageId
                     md."FileName",
                     m."Status", 
                     m."OrganizerId", 
-                    (mu."UsersId" IS NOT NULL) AS IsParticipant
+                    (mu."UsersId" IS NOT NULL) AS "IsParticipant"
                 FROM "MediaFiles" md
                 INNER JOIN "Meetings" m ON md."MeetingId" = m."Id"
                 LEFT JOIN "MeetingUser" mu ON m."Id" = mu."MeetingsId" AND mu."UsersId" = @UserId
-                WHERE md."FileName" = @FileName AND m."Id" = @MeetingId
+                WHERE md."FileName" = @ImageId AND m."Id" = @MeetingId
                 """;
 
             var fileInfo = await connection.QueryFirstOrDefaultAsync<dynamic>(
@@ -63,18 +63,19 @@ namespace Application.Media.Queries.GetMeetingMediaByImageId
             }
 
 
-            string imageId = fileInfo.ImageId;
+            string imageId = fileInfo.FileName;
+            string clearedImageId = imageId.Trim();
 
 
             //Check if image exists
-            if (string.IsNullOrWhiteSpace(imageId) || !Guid.TryParse(imageId, out var fileId))
+            if (string.IsNullOrWhiteSpace(clearedImageId) || !Guid.TryParse(clearedImageId, out var fileId))
             {
                 throw new ImageNotFound("User image not found");
             }
 
 
             //Get file from azure blob
-            var file = await _blobService.DownloadFileAsync(_blobSettings.AvatarsContainerName, fileId, cancellationToken);
+            var file = await _blobService.DownloadFileAsync(_blobSettings.MeetingsContainerName, fileId, cancellationToken);
 
             return file;
         }

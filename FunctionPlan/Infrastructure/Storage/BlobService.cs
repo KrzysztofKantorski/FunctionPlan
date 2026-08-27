@@ -9,12 +9,10 @@ namespace Infrastructure.Storage
     internal sealed class BlobService : IBlobService
     {
         private readonly BlobServiceClient _blobServiceClient;
-        private readonly BlobSettings _settings;
 
         public BlobService(BlobServiceClient blobServiceClient, IOptions<BlobSettings> options)
         {
             _blobServiceClient = blobServiceClient;
-            _settings = options.Value;
         }
 
         public async Task UploadFileAsync(string containerName, Guid fileId, Stream stream, string contentType, CancellationToken cancellationToken)

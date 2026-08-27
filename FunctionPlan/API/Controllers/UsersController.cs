@@ -1,5 +1,6 @@
 ﻿using API.Extensions;
 using Application.Common.Dto;
+using Application.Media.Queries.GetUsersAvatars;
 using Application.Users.Commands.UploadUserImage;
 using Application.Users.Queries.GetUserDetailsQuery;
 using Application.Users.Queries.GetUserImageQuery;
@@ -84,6 +85,27 @@ namespace API.Controllers
 
             await _sender.Send(command, cancelToken);
             return NoContent();
+        }
+
+
+        //Get meeting attendees info (username, avatar)
+        [HttpGet("{MeetingId}/avatars/{AvatarId}")]
+        public async Task<IActionResult> GetMeetingMediaAvatars
+            (
+            [FromRoute] int MeetingId,
+            [FromRoute] string AvatarId,
+            CancellationToken cancellationToken
+            )
+        {
+            var query = new GetUsersAvatarsQuery(
+                MeetingId,
+                User.GetUserId(),
+                AvatarId
+            );
+
+            var image = await _sender.Send(query, cancellationToken);
+
+            return File(image.Stream, image.ContentType);
         }
     }
 }

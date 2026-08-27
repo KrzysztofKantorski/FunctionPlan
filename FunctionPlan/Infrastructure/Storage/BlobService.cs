@@ -17,14 +17,14 @@ namespace Infrastructure.Storage
             _settings = options.Value;
         }
 
-        public async Task UploadFileAsync(Guid fileId, Stream stream, string contentType, CancellationToken cancellationToken)
+        public async Task UploadFileAsync(string containerName, Guid fileId, Stream stream, string contentType, CancellationToken cancellationToken)
         {
             if (stream.CanSeek)
             {
                 stream.Position = 0;
             }
 
-            BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(_settings.AvatarsContainerName);
+            BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
 
             BlobClient blobClient = containerClient.GetBlobClient(fileId.ToString());
 
@@ -37,9 +37,9 @@ namespace Infrastructure.Storage
             await blobClient.UploadAsync(stream, options, cancellationToken);
         }
 
-        public async Task<FileResponse> DownloadFileAsync(Guid fileId, CancellationToken cancellationToken)
+        public async Task<FileResponse> DownloadFileAsync(string containerName, Guid fileId, CancellationToken cancellationToken)
         {
-            BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(_settings.AvatarsContainerName);
+            BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
 
             BlobClient blobClient = containerClient.GetBlobClient(fileId.ToString());
 
@@ -51,9 +51,9 @@ namespace Infrastructure.Storage
             );
         }
 
-        public async Task DeleteFileAsync(Guid fileId, CancellationToken cancellationToken)
+        public async Task DeleteFileAsync(string containerName, Guid fileId, CancellationToken cancellationToken)
         {
-            BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(_settings.AvatarsContainerName);
+            BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
 
             BlobClient blobClient = containerClient.GetBlobClient(fileId.ToString());
 

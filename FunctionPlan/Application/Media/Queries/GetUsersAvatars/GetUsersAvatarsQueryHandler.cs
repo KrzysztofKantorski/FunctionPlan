@@ -1,5 +1,5 @@
-﻿using Application.Abstractions.Data;
-using Application.Abstractions.Storage;
+﻿using Application.Abstractions.Storage;
+using Application.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Options;
 
@@ -23,7 +23,7 @@ namespace Application.Media.Queries.GetUsersAvatars
 
             if (!Guid.TryParse(cleanAvatarId, out var avatarGuid))
             {
-                throw new Exception("Invalid AvatarId format. It must be a valid GUID.");
+                throw new IncorrectUserAvatar("Invalid AvatarId format. It must be a valid GUID.");
             }
 
             //Get file from cloud

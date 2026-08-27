@@ -47,7 +47,7 @@ namespace Application.Media.Queries.GetMeetingMediaByImageId
 
             if (fileInfo is null)
             {
-                throw new Exception("File not found or does not belong to this meeting.");
+                throw new ImageNotFound("File not found or does not belong to this meeting.");
             }
 
             //Check if meeting was cancelled

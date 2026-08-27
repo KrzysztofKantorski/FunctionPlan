@@ -2,10 +2,10 @@
 {
     public interface IBlobService
     {
-        Task UploadFileAsync(Guid fileId, Stream stream, string contentType, CancellationToken cancellationToken);   
+        Task UploadFileAsync(string containerName, Guid fileId, Stream stream, string contentType, CancellationToken cancellationToken);   
 
-        Task<FileResponse> DownloadFileAsync(Guid fileId, CancellationToken cancellationToken);
+        Task<FileResponse> DownloadFileAsync(string containerName, Guid fileId, CancellationToken cancellationToken);
 
-        Task DeleteFileAsync(Guid fileId, CancellationToken cancellationToken);
+        Task DeleteFileAsync(string containerName, Guid fileId, CancellationToken cancellationToken);
     }
 }

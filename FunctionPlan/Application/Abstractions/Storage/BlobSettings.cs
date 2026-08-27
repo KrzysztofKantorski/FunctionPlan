@@ -4,5 +4,6 @@
     {
         public string ConnectionString { get; set; } = string.Empty;
         public string AvatarsContainerName { get; set; } = string.Empty;
+        public string MeetingsContainerName { get; set; } = string.Empty;
     }
 }

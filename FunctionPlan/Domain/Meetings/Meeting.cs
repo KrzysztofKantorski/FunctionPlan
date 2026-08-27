@@ -252,5 +252,34 @@ namespace Domain.Meetings
 
             _mediaFiles.Remove(fileToRemove);
         }
+
+
+        //Change image description
+        public void UpdateImageDescription(Guid fileId, int userId, string? description)
+        {
+            if (fileId == Guid.Empty)
+            {
+                throw new IncorrectFileName("Incorrect file");
+            }
+
+            string fileNameString = fileId.ToString();
+
+            var file = _mediaFiles.FirstOrDefault(x => x.FileName == fileNameString);
+
+            if (file is null)
+            {
+                throw new Exception("File does not exist");
+            }
+
+            if (OrganizerId != userId && file.UploaderId != userId)
+            {
+                throw new Exception("You dont have permision to delete this file");
+            }
+
+
+            file.UpdateDescription(description);
+
+        }
+
     }
 }

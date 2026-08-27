@@ -1,6 +1,7 @@
 ﻿using API.Extensions;
 using Application.Common.Dto;
 using Application.Media.Commands.AddMediaFile;
+using Application.Media.Queries.GetMeetingMedia;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,8 @@ namespace API.Controllers
             _sender = sender;
         }
 
+
+        //Add media to meeting
         [HttpPost("{MeetingId}/media")]
         public async Task<IActionResult> AddMedia(
             [FromRoute] int MeetingId,
@@ -51,6 +54,25 @@ namespace API.Controllers
 
             await _sender.Send(command, cancellationToken);
             return NoContent();
+        }
+
+
+        //Get meeting media (only image url's)
+        [HttpGet("{MeetingId}/media")]
+        public async Task<IActionResult> GetMeetingMedia(
+            [FromRoute] int MeetingId,
+            CancellationToken cancellationToken
+            )
+        {
+            var command = new GetMeetingMediaCommand
+            (
+                User.GetUserId(),
+                MeetingId
+            );
+
+            var meetingMediaData = await _sender.Send(command, cancellationToken);
+
+            return Ok(meetingMediaData);
         }
     }
 }

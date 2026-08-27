@@ -54,7 +54,7 @@ namespace Application.Media.Queries.GetMeetingMedia
             }
 
             //Check if user belongs to meeting
-            if((int)meetingInfo.OrganizerId != request.UserId && meetingInfo.IsParticipant)
+            if((int)meetingInfo.OrganizerId != request.UserId && !meetingInfo.IsParticipant)
             {
                 throw new UserWithoutPermisionException("You don't have access to this meeting's media.");
             }
@@ -69,7 +69,7 @@ namespace Application.Media.Queries.GetMeetingMedia
                     md."CreatedAt",
                     u."Username" AS "UploaderName",
                     u."ProfilePictureUrl" AS "UploaderAvatarId"
-                FROM "Media" md
+                FROM "MediaFiles" md
                 INNER JOIN "Users" u ON md."UploaderId" = u."Id"
                 WHERE md."MeetingId" = @MeetingId
                 ORDER BY md."CreatedAt" DESC

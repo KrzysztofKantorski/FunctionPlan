@@ -14,7 +14,7 @@ namespace Application.Users.Commands.UploadUserImage
         private readonly IBlobService _blobService;
         private readonly BlobSettings _blobSettings;
 
-        public UploadUserImageCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, IBlobService blobService,
+        public UploadUserImageCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, IBlobService blobService
             , IOptions<BlobSettings> blobOptions)
         {
             _userRepository = userRepository;

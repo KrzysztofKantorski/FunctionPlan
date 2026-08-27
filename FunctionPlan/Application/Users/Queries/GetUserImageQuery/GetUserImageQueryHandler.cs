@@ -3,6 +3,7 @@ using Application.Abstractions.Storage;
 using Application.Exceptions;
 using Dapper;
 using MediatR;
+using Microsoft.Extensions.Options;
 using System.Data;
 
 namespace Application.Users.Queries.GetUserImageQuery
@@ -11,11 +12,13 @@ namespace Application.Users.Queries.GetUserImageQuery
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
         private readonly IBlobService _blobService;
-
-        public GetUserImageQueryHandler(ISqlConnectionFactory sqlConnectionFactory, IBlobService blobService)
+        private readonly BlobSettings _blobSettings;
+        public GetUserImageQueryHandler(ISqlConnectionFactory sqlConnectionFactory, IBlobService blobService,
+            IOptions<BlobSettings> blobOptions)
         {
             _sqlConnectionFactory = sqlConnectionFactory;
             _blobService = blobService;
+            _blobSettings = blobOptions.Value;
         }
 
         public async Task<FileResponse> Handle(GetUserImageQuery request, CancellationToken cancellationToken)
@@ -41,7 +44,7 @@ namespace Application.Users.Queries.GetUserImageQuery
             }
 
             //Get file from azure blob
-            var file = await _blobService.DownloadFileAsync(fileId, cancellationToken);
+            var file = await _blobService.DownloadFileAsync(_blobSettings.AvatarsContainerName, fileId, cancellationToken);
 
             return file;
         }

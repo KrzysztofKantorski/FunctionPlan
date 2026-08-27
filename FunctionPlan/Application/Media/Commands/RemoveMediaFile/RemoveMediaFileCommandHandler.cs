@@ -3,6 +3,7 @@ using Application.Exceptions;
 using Domain.Common;
 using Domain.Meetings;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace Application.Media.Commands.RemoveMediaFile
 {
@@ -13,12 +14,12 @@ namespace Application.Media.Commands.RemoveMediaFile
         private readonly BlobSettings _blobSettings;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RemoveMediaFileCommandHandler(IMeetingRepository meetingRepository, IBlobService blobService, 
-            BlobSettings blobSettings, IUnitOfWork unitOfWork)
+        public RemoveMediaFileCommandHandler(IMeetingRepository meetingRepository, IBlobService blobService,
+            IOptions<BlobSettings> blobOptions, IUnitOfWork unitOfWork)
         {
             _meetingRepository = meetingRepository;
             _blobService = blobService;
-            _blobSettings = blobSettings;
+            _blobSettings = blobOptions.Value;
             _unitOfWork = unitOfWork;
         }
 
@@ -30,7 +31,7 @@ namespace Application.Media.Commands.RemoveMediaFile
                 throw new Exception("Incorrect image id format.");
             }
 
-            var meeting = await _meetingRepository.GetByIdWithUsersAsync(request.MeetingId);
+            var meeting = await _meetingRepository.GetByIdWithMediaAsync(request.MeetingId);
 
             if (meeting == null) 
             {

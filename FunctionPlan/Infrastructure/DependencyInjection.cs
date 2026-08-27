@@ -70,6 +70,7 @@ namespace Infrastructure
             {
                 options.ConnectionString = configuration["BLOB_CONNECTION_STRING"] ?? string.Empty;
                 options.AvatarsContainerName = configuration["BLOB_AVATARS_CONTAINER"] ?? string.Empty;
+                options.MeetingsContainerName = configuration["BLOB_MEETINGS_CONTAINER"] ?? string.Empty;
             });
 
 

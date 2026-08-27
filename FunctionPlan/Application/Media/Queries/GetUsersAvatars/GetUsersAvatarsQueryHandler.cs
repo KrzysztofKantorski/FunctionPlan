@@ -70,17 +70,18 @@ namespace Application.Media.Queries.GetUsersAvatars
             var avatar = 
                 """
                 SELECT 
-                    u."ProfilePictureUrl" 
+                    u."ProfilePictureUrl",
+                    u."UserName"
                 FROM "Users" u 
                 WHERE u."Id" = @UserId
                 """;
 
-            var userImage = await connection.QueryFirstOrDefaultAsync<string>(
+            var userImage = await connection.QueryFirstOrDefaultAsync<UserAvatarDto>(
               avatar,
               new { request.UserId }
             );
 
-            if (userImage is null)
+            if (userImage.ProfilePictureUrl is null)
             {
                 throw new Exception("User image not found");
             }

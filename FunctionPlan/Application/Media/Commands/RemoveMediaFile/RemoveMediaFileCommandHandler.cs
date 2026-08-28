@@ -28,7 +28,7 @@ namespace Application.Media.Commands.RemoveMediaFile
 
             if (!Guid.TryParse(request.ImageId, out Guid fileId))
             {
-                throw new Exception("Incorrect image id format.");
+                throw new ImageNotFound("Incorrect image id format.");
             }
 
             var meeting = await _meetingRepository.GetByIdWithMediaAsync(request.MeetingId);

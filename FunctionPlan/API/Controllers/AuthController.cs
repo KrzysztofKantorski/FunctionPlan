@@ -1,11 +1,13 @@
 ﻿using Application.Abstractions.Security.Tokens;
 using Application.Auth.Commands.Email;
 using Application.Auth.Commands.Login;
+using Application.Auth.Commands.LoginWithGoogle;
 using Application.Auth.Commands.Logout;
 using Application.Auth.Commands.Refresh;
 using Application.Auth.Commands.RegisterUser;
 using Application.Auth.Commands.VerifyUserEmail;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
@@ -35,6 +37,9 @@ namespace API.Controllers
             return Created("", new { Id = userId });
         }
 
+
+
+
         [EnableRateLimiting("LoginLimit")]
         [HttpPost("login")]
         public async Task<IActionResult> Login(
@@ -51,10 +56,28 @@ namespace API.Controllers
                 Expires = DateTime.UtcNow.AddDays(_refreshTokenSettings.ExpiryDays) 
             };
 
-            Response.Cookies.Append("refreshToken", tokenResponse.RefreshToken, cookieOptions);
+            Response.Cookies.Append("refreshToken", tokenResponse.refreshToken, cookieOptions);
 
-            return Ok(new { AccessToken = tokenResponse.AccessToken });
+            return Ok(new { AccessToken = tokenResponse.accessToken });
         }
+
+
+
+        //Login with google
+        [HttpPost("google-login")]
+        [AllowAnonymous] 
+        public async Task<IActionResult> LoginWithGoogle(
+            [FromBody] LoginWithGoogleRequest request,
+            CancellationToken cancellationToken)
+        {
+            var command = new LoginWithGoogleCommand(request.GoogleIdToken);
+
+            var response = await _sender.Send(command, cancellationToken);
+
+            return Ok(response);
+        }
+
+
 
 
         [EnableRateLimiting("OtpRegisterLimit")]

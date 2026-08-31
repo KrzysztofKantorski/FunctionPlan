@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Cache;
 using Application.Abstractions.Data;
 using Application.Abstractions.Email;
+using Application.Abstractions.Google;
 using Application.Abstractions.Mail;
 using Application.Abstractions.Security;
 using Application.Abstractions.Security.Tokens;
@@ -125,6 +126,16 @@ namespace Infrastructure
                 options.SenderEmail = configuration["SENDER_EMAIL"] ?? string.Empty;
                 options.SmtpUsername = configuration["SMTP_USERNAME"] ?? string.Empty;
             });
+
+
+
+            //Google auth
+            services.Configure<GoogleAuthSettings>(options =>
+            {
+                options.ClientId = configuration["GOOGLE_CLIENT_ID"] ?? string.Empty;
+            });
+
+
 
             //Refresh token
             services.Configure<RefreshTokenSettings>(options =>

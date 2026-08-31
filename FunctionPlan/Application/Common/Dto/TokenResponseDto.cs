@@ -1,4 +1,4 @@
-﻿namespace Application.Auth.Commands.Refresh
+﻿namespace Application.Common.Dto
 {
     public sealed record TokenResponseDto(
         string accessToken,

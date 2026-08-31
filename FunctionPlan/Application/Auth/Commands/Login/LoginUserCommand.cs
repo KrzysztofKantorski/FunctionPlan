@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
+using Application.Common.Dto;
 
 namespace Application.Auth.Commands.Login
 {

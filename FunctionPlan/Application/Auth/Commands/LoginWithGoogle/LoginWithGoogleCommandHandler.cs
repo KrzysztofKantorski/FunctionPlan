@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Google;
 using Application.Abstractions.Security.Tokens;
+using Application.Common.Dto;
 using Domain.Common;
 using Domain.RefreshTokens;
 using Domain.Users;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace Application.Auth.Commands.LoginWithGoogle
 {
-    internal sealed class LoginWithGoogleCommandHandler : IRequestHandler<LoginWithGoogleCommand>
+    internal sealed class LoginWithGoogleCommandHandler : IRequestHandler<LoginWithGoogleCommand, TokenResponseDto>
     {
         private readonly IGoogleAuthService _googleAuthService;
         private readonly IUserRepository _userRepository;
@@ -30,7 +31,7 @@ namespace Application.Auth.Commands.LoginWithGoogle
             _settings = settings.Value;
         }
 
-        public async Task Handle(LoginWithGoogleCommand request, CancellationToken cancellationToken)
+        public async Task<TokenResponseDto> Handle(LoginWithGoogleCommand request, CancellationToken cancellationToken)
         {
 
             //Get user data
@@ -84,6 +85,8 @@ namespace Application.Auth.Commands.LoginWithGoogle
             await _refreshTokenRepository.AddAsync(refreshTokenEntity, cancellationToken);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return new TokenResponseDto(accessToken, refreshToken);
         }
     }
 }

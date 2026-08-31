@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Security;
 using Application.Abstractions.Security.Tokens;
+using Application.Common.Dto;
 using Application.Exceptions;
 using Domain.Common;
 using Domain.RefreshTokens;

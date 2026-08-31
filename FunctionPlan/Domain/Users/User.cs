@@ -104,6 +104,30 @@ namespace Domain.Users
         }
 
 
+
+        //Add google auth data
+        public void AddGoogleIdentity(string googleSubjectId) 
+        {
+            if (string.IsNullOrWhiteSpace(googleSubjectId))
+            {
+                throw new InvalidUserCredentialsException("Google Subject ID cannot be empty.");
+            }
+
+            if(!string.IsNullOrWhiteSpace(GoogleSubjectId) && GoogleSubjectId != googleSubjectId)
+            {
+                throw new Exception("Account is alerdy linked to google account");
+            }
+
+            GoogleSubjectId = googleSubjectId;
+
+            if (!IsVerified)
+            {
+                IsVerified = true;
+            }
+        }
+
+
+
         //Add avatar image to user
         public void SetUserImage( string fileName)
         {

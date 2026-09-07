@@ -5,6 +5,7 @@ using Application.Meetings.Commands.ChangeCoordinates;
 using Application.Meetings.Commands.ConfirmAttendenceCommand;
 using Application.Meetings.Commands.CreateMeetingCommand;
 using Application.Meetings.Commands.RescheduleMeetingCommand;
+using Application.Meetings.Queries.GetAttendeedMeetings;
 using Application.Meetings.Queries.GetMeetingAttendeesQuery;
 using Application.Meetings.Queries.GetMeetingById;
 using Application.Meetings.Queries.GetMeetings;
@@ -126,6 +127,19 @@ namespace API.Controllers
             var result = await _sender.Send(command, cancellationToken);
             return Ok(result);
         }
+
+        //Get meetings that user organized
+        [HttpGet("organized")]
+        public async Task<IActionResult> GetOrganizedMeetings(
+            CancellationToken cancellationToken
+            )
+        {
+            var command =  new GetOrganizedMeetingsQuery(User.GetUserId());
+            var result = await _sender.Send(command, cancellationToken);
+            return Ok(result);
+        }
+
+
 
         //Reschedule
 

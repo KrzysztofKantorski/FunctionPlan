@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Meetings.Queries.GetAttendeedMeetings
 {
-    public sealed record GetAttendedMeetingsQuery
+    public sealed record GetOrganizedMeetingsQuery
     (
         int userId
     ):IRequest<List<MeetingListDto>>;

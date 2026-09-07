@@ -1,21 +1,22 @@
 ﻿using Application.Abstractions.Data;
 using Application.Common.Dto;
+using Application.Meetings.Queries.GetAttendeedMeetings;
 using Application.Meetings.Queries.GetMyMeetings;
 using Dapper;
+using MediatR;
 using System.Data;
 
 namespace Application.Meetings.Queries.GetAttendedMeetings
 {
-    internal sealed class GetAttendedMeetingsQueryHandler
+    internal sealed class GetOrganizedMeetingsQueryHandler: IRequestHandler<GetOrganizedMeetingsQuery, List<MeetingListDto>>
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
-        public GetAttendedMeetingsQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
+        public GetOrganizedMeetingsQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
         {
             _sqlConnectionFactory = sqlConnectionFactory;
         }
-
-        public async Task<List<MeetingListDto>> Handle(GetMyMeetingsQuery request, CancellationToken cancellationToken)
+        public async Task<List<MeetingListDto>> Handle(GetOrganizedMeetingsQuery request, CancellationToken cancellationToken)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateDbConnection();
 

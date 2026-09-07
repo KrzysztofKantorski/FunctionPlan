@@ -1,52 +1,30 @@
-<div class="bg-background font-sans relative flex items-center justify-center min-h-screen w-full overflow-hidden">
+<board-background>
+
+    <main-header>
+        FUNCTION PLAN
+    </main-header>
 
 
+    <div class="flex w-full flex-col gap-4">
 
-    <!-- Background-->
+        <action-button>
+            Login
+        </action-button>
 
-    <div class="absolute inset-0 z-0 grid grid-cols-2 grid-rows-2">
-        <div class="bg-primary-container"></div>
-        <div class="bg-transparent"></div>
-        <div class="bg-transparent"></div>
-        <div class="bg-primary-container"></div>
-    </div>
+        <action-button>
+            Register
+        </action-button>
 
-
-
-    <!-- Content-->
-    <div class="z-10 flex w-[90%] max-w-[480px] flex-col items-center bg-primary p-10 md:p-14 shadow-2xl">
-        <h1 class="font-display text-on-primary text-3xl font-bold tracking-wide mb-8">FUNCTION PLAN</h1>
-
-        <div class="flex w-full flex-col gap-4">
-            <button 
-                class="w-full bg-primary-container text-on-primary-container border-none 
-                px-4 py-2 text-center text-sm uppercase 
-                tracking-wider font-medium cursor-pointer 
-                transition-opacity hover:opacity-90"
-            >
-                Login
-            </button>
-
-            <button  
-                class="w-full bg-primary-container text-on-primary-container border-none 
-                px-4 py-2 text-center text-sm uppercase 
-                tracking-wider 
-                font-medium cursor-pointer 
-                transition-opacity hover:opacity-90"
-            >
-                Register
-            </button>
-
-            <button
-                mat-flat-button
-                class=" flex w-full items-center justify-center !rounded-none !bg-surface !text-on-surface !py-6 transition-opacity hover:opacity-90"
-            >
+        <button
+            mat-flat-button
+            class=" flex w-full items-center justify-center !rounded-none !bg-surface !text-on-surface !py-6 transition-opacity hover:opacity-90"
+        >
             <div class="flex items-center gap-3">
                 <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google Logo" class="h-5 w-5" />
                 <span class="font-medium">Continue with Google</span>
             </div>
         </button>
-        </div>
-       
+        
     </div>
-</div>
+
+</board-background>

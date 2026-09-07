@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+
+
+//Components
 import { BoardBackground } from '../../../shared/components/board-background/board-background';
 import { ActionButton } from '../../../shared/components/action-button/action-button';
+import {GoogleBtn} from '../../../shared/components/google-btn/google-btn';
 import { MainHeader } from '../../../shared/components/main-header/main-header';
-import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-welcome-page',
-  imports: [MatButtonModule, BoardBackground, ActionButton, MainHeader, RouterLink],
+  imports: [ BoardBackground, ActionButton, MainHeader, RouterLink, GoogleBtn ],
   templateUrl: './welcome-page.html'
 })
 export class WelcomePage {}

@@ -72,8 +72,8 @@ namespace API.Controllers
             [FromQuery] string? SearchTerm,
             [FromQuery] string? SortOrder,
             [FromQuery] int? Status,
-            [FromBody] DateTime? StartDate,
-            [FromBody] DateTime? EndDate,
+            [FromQuery] DateTime? StartDate, 
+            [FromQuery] DateTime? EndDate,
             CancellationToken cancellation
             )
         {

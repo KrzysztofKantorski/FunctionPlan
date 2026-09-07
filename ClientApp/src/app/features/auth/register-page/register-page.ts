@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
 
+import { AuthLayout } from '../../../shared/components/auth-layout/auth-layout';
+import { GoogleBtn } from '../../../shared/components/google-btn/google-btn';
+import { MainHeader } from '../../../shared/components/main-header/main-header';
+import { ActionButton } from '../../../shared/components/action-button/action-button';
+import { FormInput } from '../../../shared/components/form-input/form-input';
+
 @Component({
   selector: 'app-register-page',
-  imports: [],
+  imports: [AuthLayout, GoogleBtn, MainHeader, ActionButton, FormInput],
   templateUrl: './register-page.html'
 })
 export class RegisterPage {}

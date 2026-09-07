@@ -1,0 +1,20 @@
+<div class="flex h-screen flex-col bg-background font-sans overflow-hidden">
+    <nav></nav>
+
+    <div class="flex flex-1 overflow-hidden">
+    
+    <!-- Sidebar -->
+    <div class="w-64 flex-shrink-0 bg-surface-variant overflow-y-auto"></div>
+
+    <!-- Meetings Grid -->
+    <main class="flex-1 overflow-y-auto p-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        @for (meeting of dummyMeetings; track meeting) 
+        {
+          <div>meeting</div>
+        }
+      </div>
+    </main>
+
+  </div>
+</div>

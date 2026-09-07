@@ -1,0 +1,12 @@
+<div class="flex min-h-screen w-full font-sans">
+
+    <!--Form-->
+    <div class="bg-primary flex flex-col justify-center px-8 sm:px-16 md:w-2/5 lg:px-24 xl:px-32 relative">
+        <ng-content></ng-content>
+    </div>
+
+    <!--Image-->
+    <div class="hidden md:flex md:w-3/5 items-center justify-center bg-background p-10">
+        <img [src]="imagePath" alt="Background graphic" class="max-h-[80vh] w-auto object-contain" />
+    </div>
+</div>

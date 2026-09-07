@@ -1,1 +1,18 @@
-<p>login-page works!</p>
+<auth-layout>
+    <div class="w-full max-w-sm">
+        <main-header>
+            Login
+        </main-header>
+
+        <div class="flex flex-col gap-5">
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            
+            <div class="mt-2">
+                <action-button path="/dashboard">Login</action-button>
+            </div>
+            
+            <google-btn></google-btn>
+        </div>
+    </div>
+</auth-layout>

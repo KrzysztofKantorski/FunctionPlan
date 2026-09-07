@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { RouterLink } from '@angular/router';
 import { AuthLayout } from '../../../shared/components/auth-layout/auth-layout';
 import { GoogleBtn } from '../../../shared/components/google-btn/google-btn';
 import { MainHeader } from '../../../shared/components/main-header/main-header';
@@ -8,7 +8,7 @@ import { FormInput } from '../../../shared/components/form-input/form-input';
 
 @Component({
   selector: 'app-register-page',
-  imports: [AuthLayout, GoogleBtn, MainHeader, ActionButton, FormInput],
+  imports: [RouterLink, AuthLayout, GoogleBtn, MainHeader, ActionButton, FormInput],
   templateUrl: './register-page.html'
 })
 export class RegisterPage {}

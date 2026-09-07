@@ -1,4 +1,4 @@
-﻿namespace Application.Meetings.Queries.GetMeetings
+﻿namespace Application.Common.Dto
 {
     public sealed class MeetingListDto
     {

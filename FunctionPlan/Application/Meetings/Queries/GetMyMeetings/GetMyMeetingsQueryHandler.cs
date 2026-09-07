@@ -22,10 +22,11 @@ namespace Application.Meetings.Queries.GetMyMeetings
 
             var sql =
                  """
-                    SELECT u."Id", u."Username"
-                    FROM "Users" u
-                    INNER JOIN "MeetingUser" mu ON u."Id" = mu."UsersId"
-                    WHERE u."Id" = @userId
+                    SELECT m."Id", m."Title", m."ScheduledFor", m."OrganizerId", org."Username" AS "OrganizerName"
+                    FROM "Meetings" m
+                    INNER JOIN "MeetingUser" mu ON m."Id" = mu."MeetingsId"
+                    INNER JOIN "Users" org ON m."OrganizerId" = org."Id"
+                    WHERE mu."UsersId" = @userId
                 """;
 
             var myMeetings = await connection.QueryAsync<MeetingListDto>(

@@ -8,6 +8,7 @@ using Application.Meetings.Commands.RescheduleMeetingCommand;
 using Application.Meetings.Queries.GetMeetingAttendeesQuery;
 using Application.Meetings.Queries.GetMeetingById;
 using Application.Meetings.Queries.GetMeetings;
+using Application.Meetings.Queries.GetMyMeetings;
 using Application.Meetings.Queries.GetPastMeetings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -115,6 +116,16 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        //Get meetings that user attendeed
+        [HttpGet("attended")]
+        public async Task<IActionResult> GetAttendedMeetings(
+            CancellationToken cancellationToken
+            )
+        {
+            var command = new GetMyMeetingsQuery(User.GetUserId());
+            var result = await _sender.Send(command, cancellationToken);
+            return Ok(result);
+        }
 
         //Reschedule
 

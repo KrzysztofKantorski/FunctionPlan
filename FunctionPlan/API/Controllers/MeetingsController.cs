@@ -72,10 +72,12 @@ namespace API.Controllers
             [FromQuery] string? SearchTerm,
             [FromQuery] string? SortOrder,
             [FromQuery] int? Status,
+            [FromBody] DateTime? StartDate,
+            [FromBody] DateTime? EndDate,
             CancellationToken cancellation
             )
         {
-            var query = new GetMeetingsQuery(SearchTerm, SortOrder, Status);
+            var query = new GetMeetingsQuery(SearchTerm, StartDate, EndDate, SortOrder, Status );
 
             var result = await _sender.Send(query);
 

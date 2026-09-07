@@ -16,6 +16,7 @@ using Domain.Users;
 using Infrastructure.BackgroundJob;
 using Infrastructure.Cache;
 using Infrastructure.Email;
+using Infrastructure.Google;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Data;
 using Infrastructure.Persistence.Repository;
@@ -135,7 +136,7 @@ namespace Infrastructure
                 options.ClientId = configuration["GOOGLE_CLIENT_ID"] ?? string.Empty;
             });
 
-
+            services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 
             //Refresh token
             services.Configure<RefreshTokenSettings>(options =>

@@ -28,4 +28,14 @@ export class LoginService
   {
     return localStorage.getItem('access_token');
   }
+
+  isLoggedIn():boolean
+  {
+    const token = this.getToken();
+    if(token != null)
+    {
+      return true;
+    }
+    return false;
+  }
 }

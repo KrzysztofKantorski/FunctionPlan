@@ -14,6 +14,9 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => 
     {
+      if (error.status === 0) {
+        snackBar.open('Cannot connect to server.', 'Close', { panelClass: 'error-snackbar', duration: 5000 });
+      }
 
       if (error.status === 401) 
       {
@@ -23,32 +26,47 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
       else if (error.status === 400) 
       {
-        let errorMessage = 'Incorrect request data';
+       let errorMessage = 'Incorrect request data';
 
-        if (error.error && error.error.errors) 
+        if (error.error) 
         {
-          //Get errors from fluent validation
-          const validationMessages = Object.values(error.error.errors).flat() as string[];
-
-          if (validationMessages.length > 0) 
+          //Fluent Validation
+          if (error.error.errors) 
           {
-            errorMessage = validationMessages.join('\n'); 
+            const validationMessages = Object.values(error.error.errors).flat() as string[];
+            if (validationMessages.length > 0) {
+              errorMessage = validationMessages.join('\n'); 
+            }
           }
-
+          //AppException
+          else if (error.error.error) 
+          {
+            errorMessage = error.error.error;
+          }
+          //DomainException
+          else if (error.error.detail) 
+          {
+            errorMessage = error.error.detail;
+          }
+          
+          else if (typeof error.error === 'string') 
+          {
+            errorMessage = error.error;
+          }
         }
 
-        else if (typeof error.error === 'string') 
-        {
-          errorMessage = error.error;
-        }
-
-        snackBar.open(errorMessage, 'Close', { panelClass: 'error-snackbar', duration:5000  });
+        snackBar.open(errorMessage, 'Close', { panelClass: 'error-snackbar', duration: 7000 });
       }
 
       else if (error.status === 403) 
       {
         snackBar.open('You are not authorized to perform this action.', 'Close', { panelClass: 'error-snackbar' });
       } 
+
+      else if (error.status === 404) 
+      {
+        snackBar.open('Url address not found', 'Close', { panelClass: 'error-snackbar', duration: 5000 });
+      }
 
       else if (error.status === 429) 
       {

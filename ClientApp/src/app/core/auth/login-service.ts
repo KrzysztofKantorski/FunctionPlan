@@ -9,7 +9,7 @@ import { tap } from 'rxjs';
 export class LoginService 
 {
 
-  private apiUrl = 'https://localhost:7206';
+  private apiUrl = 'https://localhost:7206/api';
   private httpClient = inject(HttpClient);
 
   login(credentials: LoginRequest)

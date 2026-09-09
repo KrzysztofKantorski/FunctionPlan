@@ -40,8 +40,8 @@ namespace Application.Auth.Commands.Login
             var existingUser = await _userRepository.GetByEmailAddressAsync(request.Email);
 
             if (existingUser == null) 
-            { 
-                throw new UserNotFoundException("User not found");
+            {
+                throw new InvalidRequestData("Invalid email or password");
             }
 
             //Check if user is registered with Google account
@@ -70,7 +70,7 @@ namespace Application.Auth.Commands.Login
 
             if(!isPasswordValid)
             {
-                throw new InvalidRequestData("Invalid password");
+                throw new InvalidRequestData("Invalid email or password");
             }
 
             //generate access token

@@ -7,7 +7,7 @@ import { FormInput } from '../../../shared/components/form-input/form-input';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../../core/auth/login-service';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login-page',
   imports: [AuthLayout, GoogleBtn, MainHeader, ActionButton, FormInput, ReactiveFormsModule],
@@ -19,7 +19,7 @@ export class LoginPage {
   private fb = inject(FormBuilder);
   private loginService = inject(LoginService);
   private router = inject(Router);
-
+  private snackBar = inject(MatSnackBar);
   //Form fields
   loginForm = this.fb.nonNullable.group({
     email: ['', 
@@ -28,14 +28,19 @@ export class LoginPage {
     password: ['', 
       Validators.required
     ]
-  })
+  });
 
   onSubmit(){
 
     //Check form validation
     if (this.loginForm.invalid) 
     {
+      
       this.loginForm.markAllAsTouched();
+      this.snackBar.open('Incorrect form data.', 'Close', { 
+        panelClass: 'error-snackbar', 
+        duration: 3000 
+      });
       return;
     }
 

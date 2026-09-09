@@ -1,4 +1,11 @@
 <mat-form-field class="w-full">
   <mat-label>{{ placeholder }}</mat-label>
-  <input matInput [type]="type" />
+  <input 
+    matInput 
+    [type]="type" 
+    [disabled]="isDisabled"
+    [ngModel]="value"
+    (ngModelChange)="onModelChange($event)"
+    (blur)="onTouch()"
+  />
 </mat-form-field>

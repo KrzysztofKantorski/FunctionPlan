@@ -5,6 +5,45 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { catchError, throwError } from 'rxjs';
 
 
+const extractErrorMessage = (error: HttpErrorResponse, defaultMessage: string): string => {
+
+  if (!error.error) return defaultMessage;
+
+  //Fluent Validation
+  if (error.error.errors) 
+  {
+    const validationMessages = Object.values(error.error.errors).flat() as string[];
+    if (validationMessages.length > 0) 
+    {
+      return validationMessages.join('\n');
+    }
+  }
+
+  //AppException
+  if (error.error.error)
+  {
+    return error.error.error;
+  }
+    
+  
+  //DomainException
+  if (error.error.detail) 
+  {
+    return error.error.detail;
+  }
+    
+  
+  if (typeof error.error === 'string') 
+  {
+    return error.error;
+  }
+  
+  return defaultMessage;
+};
+
+
+
+
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   const router = inject(Router);
@@ -14,70 +53,56 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => 
     {
+
+      //Default values
+      let errorMessage = 'An unexpected error occurred.';
+      let duration = 5000;
+
+
       if (error.status === 0) {
-        snackBar.open('Cannot connect to server.', 'Close', { panelClass: 'error-snackbar', duration: 5000 });
+        errorMessage = 'Cannot connect to server.';
       }
 
-      if (error.status === 401) 
+      if (error.status === 401)   
       {
-        snackBar.open('Login again.', 'Close', { panelClass: 'error-snackbar' });
+        errorMessage = 'Login again.';
         localStorage.removeItem("access_token");
         router.navigate(['/login']);
       } 
 
       else if (error.status === 400) 
       {
-       let errorMessage = 'Incorrect request data';
-
-        if (error.error) 
-        {
-          //Fluent Validation
-          if (error.error.errors) 
-          {
-            const validationMessages = Object.values(error.error.errors).flat() as string[];
-            if (validationMessages.length > 0) {
-              errorMessage = validationMessages.join('\n'); 
-            }
-          }
-          //AppException
-          else if (error.error.error) 
-          {
-            errorMessage = error.error.error;
-          }
-          //DomainException
-          else if (error.error.detail) 
-          {
-            errorMessage = error.error.detail;
-          }
-
-          else if (typeof error.error === 'string') 
-          {
-            errorMessage = error.error;
-          }
-        }
-
-        snackBar.open(errorMessage, 'Close', { panelClass: 'error-snackbar', duration: 7000 });
+        errorMessage = extractErrorMessage(error, 'Incorrect request data');
+        duration = 7000;
       }
 
       else if (error.status === 403) 
       {
-        snackBar.open('You are not authorized to perform this action.', 'Close', { panelClass: 'error-snackbar' });
+        errorMessage = extractErrorMessage(error, 'Action forbidden');
+        duration = 7000;
       } 
 
       else if (error.status === 404) 
       {
-        snackBar.open('Url address not found', 'Close', { panelClass: 'error-snackbar', duration: 5000 });
+        errorMessage = 'Url address not found';
       }
 
       else if (error.status === 429) 
       {
-        snackBar.open('Request limit has been exceeded.', 'Close', { panelClass: 'error-snackbar' });
+        errorMessage = 'Request limit has been exceeded.';
       } 
 
       else if (error.status >= 500) 
       {
-        snackBar.open('Server error occurred.', 'Close', { panelClass: 'error-snackbar' });
+        errorMessage = 'Server error occurred.';
       }
+      
+
+      //Display error info
+      snackBar.open(errorMessage, 'Close', { 
+        panelClass: 'error-snackbar', 
+        duration: duration 
+      });
 
 
       return throwError(() => error)

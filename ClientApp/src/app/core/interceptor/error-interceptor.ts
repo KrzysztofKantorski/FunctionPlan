@@ -21,6 +21,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.status === 401) 
       {
         snackBar.open('Login again.', 'Close', { panelClass: 'error-snackbar' });
+        localStorage.removeItem("access_token");
         router.navigate(['/login']);
       } 
 
@@ -48,7 +49,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           {
             errorMessage = error.error.detail;
           }
-          
+
           else if (typeof error.error === 'string') 
           {
             errorMessage = error.error;

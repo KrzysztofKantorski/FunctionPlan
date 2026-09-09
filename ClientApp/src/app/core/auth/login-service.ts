@@ -19,7 +19,7 @@ export class LoginService
       tap(response=>
       {
         //Save access token to local storage
-        localStorage.setItem('access_token', response.token);
+        localStorage.setItem('access_token', response.accessToken);
       })
     )
   }

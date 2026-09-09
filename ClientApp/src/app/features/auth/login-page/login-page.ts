@@ -48,7 +48,7 @@ export class LoginPage {
     this.loginService.login(this.loginForm.getRawValue()).subscribe({
       next: () => {
         //Navigate to main page
-       this.router.navigate(['/dashboard']);
+       this.router.navigate(['/main-page']);
       },
       error: () => {
         //Reset password field

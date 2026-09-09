@@ -5,6 +5,7 @@ import {RegisterPage} from './features/auth/register-page/register-page';
 import {VerifyPage} from './features/auth/verify-page/verify-page';
 import {MainPage} from './features/meetings/main-page/main-page';
 import { guestGuard } from './core/guards/guest-guard';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
     {
@@ -29,6 +30,7 @@ export const routes: Routes = [
     },
     {
         path:"main-page", 
-        component: MainPage
+        component: MainPage,
+        canActivate: [authGuard]
     }
 ];

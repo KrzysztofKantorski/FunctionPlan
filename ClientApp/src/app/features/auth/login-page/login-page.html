@@ -4,15 +4,15 @@
             Login
         </main-header>
 
-        <div class="flex flex-col gap-5">
-            <form-input type="email" placeholder="Email"></form-input>
-            <form-input type="password" placeholder="Password"></form-input>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+            <form-input formControlName="email" type="email" placeholder="Email"></form-input>
+            <form-input formControlName="password" type="password" placeholder="Password"></form-input>
 
             <div class="mt-2">
-                <action-button path="/dashboard">Login</action-button>
+                <action-button type="submit">Login</action-button>
             </div>
             
             <google-btn></google-btn>
-        </div>
+        </form>
     </div>
 </auth-layout>

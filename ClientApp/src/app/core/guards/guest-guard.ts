@@ -1,19 +1,26 @@
-import { inject } from '@angular/core/primitives/di';
+import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { LoginService } from '../auth/login-service';
+import { AuthService } from '../auth/auth-service';
+import { map, take } from 'rxjs';
 
 export const guestGuard: CanActivateFn = (route, state) => {
 
   const router = inject(Router);
-  const loginService = inject(LoginService);
+  const authService = inject(AuthService);
 
-  let isLoggedIn = loginService.isLoggedIn();
-  
-  if(isLoggedIn)
-  {
-    router.navigate(['/main-page']);
-    return false;
-  }
+  return authService.isLoggedIn$
+  .pipe(
+    //Get value from stream
+    take(1), 
+    map(isLoggedIn => {
+      if (isLoggedIn) {
+        router.navigate(['/main-page']);
 
-  return true;
+        //Block access to auth routes
+        return false; 
+      }
+      
+      return true; 
+    })
+  );
 };

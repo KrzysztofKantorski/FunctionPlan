@@ -6,7 +6,7 @@ import { ActionButton } from '../../../shared/components/action-button/action-bu
 import { FormInput } from '../../../shared/components/form-input/form-input';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginService } from '../../../core/auth/login-service';
+import { AuthService } from '../../../core/auth/auth-service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login-page',
@@ -17,9 +17,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class LoginPage {
 
   private fb = inject(FormBuilder);
-  private loginService = inject(LoginService);
+  private AuthService = inject(AuthService);
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
+
+
   //Form fields
   loginForm = this.fb.nonNullable.group({
     email: ['', 
@@ -45,7 +47,7 @@ export class LoginPage {
     }
 
     //Call service method
-    this.loginService.login(this.loginForm.getRawValue()).subscribe({
+    this.AuthService.login(this.loginForm.getRawValue()).subscribe({
       next: () => {
         //Navigate to main page
        this.router.navigate(['/main-page']);

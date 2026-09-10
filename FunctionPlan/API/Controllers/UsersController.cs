@@ -28,6 +28,7 @@ namespace API.Controllers
 
 
         //Get user by id
+        [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> GetMeetingById(
             CancellationToken cancellationToken

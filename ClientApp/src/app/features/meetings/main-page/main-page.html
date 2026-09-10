@@ -1,5 +1,13 @@
 <div class="flex h-screen flex-col bg-background font-sans overflow-hidden">
-    <nav></nav>
+    <nav class="bg-secondary text-white p-4 flex justify-between">
+      @if(userProfile$ |  async; as user)
+      {
+          <div class="flex items-center gap-4">
+            <span>{{user.username}}</span>
+            <span>{{user.email}}</span>
+          </div>
+      }
+    </nav>
 
     <div class="flex flex-1 overflow-hidden">
     
@@ -9,10 +17,7 @@
     <!-- Meetings Grid -->
     <main class="flex-1 overflow-y-auto p-10">
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-        @for (meeting of dummyMeetings; track meeting) 
-        {
-          <div>meeting</div>
-        }
+        <div>meeting</div>
       </div>
     </main>
 

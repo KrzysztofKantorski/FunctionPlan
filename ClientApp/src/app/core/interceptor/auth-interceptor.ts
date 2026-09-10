@@ -35,7 +35,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
     catchError((error: HttpErrorResponse) =>{
 
       //If user is unauthorized and is not refreshing token
-      if(error.status === 401 && !authReq.url.includes('/api/auth/refresh'))
+      if(error.status === 401 && !authReq.url.includes('/api/auth/refresh') && !authReq.url.includes('/api/auth/login'))
       {
           return handle401Error(authReq, next, authService, router);
       }
@@ -84,8 +84,10 @@ const handle401Error = (request: HttpRequest<unknown>, next: HttpHandlerFn, auth
       catchError((error) => {
         //Refresh token expired
         isRefreshing = false;
-        authService.logout();
-        router.navigate(['/login']); 
+        if (error.url && error.url.includes('/api/auth/refresh')) {
+          authService.logout();
+          router.navigate(['/login']); 
+        }
         return throwError(() => error);
       })
     )

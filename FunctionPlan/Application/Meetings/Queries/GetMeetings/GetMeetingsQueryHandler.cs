@@ -32,6 +32,17 @@ namespace Application.Meetings.Queries.GetMeetings
             var conditions = new List<string>();
             var parameters = new DynamicParameters();
 
+            //Display only meetings avaliable to join
+            conditions.Add("m.\"OrganizerId\" != @UserId");
+
+            //Dont display meetings that user alerdy joined
+            conditions.Add("""
+                NOT EXISTS (
+                    SELECT 1 FROM "MeetingUser" mu 
+                    WHERE mu."MeetingsId" = m."Id" AND mu."UsersId" = @UserId
+                )
+                """);
+
             //Get allowed meeting statuses
             var allowedStatuses = new List<int> { (int)MeetingStatus.Planned, (int)MeetingStatus.InProgress };
 

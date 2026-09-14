@@ -39,10 +39,6 @@ export class LoginPage {
     {
       
       this.loginForm.markAllAsTouched();
-      this.snackBar.open('Incorrect form data.', 'Close', { 
-        panelClass: 'error-snackbar', 
-        duration: 3000 
-      });
       return;
     }
 
@@ -57,5 +53,16 @@ export class LoginPage {
         this.loginForm.controls.password.reset();
       }
     });
+  }
+
+
+  get emailControl()
+  {
+    return this.loginForm.controls.email;
+  }
+
+   get passwordControl()
+  {
+    return this.loginForm.controls.password;
   }
 }

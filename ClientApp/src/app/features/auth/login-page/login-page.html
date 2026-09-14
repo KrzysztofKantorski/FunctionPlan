@@ -6,7 +6,31 @@
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
             <form-input formControlName="email" type="email" placeholder="Email"></form-input>
+
+            @if (emailControl.touched && emailControl.invalid)
+            {
+                <div class="text-error text-sm">
+                    @if(emailControl.hasError('required'))
+                    {
+                        <span>Email field is required</span>
+                    }
+
+                    @if(emailControl.hasError('email'))
+                    {
+                        <span>Incorrect email format</span>
+                    }
+                </div>
+            }
             <form-input formControlName="password" type="password" placeholder="Password"></form-input>
+            @if (passwordControl.touched && passwordControl.invalid)
+            {
+                <div class="text-error text-sm">
+                    @if(passwordControl.hasError('required'))
+                    {
+                        <span>Password field is required</span>
+                    }
+                </div>
+            }
 
             <div class="mt-2">
                 <action-button type="submit">Login</action-button>

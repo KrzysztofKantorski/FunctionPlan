@@ -1,5 +1,5 @@
-<div class="flex flex-col gap-4 p-5 h-full">
-    <h2 class="text-xl font-semibold mb-2">Filter meetings</h2>
+<div class="flex flex-col gap-4 p-5">
+    <h2 class="text-xl font-semibold mb-2 mt-2">Filter meetings</h2>
     
     <form [formGroup]="filterForm" class="flex flex-col gap-2">
 
@@ -26,20 +26,20 @@
 
         <!-- Date range -->
         <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Wybierz zakres dat</mat-label>
+            <mat-label>Choose date range</mat-label>
             <mat-date-range-input [rangePicker]="rangePicker">
-                <input matStartDate formControlName="startDate" placeholder="Początek">
-                <input matEndDate formControlName="endDate" placeholder="Koniec">
+                <input matStartDate formControlName="startDate" placeholder="Start">
+                <input matEndDate formControlName="endDate" placeholder="End">
             </mat-date-range-input>
-            <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+           
             <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
       
             <!-- Date panel buttons -->
             <mat-date-range-picker #rangePicker>
-                <mat-datepicker-actions>
-                <button mat-button matDatepickerCancel>Cancel</button>
-                <button mat-button color="primary" matDatepickerApply>Apply</button>
-                </mat-datepicker-actions>
+                <mat-date-range-picker-actions>
+                <button matButton matDateRangePickerCancel class="m-2">Cancel</button>
+                <button matButton="elevated" matDateRangePickerApply>Apply</button>
+                </mat-date-range-picker-actions>
             </mat-date-range-picker>
         </mat-form-field>
     </form>

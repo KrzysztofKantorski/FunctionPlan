@@ -6,7 +6,16 @@
     <div class="flex flex-1 overflow-hidden">
     
     <!-- Sidebar -->
-    <div class="w-64 flex-shrink-0 bg-primary-container overflow-y-auto"></div>
+    <div class="w-64 flex-shrink-0 bg-primary-container overflow-y-auto relative">
+      <sidebar (filtersChanged)="onFiltersUpdated($event)"></sidebar>
+
+      <button 
+        mat-flat-button 
+        class="!p-5 !text-lg !w-full !bg-on-primary !text-on-primary-container !rounded-none text-center !absolute bottom-5"
+      >
+        Schedule meeting
+      </button>
+    </div>
 
     <!-- Meetings Grid -->
     <main class="flex-1 overflow-y-auto p-10">

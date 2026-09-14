@@ -1,5 +1,10 @@
  <div class="pl-4 pr-4">
     <button matButton>Main</button>
-    <button matButton>History</button>
+    <button matButton [matMenuTriggerFor]="menu">Meetings</button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>History</button>
+            <button mat-menu-item>Your meetings</button>
+            <button mat-menu-item>Accepted meetings</button>
+        </mat-menu>
     <button matButton>Users</button>
 </div>

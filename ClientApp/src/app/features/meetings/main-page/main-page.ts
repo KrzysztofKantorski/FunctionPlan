@@ -10,9 +10,15 @@ import { NavbarSearch } from '../../../shared/components/navbar-search/navbar-se
 import { Sidebar } from '../../../shared/components/sidebar/sidebar';
 import { MeetingFilters } from '../../../core/models/meeting-filters';
 import { MatButtonModule } from '@angular/material/button';
+import { UserMenu } from '../../../shared/components/user-menu/user-menu';
 @Component({
   selector: 'app-main-page',
-  imports: [MainHeader, AsyncPipe, Navbar, NavbarBtnGroup, Sidebar, MatButtonModule, NavbarSearch],
+  imports: 
+  [ 
+    MainHeader, AsyncPipe, Navbar, NavbarBtnGroup, 
+    Sidebar, MatButtonModule, NavbarSearch,
+    UserMenu
+  ],
   templateUrl: './main-page.html'
 })
 export class MainPage {

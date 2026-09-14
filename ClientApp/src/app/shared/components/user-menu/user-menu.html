@@ -1,0 +1,8 @@
+<button matButton [matMenuTriggerFor]="menu">
+    <img [src]="imagePath" class="h-[50px] w-[50px]" alt="">
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Manage credentials</button>
+  <button mat-menu-item>Change profile picture</button>
+  <button mat-menu-item>Statistics</button>
+</mat-menu>

@@ -1,9 +1,9 @@
 <div class="flex h-screen flex-col bg-background font-sans overflow-hidden">
-  
+
     <!-- Nav -->
     <navbar>
       <navbar-btn-group></navbar-btn-group>
-      <navbar-search></navbar-search>
+      <navbar-search (searchChanged)="onSearchChanged($event)"></navbar-search>
       <user-menu></user-menu>
     </navbar>
 

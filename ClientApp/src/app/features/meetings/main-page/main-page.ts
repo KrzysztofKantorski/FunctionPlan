@@ -68,5 +68,15 @@ export class MainPage {
     })
   }
 
+  //Value from searchbar
+  onSearchChanged(searchTerm: string)
+  {
+    const currentSearch = this.filtersSubject.getValue();
 
+    //Update search text
+    this.filtersSubject.next({
+      ...currentSearch,
+      searchTerm: searchTerm
+    });
+  }
 }

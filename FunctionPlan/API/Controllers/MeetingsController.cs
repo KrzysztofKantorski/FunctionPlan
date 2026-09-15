@@ -79,7 +79,7 @@ namespace API.Controllers
             CancellationToken cancellation
             )
         {
-            var query = new GetMeetingsQuery(SearchTerm, StartDate, EndDate, SortOrder, Status );
+            var query = new GetMeetingsQuery(User.GetUserId(), SearchTerm, StartDate, EndDate, SortOrder, Status );
 
             var result = await _sender.Send(query);
 

@@ -17,7 +17,7 @@ export class MeetingService {
   //Get user meetings with filters (from sidebar and search bar)
   getMeetings(filters: MeetingFilters): Observable <Meeting[]>
   {
-    let params = inject(HttpParams);
+    let params = new HttpParams();
 
     //Send filters if set
 

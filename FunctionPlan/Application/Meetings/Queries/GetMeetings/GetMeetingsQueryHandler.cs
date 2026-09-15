@@ -43,6 +43,7 @@ namespace Application.Meetings.Queries.GetMeetings
                 )
                 """);
 
+            parameters.Add("UserId", request.UserId);
             //Get allowed meeting statuses
             var allowedStatuses = new List<int> { (int)MeetingStatus.Planned, (int)MeetingStatus.InProgress };
 

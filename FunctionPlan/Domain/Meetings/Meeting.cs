@@ -64,6 +64,7 @@ namespace Domain.Meetings
 
 
             Title = title;
+            Description = description;
             ScheduledFor = scheduledFor;
             OrganizerId = organizerId;
             Location = location;

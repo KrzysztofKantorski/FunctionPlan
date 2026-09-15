@@ -29,9 +29,11 @@
           @for (meeting of meetings; track meeting.id) {
             <div class="p-4 border rounded shadow-sm bg-white">
               <h3 class="font-bold text-lg">{{ meeting.title }}</h3>
+              <p>{{meeting.organizerName}}</p>
               <p class="text-sm text-gray-500">
-                {{ meeting.scheduledFor | date:'dd/MM/yyyy HH:mm' }}
+                {{ meeting.scheduledFor | date:'dd.MM.yyyy HH:mm' }}
               </p>
+              
             </div>
           }
           

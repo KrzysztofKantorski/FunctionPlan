@@ -15,6 +15,7 @@ namespace Domain.Meetings
     public sealed class Meeting : Entity
     {
         public string Title { get; private set; }
+        public string Description { get; private set; }
         public DateTime ScheduledFor { get; private set; }
         public int OrganizerId { get; private set; }
         public User Organizer { get; private set; }
@@ -33,7 +34,7 @@ namespace Domain.Meetings
         public IReadOnlyCollection<MediaFile> MediaFiles => _mediaFiles.AsReadOnly();
         private Meeting() { }
 
-        public Meeting(string title, DateTime scheduledFor, int organizerId, Coordinates location)
+        public Meeting(string title, string description, DateTime scheduledFor, int organizerId, Coordinates location)
         {
             if (string.IsNullOrEmpty(title))
             {
@@ -45,7 +46,19 @@ namespace Domain.Meetings
                 throw new ArgumentException("Incorrect title content");
             }
 
-            if(scheduledFor < DateTime.UtcNow)
+            if (string.IsNullOrEmpty(description))
+            {
+                throw new ArgumentNullException("Description cannot be empty");
+            }
+
+
+            if (description.Length > 200)
+            {
+                throw new ArgumentException("Incorrect description content");
+            }
+
+
+            if (scheduledFor < DateTime.UtcNow)
             {
                 throw new InvalidMeetingDateException("Incorrect meeting date: " + scheduledFor);
             }

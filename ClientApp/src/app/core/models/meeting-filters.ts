@@ -4,4 +4,5 @@ export interface MeetingFilters
     endDate?: Date | null;
     sortOrder?: string | null;
     status?: number | null;
+    searchTerm?: string | null;
 }

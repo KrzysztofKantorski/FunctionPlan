@@ -15,7 +15,7 @@ namespace Domain.Meetings
     public sealed class Meeting : Entity
     {
         public string Title { get; private set; }
-        public string Description { get; private set; }
+        public string? Description { get; private set; }
         public DateTime ScheduledFor { get; private set; }
         public int OrganizerId { get; private set; }
         public User Organizer { get; private set; }

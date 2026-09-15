@@ -15,7 +15,6 @@ namespace Infrastructure.Persistence.Configurations
                 .HasMaxLength(100);
 
             builder.Property(m => m.Description)
-                .IsRequired()
                 .HasMaxLength(200);
 
             //Relation with user

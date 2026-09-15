@@ -2,9 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { MeetingFilters } from '../models/meeting-filters';
+import { Meeting } from '../models/meeting';
+import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
+
+
 export class MeetingService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
@@ -50,6 +55,6 @@ export class MeetingService {
 
 
     //Send request with params
-    this.http.get<Meeting[]>(`${this.apiUrl}/meetings`, {params});
+    return this.http.get<Meeting[]>(`${this.apiUrl}/meetings`, {params});
   }
 }

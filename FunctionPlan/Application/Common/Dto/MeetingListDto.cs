@@ -4,6 +4,7 @@
     {
         public int Id { get; init; }
         public string Title { get; init; }
+        public string Description { get; init; }
         public DateTime ScheduledFor { get; init; }
         public int OrganizerId { get; init; }
         public string OrganizerName { get; init; }

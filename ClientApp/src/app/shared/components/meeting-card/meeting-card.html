@@ -1,0 +1,23 @@
+<mat-card class="example-card" class="!relative !bg-on-primary h-full flex flex-col">
+
+  <mat-card-header class="mt-2">
+    <mat-card-title class="text-lg font-bold">{{meeting.title}}</mat-card-title>
+    <mat-card-subtitle class="font-medium !mt-2">{{meeting.scheduledFor}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="mt-4 mb-4 flex-grow">
+    <div class="text-sm  border-b pb-2">
+      {{ meeting.organizerName }}
+    </div>
+
+    <p class="text-sm line-clamp-3 mt-4">
+      {{ meeting.description || 'No description' }}
+    </p>
+  </mat-card-content>
+
+
+  <mat-card-actions>
+    <button matButton>Details</button>
+    <button matButton>Join</button>
+  </mat-card-actions>
+</mat-card>

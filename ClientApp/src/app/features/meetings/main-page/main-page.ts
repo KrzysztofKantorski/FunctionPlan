@@ -8,6 +8,7 @@ import { Navbar } from '../../../shared/components/nav/navbar/navbar';
 import { NavbarBtnGroup } from '../../../shared/components/nav/navbar-btn-group/navbar-btn-group';
 import { NavbarSearch } from '../../../shared/components/nav/navbar-search/navbar-search';
 import { Sidebar } from '../../../shared/components/sidebar/sidebar';
+import { MeetingCard } from '../../../shared/components/meeting-card/meeting-card';
 import { MeetingFilters } from '../../../core/models/meeting-filters';
 import { MatButtonModule } from '@angular/material/button';
 import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
@@ -20,7 +21,7 @@ import { DatePipe } from '@angular/common';
   [ 
     MainHeader, AsyncPipe, Navbar, NavbarBtnGroup, 
     Sidebar, MatButtonModule, NavbarSearch,
-    UserMenu, DatePipe
+    UserMenu, DatePipe, MeetingCard
   ],
   templateUrl: './main-page.html'
 })

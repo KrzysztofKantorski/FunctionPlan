@@ -37,6 +37,7 @@ namespace Application.Meetings.Commands.CreateMeetingCommand
 
             var meeting = new Meeting(
                 request.Title,
+                request.Description,
                 scheduledForUtc,
                 request.OrganizerId,
                 location

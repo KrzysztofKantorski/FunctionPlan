@@ -14,6 +14,10 @@ namespace Infrastructure.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.Property(m => m.Description)
+                .IsRequired()
+                .HasMaxLength(200);
+
             //Relation with user
             builder.HasOne(m => m.Organizer)
                .WithMany() 

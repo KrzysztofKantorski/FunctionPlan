@@ -5,6 +5,7 @@ namespace Application.Meetings.Commands.CreateMeetingCommand
 {
     public sealed record CreateMeetingCommand(
         string Title,
+        string Description,
         DateTime ScheduledFor,
         int OrganizerId,
         double Latitude,

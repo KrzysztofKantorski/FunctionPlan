@@ -43,6 +43,7 @@ namespace API.Controllers
 
             var command = new CreateMeetingCommand(
                 request.Title,
+                request.Description,
                 request.ScheduledFor,
                 User.GetUserId(),
                 request.Latitude,

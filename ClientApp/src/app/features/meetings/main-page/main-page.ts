@@ -13,13 +13,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
 import { Meeting } from '../../../core/models/meeting';
 import { MeetingService } from '../../../core/services/meeting-service';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-main-page',
   imports: 
   [ 
     MainHeader, AsyncPipe, Navbar, NavbarBtnGroup, 
     Sidebar, MatButtonModule, NavbarSearch,
-    UserMenu
+    UserMenu, DatePipe
   ],
   templateUrl: './main-page.html'
 })

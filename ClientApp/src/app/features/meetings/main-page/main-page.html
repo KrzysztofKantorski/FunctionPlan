@@ -21,9 +21,20 @@
 
     <!-- Meetings Grid -->
     <main class="flex-1 overflow-y-auto p-10">
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-        <div>meeting</div>
-      </div>
+        @if(meetings$ | async; as meetings)
+        {
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+              @for(meeting of meetings; track meeting.Id)
+              {
+                <div class="p-4 border rounded shadow-sm bg-white">
+                  <h3 class="font-bold text-lg">{{ meeting.Title }}</h3>
+                  <p class="text-sm text-gray-500">
+                    {{ meeting.ScheduledFor | date:'dd/MM/yyyy HH:mm' }}
+                  </p>
+                </div>
+              }
+          </div>
+        }
     </main>
 
   </div>

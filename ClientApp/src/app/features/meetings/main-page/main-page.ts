@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MainHeader } from '../../../shared/components/main-header/main-header';
 import { UserService } from '../../../core/services/user-service';
 import { UserProfile } from '../../../core/models/user-model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Navbar } from '../../../shared/components/nav/navbar/navbar';
 import { NavbarBtnGroup } from '../../../shared/components/nav/navbar-btn-group/navbar-btn-group';
@@ -11,6 +11,8 @@ import { Sidebar } from '../../../shared/components/sidebar/sidebar';
 import { MeetingFilters } from '../../../core/models/meeting-filters';
 import { MatButtonModule } from '@angular/material/button';
 import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
+import { Meeting } from '../../../core/models/meeting';
+import { MeetingService } from '../../../core/services/meeting-service';
 @Component({
   selector: 'app-main-page',
   imports: 
@@ -24,16 +26,46 @@ import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
 export class MainPage {
 
   private userService = inject(UserService);
+  private meetingService = inject(MeetingService);
+
+  //Filters state
+  private filtersSubject = new BehaviorSubject<MeetingFilters>
+  ({
+    sortOrder: 'asc'
+  });
+
   userProfile$: Observable<UserProfile> | undefined;
+  meetings$: Observable <Meeting[]> | undefined;
+
+
 
   ngOnInit(): void
   {
     this.userProfile$ = this.userService.getUserDetails();
+
+    //Send request when filters change
+    this.meetings$ = this.filtersSubject.pipe(
+
+      //Send filters and call service
+      switchMap((filters) => this.meetingService.getMeetings(filters))
+    )
+
   }
 
 
-  onFiltersUpdated(filters: MeetingFilters)
+  //Filters from sidebar
+  onFiltersUpdated(sidebarFilters: MeetingFilters)
   {
-      console.log('Filters changed:', filters);
+    //Get current filters from sidebar
+    const currentFilters = this.filtersSubject.getValue();
+
+    //Update values
+    this.filtersSubject.next
+    ({
+      ...currentFilters,
+      ...sidebarFilters
+    })
   }
+
+
 }

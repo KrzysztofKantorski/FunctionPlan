@@ -46,12 +46,6 @@ namespace Domain.Meetings
                 throw new ArgumentException("Incorrect title content");
             }
 
-            if (string.IsNullOrEmpty(description))
-            {
-                throw new ArgumentNullException("Description cannot be empty");
-            }
-
-
             if (description.Length > 200)
             {
                 throw new ArgumentException("Incorrect description content");

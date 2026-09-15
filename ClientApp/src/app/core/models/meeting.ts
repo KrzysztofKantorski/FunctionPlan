@@ -1,7 +1,7 @@
 export interface Meeting{
-    Id: number;
-    Title: string;
-    ScheduledFor: Date;
-    OrganizerId: number;
-    OrganizerName: string; 
+    id: number;
+    title: string;
+    scheduledFor: Date;
+    organizerId: number;
+    organizerName: string; 
 }

@@ -21,19 +21,31 @@
 
     <!-- Meetings Grid -->
     <main class="flex-1 overflow-y-auto p-10">
-        @if(meetings$ | async; as meetings)
-        {
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-              @for(meeting of meetings; track meeting.Id)
-              {
-                <div class="p-4 border rounded shadow-sm bg-white">
-                  <h3>{{ meeting.Title }}</h3>
-                  <h3>{{ meeting.ScheduledFor }}</h3>
-                  
-                </div>
-              }
-          </div>
-        }
+      @if (meetings$ | async; as meetings) {
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          
+          @for (meeting of meetings; track meeting.id) {
+            <div class="p-4 border rounded shadow-sm bg-white">
+              <h3 class="font-bold text-lg">{{ meeting.title }}</h3>
+              <p class="text-sm text-gray-500">
+                <!-- Tu możesz użyć wbudowanego w Angulara pipe'a 'date' -->
+                {{ meeting.scheduledFor | date:'dd/MM/yyyy HH:mm' }}
+              </p>
+            </div>
+          }
+          
+          <!-- Gdy tablica jest pusta -->
+          @empty {
+            <div class="col-span-full text-center text-gray-500 py-10">
+              No meetings matching criteria.
+            </div>
+          }
+
+        </div>
+      } @else {
+        <!-- Skeleton loading lub spinner (podczas pierwszego ładowania) -->
+        <div class="text-center py-10">Wczytywanie spotkań...</div>
+      }
     </main>
 
   </div>

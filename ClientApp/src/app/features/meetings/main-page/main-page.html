@@ -1,4 +1,6 @@
 <div class="flex h-screen flex-col bg-background font-sans overflow-hidden">
+  
+    <!-- Nav -->
     <navbar>
       <navbar-btn-group></navbar-btn-group>
       <navbar-search></navbar-search>
@@ -28,13 +30,12 @@
             <div class="p-4 border rounded shadow-sm bg-white">
               <h3 class="font-bold text-lg">{{ meeting.title }}</h3>
               <p class="text-sm text-gray-500">
-                <!-- Tu możesz użyć wbudowanego w Angulara pipe'a 'date' -->
                 {{ meeting.scheduledFor | date:'dd/MM/yyyy HH:mm' }}
               </p>
             </div>
           }
           
-          <!-- Gdy tablica jest pusta -->
+          <!-- No matching meetings -->
           @empty {
             <div class="col-span-full text-center text-gray-500 py-10">
               No meetings matching criteria.
@@ -43,7 +44,7 @@
 
         </div>
       } @else {
-        <!-- Skeleton loading lub spinner (podczas pierwszego ładowania) -->
+        <!-- Loading state -->
         <div class="text-center py-10">Wczytywanie spotkań...</div>
       }
     </main>

@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment.development';
 import { MeetingFilters } from '../models/meeting-filters';
 import { Meeting } from '../models/meeting';
 import { Observable } from 'rxjs';
+import { MeetingDetails } from '../models/meeting-details';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,9 @@ import { Observable } from 'rxjs';
 export class MeetingService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
+
+
+
 
   //Get user meetings with filters (from sidebar and search bar)
   getMeetings(filters: MeetingFilters): Observable <Meeting[]>
@@ -56,5 +60,13 @@ export class MeetingService {
 
     //Send request with params
     return this.http.get<Meeting[]>(`${this.apiUrl}/meetings`, {params});
+  }
+
+
+
+  //Get meeting details
+  getMeetingDetails(meetingId: number): Observable<MeetingDetails>
+  {
+    return this.http.get<MeetingDetails>(`${this.apiUrl}/meetings/${meetingId}`);
   }
 }

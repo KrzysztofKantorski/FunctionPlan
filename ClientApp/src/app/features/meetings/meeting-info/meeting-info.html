@@ -6,11 +6,14 @@
         <user-menu></user-menu>
     </navbar>
 
-    @if(isLoading) {
-        <div class="flex h-full items-center justify-center text-gray-500 text-lg">
-            Loading meeting details...
+    
+    @if (isLoading) 
+    {
+        <div class="text-center py-20 text-gray-500 text-lg">
+            Loading meeting...
         </div>
     }
+
     @else if(meetingDetails)
     {
         <div class="flex gap-[5rem] flex-wrap w-[80%] m-auto min-h-[90vh] items-center justify-center">
@@ -23,17 +26,17 @@
             </div>
 
             <div> 
-                <meeting-header>{{meetingDetails.title}}</meeting-header>
+                <meeting-header>{{meetingDetails?.title}}</meeting-header>
 
-                <p>{{meetingDetails.scheduledFor}}</p>
+                <p>{{meetingDetails?.scheduledFor}}</p>
 
                 <div>
-                    {{ meetingDetails.organizer.username }}
+                    {{ meetingDetails?.organizer?.username }}
                 </div>
 
                 <div class="mb-8">
                     <p class="text-gray-600 leading-relaxed">
-                        {{ meetingDetails.description || 'No description.' }}
+                        {{ meetingDetails?.description || 'No description.' }}
                     </p>
                 </div>
 
@@ -43,6 +46,7 @@
             </div>
         </div>
 
+
     }
 
     @else {
@@ -51,6 +55,7 @@
         </div>
     }
 
+   
 </div>
 
 

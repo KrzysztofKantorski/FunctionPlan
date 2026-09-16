@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { Navbar } from '../../../shared/components/nav/navbar/navbar';
 import { NavbarBtnGroup } from '../../../shared/components/nav/navbar-btn-group/navbar-btn-group';
 import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
@@ -8,6 +8,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { MeetingService } from '../../../core/services/meeting-service';
 import { MeetingDetails } from '../../../core/models/meeting-details';
 import { MeetingMap } from '../../../shared/components/meeting-map/meeting-map';
+import { isPlatformBrowser } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-meeting-info',
@@ -16,7 +19,9 @@ import { MeetingMap } from '../../../shared/components/meeting-map/meeting-map';
 })
 
 export class MeetingInfo implements OnInit {
+  private platformId = inject(PLATFORM_ID);
   private meetingService = inject(MeetingService);
+  private cdr = inject(ChangeDetectorRef);
 
   //Get meeting id from route
   @Input() id!: string;
@@ -26,24 +31,28 @@ export class MeetingInfo implements OnInit {
 
   ngOnInit() 
   { 
-    const meetingId = Number(this.id);
+   
+    if(isPlatformBrowser(this.platformId)){
+       const meetingId = Number(this.id);
+        this.meetingService.getMeetingDetails(meetingId).subscribe({
+        next: (data) =>
+        {
+          this.meetingDetails = data;
+          this.isLoading = false;
 
-    this.meetingService.getMeetingDetails(meetingId).subscribe({
-      next: (data) =>
-      {
-        this.meetingDetails = data;
-        this.isLoading = false;
-        console.log(this.meetingDetails);
-      },
+          //Force browser reload
+          this.cdr.detectChanges();
+          console.log(this.meetingDetails);
+        },
 
-      error: () => 
-      {
-        this.isLoading = false;
-      }
-      
-    })
-
-
-    
+        error: () => 
+        {
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        }
+        
+      })
+    }
+   
   }
 }

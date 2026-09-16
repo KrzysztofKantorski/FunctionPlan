@@ -19,6 +19,9 @@ import { MeetingText } from '../../../shared/components/meeting/meeting-text/mee
 import {MatIconModule} from '@angular/material/icon';
 import { MeetingParticipant } from '../../../core/models/meeting-participant';
 import { UserAvatar } from '../../../shared/components/meeting/user-avatar/user-avatar';
+import { MatDialog } from '@angular/material/dialog';
+import { UserDialog } from '../../../shared/components/meeting/user-dialog/user-dialog';
+
 
 @Component({
   selector: 'app-meeting-info',
@@ -35,6 +38,8 @@ export class MeetingInfo implements OnInit {
   private platformId = inject(PLATFORM_ID);
   private meetingService = inject(MeetingService);
   private cdr = inject(ChangeDetectorRef);
+  private dialog = inject(MatDialog);
+
 
   //Get meeting id from route
   @Input() id!: string;
@@ -77,5 +82,16 @@ export class MeetingInfo implements OnInit {
       })
     }
    
+  }
+
+
+
+  openParticipantDetails(participant: MeetingParticipant): void 
+  {
+    this.dialog.open(UserDialog, 
+    {
+      data: participant,
+      width: '320px'
+    });
   }
 }

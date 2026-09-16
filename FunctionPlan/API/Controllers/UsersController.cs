@@ -2,6 +2,7 @@
 using Application.Common.Dto;
 using Application.Media.Queries.GetUsersAvatars;
 using Application.Users.Commands.UploadUserImage;
+using Application.Users.Queries.GetAnotherUserAvatar;
 using Application.Users.Queries.GetUserDetailsQuery;
 using Application.Users.Queries.GetUserImageQuery;
 using MediatR;
@@ -51,6 +52,23 @@ namespace API.Controllers
             int userId = User.GetUserId();
 
             var query = new GetUserImageQuery(userId);
+
+            var fileResponse = await _sender.Send(query, cancellationToken);
+
+            return File(fileResponse.Stream, fileResponse.ContentType);
+        }
+
+
+        //Get another user avatar
+        //Get user avatar
+        [HttpGet("{userId}/avatar")]
+        [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Client)]
+        public async Task<IActionResult> GetAnotherUserImage(
+            int userId,
+            CancellationToken cancellationToken
+            )
+        {
+            var query = new GetAnotherUserAvatarQuery(userId);
 
             var fileResponse = await _sender.Send(query, cancellationToken);
 

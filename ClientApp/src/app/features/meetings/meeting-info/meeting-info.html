@@ -6,26 +6,51 @@
         <user-menu></user-menu>
     </navbar>
 
-    <div class="flex gap-[5rem] flex-wrap w-[80%] m-auto min-h-[90vh] items-center justify-center">
-        
-        <div>
-            siup
+    @if(isLoading) {
+        <div class="flex h-full items-center justify-center text-gray-500 text-lg">
+            Loading meeting details...
         </div>
+    }
+    @else if(meetingDetails)
+    {
+        <div class="flex gap-[5rem] flex-wrap w-[80%] m-auto min-h-[90vh] items-center justify-center">
 
-        <div> 
-            <meeting-header>Meeting details</meeting-header>
-
-            <p>Date</p>
-
-            <div>
-                Users
+            <div class="w-full md:w-[400px]">
+                <meeting-map 
+                    [lng]="meetingDetails.longitude" 
+                    [lat]="meetingDetails.latitude">
+                </meeting-map>
             </div>
 
-            <div>
-                <button matButton>Join</button>
+            <div> 
+                <meeting-header>{{meetingDetails.title}}</meeting-header>
+
+                <p>{{meetingDetails.scheduledFor}}</p>
+
+                <div>
+                    {{ meetingDetails.organizer.username }}
+                </div>
+
+                <div class="mb-8">
+                    <p class="text-gray-600 leading-relaxed">
+                        {{ meetingDetails.description || 'No description.' }}
+                    </p>
+                </div>
+
+                <div>
+                    <button matButton>Join</button>
+                </div>
             </div>
         </div>
-    </div>
+
+    }
+
+    @else {
+        <div class="text-center py-20 text-red-500 text-lg">
+            Could not load meeting
+        </div>
+    }
+
 </div>
 
 

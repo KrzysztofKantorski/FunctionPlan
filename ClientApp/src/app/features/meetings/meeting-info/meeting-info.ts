@@ -7,11 +7,11 @@ import { MeetingHeader } from '../../../shared/components/meeting-header/meeting
 import {MatButtonModule} from '@angular/material/button';
 import { MeetingService } from '../../../core/services/meeting-service';
 import { MeetingDetails } from '../../../core/models/meeting-details';
-
+import { MeetingMap } from '../../../shared/components/meeting-map/meeting-map';
 
 @Component({
   selector: 'app-meeting-info',
-  imports: [Navbar, NavbarBtnGroup, UserMenu, BackButton, MeetingHeader, MatButtonModule],
+  imports: [Navbar, NavbarBtnGroup, UserMenu, BackButton, MeetingHeader, MatButtonModule, MeetingMap],
   templateUrl: './meeting-info.html'
 })
 
@@ -33,13 +33,17 @@ export class MeetingInfo implements OnInit {
       {
         this.meetingDetails = data;
         this.isLoading = false;
+        console.log(this.meetingDetails);
       },
+
       error: () => 
       {
         this.isLoading = false;
       }
       
     })
+
+
     
   }
 }

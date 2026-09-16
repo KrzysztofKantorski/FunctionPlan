@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
@@ -6,14 +6,13 @@ import { environment } from '../../../../environments/environment.development';
 @Component({
   selector: 'meeting-map',
   standalone: true,
-  template: `./meeting-map.html`
+  templateUrl: './meeting-map.html'
 })
 
 
-export class MeetingMap implements OnInit, OnDestroy {
+export class MeetingMap implements AfterViewInit, OnDestroy {
 
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
-  
 
   //Meeting coordinates
   @Input({ required: true }) lng!: number;
@@ -21,10 +20,10 @@ export class MeetingMap implements OnInit, OnDestroy {
 
   private platformId = inject(PLATFORM_ID);
   private map: any;
-
+  private resizeObserver!: ResizeObserver;
   
 
-  async ngOnInit()  
+  async ngAfterViewInit()  
   {
     //Ensure browser
     if(isPlatformBrowser(this.platformId))
@@ -48,12 +47,23 @@ export class MeetingMap implements OnInit, OnDestroy {
       new mapboxgl.Marker({ color: '#3b82f6' })
         .setLngLat([this.lng, this.lat])
         .addTo(this.map);
+
+      this.resizeObserver = new ResizeObserver(() => {
+        if (this.map) {
+          this.map.resize();
+        }
+      });
+
+      this.resizeObserver.observe(this.mapContainer.nativeElement);
     }
   }
 
 
   ngOnDestroy(): void 
   {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
     if (this.map) {
       this.map.remove();
     }

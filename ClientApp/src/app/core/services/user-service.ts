@@ -17,4 +17,13 @@ export class UserService {
   {
     return this.http.get<UserProfile>(`${this.apiUrl}/users/me`);
   }
+
+  //Get user image as blob
+  getUserImage(): Observable<Blob>
+  {
+    return this.http.get(`${this.apiUrl}/users/avatar`, {
+      responseType: 'blob'
+    })
+  }
+
 }

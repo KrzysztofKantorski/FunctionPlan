@@ -16,46 +16,44 @@
 
     @else if(meetingDetails)
     {
-        <div class="flex gap-[5rem] flex-wrap w-[80%] m-auto min-h-[90vh] items-center justify-center">
-            <div class="flex items-start gap-[5rem]">
-                <div class="w-full md:w-[400px]">
-                    <meeting-map 
-                        [lng]="meetingDetails.longitude" 
-                        [lat]="meetingDetails.latitude">
-                    </meeting-map>
-                </div>
+        <div class=" pt-[30vh] md:py-[20vh] flex flex-col md:flex-row w-[95%] md:w-[80%] max-w-6xl mx-auto 
+        min-h-[50vh] items-center md:items-start justify-center gap-10 md:gap-[5rem]" >
 
-                <div class=" min-h-[50vh] flex flex-col justify-start items-start"> 
-                    <meeting-header>{{meetingDetails?.title}}</meeting-header>
-
-                    <p class="text-xl text-on-primary-container mt-4">{{meetingDetails?.scheduledFor | date:'dd.MM.yyyy HH:mm' }}</p>
-
-                    <div class="mt-4">
-                        <meeting-subtitle>Organizer: {{ meetingDetails?.organizer?.username }}</meeting-subtitle>
-                    </div>
-
-                    <div class="mt-4 mb-4">
-                        <meeting-subtitle>Participants</meeting-subtitle>
-                        <meeting-text>User</meeting-text>
-                    
-                    </div>
-
-                    <div class="mb-6">
-                        <meeting-subtitle>Description</meeting-subtitle>
-                        <meeting-text>
-                            {{ meetingDetails?.description || 'No description.' }}
-                        </meeting-text>
-                    </div>
-
-                    <div>
-                        <button matFab extended>
-                            JOIN
-                        </button>
-                    </div>
-                </div>
-
+            <div class="w-full md:w-[400px] order-2 md:order-1">
+                <meeting-map 
+                    [lng]="meetingDetails.longitude" 
+                    [lat]="meetingDetails.latitude">
+                </meeting-map>
             </div>
-           
+
+            <div class="w-full md:flex-1 flex flex-col justify-start items-start order-1 md:order-2"> 
+                <meeting-header>{{meetingDetails?.title}}</meeting-header>
+
+                <p class="text-xl text-on-primary-container mt-4">{{meetingDetails?.scheduledFor | date:'dd.MM.yyyy HH:mm' }}</p>
+
+                <div class="mt-4">
+                    <meeting-subtitle>Organizer: {{ meetingDetails?.organizer?.username }}</meeting-subtitle>
+                </div>
+
+                <div class="mt-4 mb-4">
+                    <meeting-subtitle>Participants</meeting-subtitle>
+                    <meeting-text>User</meeting-text>
+                </div>
+
+                <div class="mb-6">
+                    <meeting-subtitle>Description</meeting-subtitle>
+                    <meeting-text>
+                        {{ meetingDetails?.description || 'No description.' }}
+                    </meeting-text>
+                </div>
+
+                <div>
+                    <button mat-fab extended>
+                        JOIN
+                    </button>
+                </div>
+            </div>
+
         </div>
 
 

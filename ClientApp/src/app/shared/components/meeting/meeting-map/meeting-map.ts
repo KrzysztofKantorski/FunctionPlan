@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'meeting-map',

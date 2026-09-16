@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject, Input, PLATFORM_ID } from '@angular/core';
-import { UserService } from '../../../core/services/user-service';
+import { UserService } from '../../../../core/services/user-service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
 

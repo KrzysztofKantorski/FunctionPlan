@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { Meeting } from '../../../core/models/meeting';
+import { Meeting } from '../../../../core/models/meeting';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';

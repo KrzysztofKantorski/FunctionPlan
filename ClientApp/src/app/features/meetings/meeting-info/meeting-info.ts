@@ -15,10 +15,12 @@ import { MeetingDetails } from '../../../core/models/meeting-details';
 import { MeetingMap } from '../../../shared/components/meeting-map/meeting-map';
 import { MeetingSubtitle } from '../../../shared/components/meeting-subtitle/meeting-subtitle';
 import { MeetingText } from '../../../shared/components/meeting-text/meeting-text';
+import {MatIconModule} from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-meeting-info',
-  imports: [Navbar, NavbarBtnGroup, UserMenu, BackButton, MeetingHeader, MatButtonModule, MeetingMap, DatePipe, MeetingSubtitle, MeetingText],
+  imports: [Navbar, NavbarBtnGroup, UserMenu, BackButton, MeetingHeader, MatButtonModule, MeetingMap, DatePipe, MeetingSubtitle, MeetingText, MatIconModule],
   templateUrl: './meeting-info.html'
 })
 

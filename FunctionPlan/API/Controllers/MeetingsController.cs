@@ -66,7 +66,7 @@ namespace API.Controllers
         {
             var result = await _sender.Send(new GetMeetingByIdQuery(MeetingId));
 
-            return Ok(new { id = result });
+            return Ok(result);
         }
 
         //Get meetings with filters

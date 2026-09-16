@@ -16,11 +16,17 @@ import { MeetingMap } from '../../../shared/components/meeting-map/meeting-map';
 import { MeetingSubtitle } from '../../../shared/components/meeting-subtitle/meeting-subtitle';
 import { MeetingText } from '../../../shared/components/meeting-text/meeting-text';
 import {MatIconModule} from '@angular/material/icon';
-
+import { MeetingParticipant } from '../../../core/models/meeting-participant';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-meeting-info',
-  imports: [Navbar, NavbarBtnGroup, UserMenu, BackButton, MeetingHeader, MatButtonModule, MeetingMap, DatePipe, MeetingSubtitle, MeetingText, MatIconModule],
+  imports: 
+  [
+    Navbar, NavbarBtnGroup, UserMenu, BackButton, MeetingHeader, 
+    MatButtonModule, MeetingMap, DatePipe, MeetingSubtitle, MeetingText, 
+    MatIconModule
+  ],
   templateUrl: './meeting-info.html'
 })
 
@@ -33,6 +39,8 @@ export class MeetingInfo implements OnInit {
   @Input() id!: string;
 
   meetingDetails: MeetingDetails | undefined;
+  meetingParticipants: MeetingParticipant[] | undefined;
+
   isLoading = true;
 
   ngOnInit() 
@@ -40,22 +48,30 @@ export class MeetingInfo implements OnInit {
    
     if(isPlatformBrowser(this.platformId)){
        const meetingId = Number(this.id);
-        this.meetingService.getMeetingDetails(meetingId).subscribe({
-        next: (data) =>
-        {
-          this.meetingDetails = data;
-          this.isLoading = false;
 
-          //Force browser reload
-          this.cdr.detectChanges();
-          console.log(this.meetingDetails);
-        },
+        forkJoin({
 
-        error: () => 
-        {
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        }
+          //Excecute two request and wait for both responses
+          details: this.meetingService.getMeetingDetails(meetingId),
+          participants: this.meetingService.getMeetingParticipants(meetingId)
+
+        })
+        .subscribe({
+          next: ({details, participants}) =>
+          {
+            this.meetingParticipants = participants;
+            this.meetingDetails = details;
+            this.isLoading = false;
+
+            //Force browser reload
+            this.cdr.detectChanges();
+          },
+
+          error: () => 
+          {
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          }
         
       })
     }

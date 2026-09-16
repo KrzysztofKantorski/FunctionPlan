@@ -40,7 +40,18 @@
 
                 <div class="mt-4 mb-4">
                     <meeting-subtitle>Participants</meeting-subtitle>
-                    <meeting-text>User</meeting-text>
+                    @for (user of meetingParticipants; track user.id) 
+                    {
+                        <meeting-text>
+                            {{ user.username }}
+                        </meeting-text>
+                    } 
+
+                    @empty 
+                    {
+                        <meeting-text>No participants yet.</meeting-text>
+                    }
+
                 </div>
 
                 <div class="mb-4">

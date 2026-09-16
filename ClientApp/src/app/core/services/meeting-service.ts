@@ -5,6 +5,7 @@ import { MeetingFilters } from '../models/meeting-filters';
 import { Meeting } from '../models/meeting';
 import { Observable } from 'rxjs';
 import { MeetingDetails } from '../models/meeting-details';
+import { MeetingParticipant } from '../models/meeting-participant';
 
 @Injectable({
   providedIn: 'root',
@@ -68,5 +69,11 @@ export class MeetingService {
   getMeetingDetails(meetingId: number): Observable<MeetingDetails>
   {
     return this.http.get<MeetingDetails>(`${this.apiUrl}/meetings/${meetingId}`);
+  }
+
+  //Get meeting participants
+  getMeetingParticipants(meetingId: number): Observable<MeetingParticipant[]>
+  {
+    return this.http.get<MeetingParticipant[]>(`${this.apiUrl}/meetings/${meetingId}/attendees`);
   }
 }

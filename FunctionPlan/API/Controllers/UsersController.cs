@@ -43,6 +43,7 @@ namespace API.Controllers
 
         //Get user avatar
         [HttpGet("avatar")]
+        [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Client)]
         public async Task<IActionResult> GetUserImage(
             CancellationToken cancellationToken
             )

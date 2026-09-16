@@ -19,7 +19,7 @@ namespace Application.Meetings.Queries.GetMeetingById
             var sql =
                 """
                     SELECT 
-                    m."Id", m."Title", m."ScheduledFor", m."Latitude", m."Longitude",
+                    m."Id", m."Title", m."Description",  m."ScheduledFor", m."Latitude", m."Longitude",
                     u."Id", u."Username"
                     FROM "Meetings" m
                     INNER JOIN "Users" u ON m."OrganizerId" = u."Id"

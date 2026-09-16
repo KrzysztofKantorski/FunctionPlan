@@ -1,12 +1,14 @@
 import { Routes } from '@angular/router';
+
 import { WelcomePage } from './features/auth/welcome-page/welcome-page';
 import {LoginPage} from './features/auth/login-page/login-page';
 import {RegisterPage} from './features/auth/register-page/register-page';
 import {VerifyPage} from './features/auth/verify-page/verify-page';
 import {MainPage} from './features/meetings/main-page/main-page';
+import { MeetingInfo } from './features/meetings/meeting-info/meeting-info';
+
 import { guestGuard } from './core/guards/guest-guard';
 import { authGuard } from './core/guards/auth-guard';
-
 export const routes: Routes = [
     {
         path :"", 
@@ -31,6 +33,11 @@ export const routes: Routes = [
     {
         path:"main-page", 
         component: MainPage,
+        canActivate: [authGuard]
+    },
+    {
+        path:"meeting-info/:id", 
+        component: MeetingInfo,
         canActivate: [authGuard]
     }
 ];

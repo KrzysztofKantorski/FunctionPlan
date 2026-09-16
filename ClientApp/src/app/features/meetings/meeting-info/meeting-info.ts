@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { forkJoin } from 'rxjs';
 
 
 
@@ -17,7 +18,7 @@ import { MeetingSubtitle } from '../../../shared/components/meeting-subtitle/mee
 import { MeetingText } from '../../../shared/components/meeting-text/meeting-text';
 import {MatIconModule} from '@angular/material/icon';
 import { MeetingParticipant } from '../../../core/models/meeting-participant';
-import { forkJoin } from 'rxjs';
+import { UserAvatar } from '../../../shared/components/user-avatar/user-avatar';
 
 @Component({
   selector: 'app-meeting-info',
@@ -25,7 +26,7 @@ import { forkJoin } from 'rxjs';
   [
     Navbar, NavbarBtnGroup, UserMenu, BackButton, MeetingHeader, 
     MatButtonModule, MeetingMap, DatePipe, MeetingSubtitle, MeetingText, 
-    MatIconModule
+    MatIconModule, UserAvatar
   ],
   templateUrl: './meeting-info.html'
 })

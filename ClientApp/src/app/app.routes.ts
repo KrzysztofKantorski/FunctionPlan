@@ -6,9 +6,14 @@ import {RegisterPage} from './features/auth/register-page/register-page';
 import {VerifyPage} from './features/auth/verify-page/verify-page';
 import {MainPage} from './features/meetings/main-page/main-page';
 import { MeetingInfo } from './features/meetings/meeting-info/meeting-info';
+import { MeetingHistory } from './features/meetings/meeting-history/meeting-history';
+
 
 import { guestGuard } from './core/guards/guest-guard';
 import { authGuard } from './core/guards/auth-guard';
+
+
+
 export const routes: Routes = [
     {
         path :"", 
@@ -38,6 +43,11 @@ export const routes: Routes = [
     {
         path:"meeting-info/:id", 
         component: MeetingInfo,
+        canActivate: [authGuard]
+    },
+    {
+        path:"meeting-history", 
+        component: MeetingHistory,
         canActivate: [authGuard]
     }
 ];

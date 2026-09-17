@@ -4,5 +4,5 @@ export interface MeetingHistory
     title: string;
     scheduledFor: Date;
     organizerId: number;
-    organizerName: number;
+    organizerName: string;
 }

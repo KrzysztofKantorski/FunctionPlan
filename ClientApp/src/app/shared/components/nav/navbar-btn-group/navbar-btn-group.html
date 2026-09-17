@@ -1,8 +1,8 @@
  <div>
-    <button matButton>Main</button>
+    <button matButton (click)="goToMain()">Main</button>
     <button matButton [matMenuTriggerFor]="menu">Meetings</button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>History</button>
+            <button mat-menu-item  >History</button>
             <button mat-menu-item>Your meetings</button>
             <button mat-menu-item>Accepted meetings</button>
         </mat-menu>

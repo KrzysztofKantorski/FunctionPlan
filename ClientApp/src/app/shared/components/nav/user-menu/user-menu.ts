@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { UserService } from '../../../../core/services/user-service';
@@ -10,7 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
   templateUrl: './user-menu.html'
 })
 export class UserMenu implements OnInit, OnDestroy{
-
+  private cdr = inject(ChangeDetectorRef);
   private userService = inject(UserService);
   private sanitizer = inject(DomSanitizer);
   private platformId = inject(PLATFORM_ID);
@@ -27,11 +27,19 @@ export class UserMenu implements OnInit, OnDestroy{
           next: (blob: Blob) =>
           {
             this.rawObjectUrl = URL.createObjectURL(blob);
-            this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(this.rawObjectUrl);
+            const safe = this.sanitizer.bypassSecurityTrustUrl(this.rawObjectUrl);
+
+            Promise.resolve().then(() => {
+              this.avatarUrl = safe;
+              this.cdr.markForCheck();
+            });
           },
-          error: (err) =>
+          error: () =>
           {
-            console.error('Avatar fetching error', err);
+            Promise.resolve().then(() => {
+              this.avatarUrl = null;
+              this.cdr.markForCheck();
+            });
           }
         })
       

@@ -19,10 +19,7 @@ export class MeetingService {
 
 
 
-
-  //Get user meetings with filters (from sidebar and search bar)
-  getMeetings(filters: MeetingFilters): Observable <Meeting[]>
-  {
+  private buildMeetingParams(filters: MeetingFilters): HttpParams{
     let params = new HttpParams();
 
     //Send filters if set
@@ -60,18 +57,31 @@ export class MeetingService {
     }
 
 
+    return params;
+  }
+
+
+
+
+  //Get user meetings with filters (from sidebar and search bar)
+  getMeetings(filters: MeetingFilters): Observable <Meeting[]>
+  {
+    const params = this.buildMeetingParams(filters);
+
+
     //Send request with params
     return this.http.get<Meeting[]>(`${this.apiUrl}/meetings`, {params});
   }
 
 
   //Get past meetings
-  getPastMeetings(): Observable<MeetingHistory[]>
+  getPastMeetings(filters: MeetingFilters): Observable<MeetingHistory[]>
   {
-    return this.http.get<MeetingHistory[]>(`${this.apiUrl}/meetings/history`);
+    const params = this.buildMeetingParams(filters);
+    return this.http.get<MeetingHistory[]>(`${this.apiUrl}/meetings/history`, {params});
   }
 
-  
+
   //Get meeting details
   getMeetingDetails(meetingId: number): Observable<MeetingDetails>
   {

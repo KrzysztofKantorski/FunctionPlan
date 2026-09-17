@@ -6,6 +6,7 @@ import { Meeting } from '../models/meeting';
 import { Observable } from 'rxjs';
 import { MeetingDetails } from '../models/meeting-details';
 import { MeetingParticipant } from '../models/meeting-participant';
+import { MeetingHistory } from '../models/meeting-history';
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +65,13 @@ export class MeetingService {
   }
 
 
+  //Get past meetings
+  getPastMeetings(): Observable<MeetingHistory[]>
+  {
+    return this.http.get<MeetingHistory[]>(`${this.apiUrl}/meetings/history`);
+  }
 
+  
   //Get meeting details
   getMeetingDetails(meetingId: number): Observable<MeetingDetails>
   {

@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Data;
+using Application.Exceptions;
 using Dapper;
 using Domain.Meetings;
 using MediatR;
@@ -59,6 +60,25 @@ namespace Application.Meetings.Queries.GetPastMeetings
             {
                 conditions.Add("m.\"Title\" ILIKE @SearchTerm");
                 parameters.Add("SearchTerm", $"%{request.SearchTerm}%");
+            }
+
+
+            //Check if user provided proper date range
+            if (request.StartDate.HasValue && request.EndDate.HasValue && request.StartDate > request.EndDate)
+            {
+                throw new InvalidRequestData("StartDate cannot be later than EndDate.");
+            }
+
+            if (request.StartDate.HasValue)
+            {
+                conditions.Add("m.\"ScheduledFor\" >= @StartDate");
+                parameters.Add("StartDate", request.StartDate.Value);
+            }
+
+            if (request.EndDate.HasValue)
+            {
+                conditions.Add("m.\"ScheduledFor\" <= @EndDate");
+                parameters.Add("EndDate", request.EndDate.Value.Date.AddDays(1).AddTicks(-1));
             }
 
             //Add conditions

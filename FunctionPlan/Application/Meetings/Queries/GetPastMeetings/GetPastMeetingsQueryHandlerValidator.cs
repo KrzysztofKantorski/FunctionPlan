@@ -19,6 +19,20 @@ namespace Application.Meetings.Queries.GetPastMeetings
                 RuleFor(x => x.Status)
                     .IsInEnum().WithMessage("Incorrect meeting status.");
             });
+
+            When(x => x.StartDate != null, () =>
+            {
+                RuleFor(x => x.StartDate!.Value)
+                  .NotEmpty()
+                  .WithMessage("Start date cannot be empty.");
+            });
+
+            When(x => x.EndDate != null, () =>
+            {
+                RuleFor(x => x.EndDate!.Value)
+                  .NotEmpty()
+                  .WithMessage("End date cannot be empty.");
+            });
         }
     }
 }

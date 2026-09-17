@@ -93,11 +93,13 @@ namespace API.Controllers
         public async Task<IActionResult> GetMeetingsHistory(
            [FromQuery] string? SearchTerm,
            [FromQuery] string? SortOrder,
+           [FromQuery] DateTime? StartDate,
+           [FromQuery] DateTime? EndDate,
            [FromQuery] int? Status,
            CancellationToken cancellation
            )
         {
-            var query = new GetPastMeetingsQuery(SearchTerm, SortOrder, Status);
+            var query = new GetPastMeetingsQuery(SearchTerm, SortOrder, StartDate, EndDate, Status);
 
             var result = await _sender.Send(query);
 

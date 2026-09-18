@@ -1,18 +1,12 @@
-import { Component } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
+import { Component, inject, Input } from '@angular/core';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
-export interface PeriodicElement {
-  scheduledFor: string;
-  title: number;
-  organizerName: number;
-  actions: string;
-}
+import { Router } from '@angular/router';
+import { PastMeetings } from '../../../../core/models/meeting-history';
+import { Observable } from 'rxjs';
 
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {title: 1, scheduledFor: '2025-10-10', organizerName: 1.0079, actions: 'H'}
-];
 
 @Component({
   selector: 'meeting-table',
@@ -22,6 +16,17 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 
 export class MeetingTable {
+  private router = inject(Router);
+
+  //Datesource
+  dataSource = new MatTableDataSource<PastMeetings>([]);
+
+  @Input({ required: true }) 
+  set data(value: PastMeetings[] | undefined) 
+  {
+    this.dataSource.data = value ?? [];
+  }
+  
   displayedColumns: string[] = ['title', 'scheduledFor', 'organizerName', 'actions'];
-  dataSource = ELEMENT_DATA;
+
 }

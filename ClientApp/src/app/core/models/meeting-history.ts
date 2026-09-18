@@ -1,4 +1,4 @@
-export interface MeetingHistory
+export interface PastMeetings
 {
     id: number;
     title: string;

@@ -1,18 +1,19 @@
 <div class="flex h-screen flex-col bg-background font-sans overflow-hidden">
     <navbar>
       <navbar-btn-group></navbar-btn-group>
-      <navbar-search ></navbar-search>
+      <navbar-search (searchChanged)="onSearchChanged($event)"></navbar-search>
       <user-menu></user-menu>
     </navbar>
 
 
     <div class="flex flex-1 overflow-hidden">
         <div class="w-64 flex-shrink-0 bg-primary-container overflow-y-auto relative">
-            <sidebar ></sidebar>
+            <sidebar  (filtersChanged)="onFiltersUpdated($event)"></sidebar>
         </div>
+        <main class="flex-1 overflow-y-auto p-10">
+            <meeting-table [data]="(meetingsHistory$ | async) ?? []"></meeting-table>
+        </main>
     </div>
 
-    <main class="flex-1 overflow-y-auto p-10">
-        <meeting-table></meeting-table>
-    </main>
+    
 </div>

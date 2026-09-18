@@ -1,7 +1,6 @@
 ﻿using Application.Abstractions.Data;
-using Application.Common.Dto;
 using Application.Meetings.Queries.GetAttendeedMeetings;
-using Application.Meetings.Queries.GetMyMeetings;
+using Application.Meetings.Queries.GetOrganizedMeetings;
 using Dapper;
 using MediatR;
 using System.Data;

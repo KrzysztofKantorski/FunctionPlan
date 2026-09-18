@@ -1,4 +1,5 @@
-﻿using Application.Common.Dto;
+﻿
+using Application.Meetings.Queries.GetOrganizedMeetings;
 using MediatR;
 
 namespace Application.Meetings.Queries.GetAttendeedMeetings

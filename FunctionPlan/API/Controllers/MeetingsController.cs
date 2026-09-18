@@ -134,10 +134,14 @@ namespace API.Controllers
         //Get meetings that user organized
         [HttpGet("organized")]
         public async Task<IActionResult> GetOrganizedMeetings(
+            [FromQuery] string? SearchTerm,
+            [FromQuery] string? SortOrder,
+            [FromQuery] DateTime? StartDate,
+            [FromQuery] DateTime? EndDate,
             CancellationToken cancellationToken
             )
         {
-            var command =  new GetOrganizedMeetingsQuery(User.GetUserId());
+            var command =  new GetOrganizedMeetingsQuery(SearchTerm, SortOrder, StartDate, EndDate, User.GetUserId());
             var result = await _sender.Send(command, cancellationToken);
             return Ok(result);
         }

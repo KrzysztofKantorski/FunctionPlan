@@ -1,0 +1,33 @@
+﻿using Application.Meetings.Queries.GetAttendeedMeetings;
+using FluentValidation;
+
+namespace Application.Meetings.Queries.GetOrganizedMeetings
+{
+    // Zakładam, że powinieneś walidować zapytanie GetOrganizedMeetingsQuery, a nie sam validator.
+    internal sealed class GetOrganizedMeetingsValidator : AbstractValidator<GetOrganizedMeetingsQuery>
+    {
+        public GetOrganizedMeetingsValidator()
+        {
+            RuleFor(x => x.SearchTerm)
+                 .MaximumLength(100).WithMessage("Incorrect search phrase");
+
+            RuleFor(x => x.SortOrder)
+                .Must(x => string.IsNullOrWhiteSpace(x) || x.ToLower() == "asc" || x.ToLower() == "desc")
+                .WithMessage("Incorrect sort order");
+
+            When(x => x.StartDate != null, () =>
+            {
+                RuleFor(x => x.StartDate!.Value)
+                  .NotEmpty()
+                  .WithMessage("Start date cannot be empty.");
+            });
+
+            When(x => x.EndDate != null, () =>
+            {
+                RuleFor(x => x.EndDate!.Value)
+                  .NotEmpty()
+                  .WithMessage("End date cannot be empty.");
+            });
+        }
+    }
+}

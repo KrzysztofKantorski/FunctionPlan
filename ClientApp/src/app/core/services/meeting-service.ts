@@ -82,6 +82,16 @@ export class MeetingService {
   }
 
 
+
+  //Get organized meetings
+  getOrganizedMeetings(filters: MeetingFilters): Observable<MeetingTableView[]>
+  {
+    const params = this.buildMeetingParams(filters);
+    return this.http.get<MeetingTableView[]>(`${this.apiUrl}/meetings/organized`, {params});
+  }
+
+
+
   //Get meeting details
   getMeetingDetails(meetingId: number): Observable<MeetingDetails>
   {

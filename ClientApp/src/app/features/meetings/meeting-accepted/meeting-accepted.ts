@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MeetingService } from '../../../core/services/meeting-service';
 import { MeetingFilters } from '../../../core/models/meeting-filters';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
@@ -23,6 +23,7 @@ import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
 
 
 export class MeetingAccepted {
+
 
   private meetingService = inject(MeetingService);
   

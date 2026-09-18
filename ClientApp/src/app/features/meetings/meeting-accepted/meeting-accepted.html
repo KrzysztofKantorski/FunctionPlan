@@ -27,7 +27,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
           
           @for (meeting of meetings; track meeting.id) {
-            <meeting-card [meeting]="meeting"></meeting-card>
+            <meeting-card [meeting]="meeting" [isAcceptedView]="true"></meeting-card>
           }
           
           <!-- No matching meetings -->

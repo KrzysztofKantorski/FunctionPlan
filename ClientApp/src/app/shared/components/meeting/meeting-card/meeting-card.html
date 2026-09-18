@@ -18,6 +18,16 @@
 
   <mat-card-actions>
     <button matButton (click)="goToDetails(meeting.id)">Details</button>
-    <button matButton>Join</button>
+    
+    @if(isAcceptedView)
+    {
+      <button matButton>Cancel attendance</button>
+    }
+    @else
+    {
+      <button matButton>Join</button>
+    }
+
+   
   </mat-card-actions>
 </mat-card>

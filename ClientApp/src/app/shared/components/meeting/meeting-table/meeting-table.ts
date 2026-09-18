@@ -26,7 +26,13 @@ export class MeetingTable {
   {
     this.dataSource.data = value ?? [];
   }
-  
+
   displayedColumns: string[] = ['title', 'scheduledFor', 'organizerName', 'actions'];
+
+
+  goToMeeting(meetingId: number): void 
+  {
+    this.router.navigate(['/meeting-info', meetingId]);
+  }
 
 }

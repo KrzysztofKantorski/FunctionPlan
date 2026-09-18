@@ -23,4 +23,8 @@ export class NavbarBtnGroup {
   goToOrganized(){
     this.router.navigate(['/meeting-organized'])
   }
+
+  goToAccepted(){
+    this.router.navigate(['/meeting-accepted'])
+  }
 }

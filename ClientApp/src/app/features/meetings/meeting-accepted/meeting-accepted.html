@@ -1,0 +1,48 @@
+<div class="flex h-screen flex-col bg-background font-sans overflow-hidden">
+
+    <!-- Nav -->
+    <navbar>
+      <navbar-btn-group></navbar-btn-group>
+      <navbar-search (searchChanged)="onSearchChanged($event)"></navbar-search>
+      <user-menu></user-menu>
+    </navbar>
+
+    <div class="flex flex-1 overflow-hidden">
+    
+    <!-- Sidebar -->
+    <div class="w-64 flex-shrink-0 bg-primary-container overflow-y-auto relative">
+      <sidebar (filtersChanged)="onFiltersUpdated($event)"></sidebar>
+
+      <button 
+        mat-flat-button 
+        class="!p-5 !text-lg !w-[90%] !bg-on-primary !text-on-primary-container !rounded-none text-center !absolute bottom-5 left-[5%]"
+      >
+        Schedule meeting
+      </button>
+    </div>
+
+    <!-- Meetings Grid -->
+    <main class="flex-1 overflow-y-auto p-10">
+      @if (meetings$ | async; as meetings) {
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          
+          @for (meeting of meetings; track meeting.id) {
+            <meeting-card [meeting]="meeting"></meeting-card>
+          }
+          
+          <!-- No matching meetings -->
+          @empty {
+            <div class="col-span-full text-center text-gray-500 py-10">
+              No meetings matching criteria.
+            </div>
+          }
+
+        </div>
+      } @else {
+        <!-- Loading state -->
+        <div class="text-center py-10">Wczytywanie spotkań...</div>
+      }
+    </main>
+
+  </div>
+</div>

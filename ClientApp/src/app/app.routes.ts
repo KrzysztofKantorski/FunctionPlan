@@ -8,6 +8,8 @@ import {MainPage} from './features/meetings/main-page/main-page';
 import { MeetingInfo } from './features/meetings/meeting-info/meeting-info';
 import { MeetingHistory } from './features/meetings/meeting-history/meeting-history';
 import { MeetingOrganized } from './features/meetings/meeting-organized/meeting-organized';
+import { MeetingAccepted } from './features/meetings/meeting-accepted/meeting-accepted';
+
 
 import { guestGuard } from './core/guards/guest-guard';
 import { authGuard } from './core/guards/auth-guard';
@@ -53,6 +55,11 @@ export const routes: Routes = [
     {
         path:"meeting-organized", 
         component: MeetingOrganized,
+        canActivate: [authGuard]
+    },
+    {
+        path:"meeting-accepted", 
+        component: MeetingAccepted,
         canActivate: [authGuard]
     }
 ];

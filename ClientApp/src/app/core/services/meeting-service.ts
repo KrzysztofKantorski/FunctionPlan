@@ -92,10 +92,10 @@ export class MeetingService {
 
 
   //Get accepted meetings
-  getAcceptedMeetings(filters: MeetingFilters): Observable<MeetingTableView[]>
+  getAcceptedMeetings(filters: MeetingFilters): Observable<Meeting[]>
   {
     const params = this.buildMeetingParams(filters);
-    return this.http.get<MeetingTableView[]>(`${this.apiUrl}/meetings/attended`, {params});
+    return this.http.get<Meeting[]>(`${this.apiUrl}/meetings/attended`, {params});
   }
 
 

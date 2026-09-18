@@ -9,8 +9,13 @@
     <div class="w-64 flex-shrink-0 bg-primary-container overflow-y-auto relative">
       <sidebar (filtersChanged)="onFiltersUpdated($event)"></sidebar>
     </div>
-    <main class="flex-1 overflow-y-auto p-10">
-      <meeting-table [data]="(meetings$ | async) ?? []"></meeting-table>
+   <main class="flex-1 overflow-y-auto p-10">
+        <meeting-table 
+            [data]="(meetings$ | async) ?? []"
+            [isOrganizerView]="isOrganizerView"
+            (updateMeeting)="updateMeeting.emit($event)"
+            (deleteMeeting)="deleteMeeting.emit($event)">
+        </meeting-table>
     </main>
   </div>
 </div>

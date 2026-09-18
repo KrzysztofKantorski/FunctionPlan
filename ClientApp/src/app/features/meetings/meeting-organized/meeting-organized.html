@@ -1,4 +1,6 @@
 <meeting-table-layout 
-      [fetchFn]="fetchOrganizedMeetings">
+  [fetchFn]="fetchOrganizedMeetings"
+  [isOrganizerView]="true"
+  (updateMeeting)="handleUpdate($event)"
+  (deleteMeeting)="handleDelete($event)">
 </meeting-table-layout>
-

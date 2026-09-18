@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MeetingFilters } from '../../../core/models/meeting-filters';
 import { MeetingTableView } from '../../../core/models/meeting-table';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
@@ -18,6 +18,11 @@ import { AsyncPipe } from '@angular/common';
 
 export class MeetingTableLayout {
 
+  //Add delete / edit buttons only for organized meetings page
+  @Input() isOrganizerView = false;
+  
+  @Output() updateMeeting = new EventEmitter<number>();
+  @Output() deleteMeeting = new EventEmitter<number>();
   // Function to be passed from view
   @Input({ required: true }) fetchFn!: (filters: MeetingFilters) => Observable<MeetingTableView[]>;
 

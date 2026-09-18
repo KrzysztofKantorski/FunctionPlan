@@ -8,7 +8,7 @@ import { MeetingTable } from '../../../shared/components/meeting/meeting-table/m
 import { MeetingFilters } from '../../../core/models/meeting-filters';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { MeetingService } from '../../../core/services/meeting-service';
-import { PastMeetings } from '../../../core/models/meeting-history';
+import { MeetingTableView } from '../../../core/models/meeting-table';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -28,7 +28,7 @@ export class MeetingHistory {
     sortOrder: 'asc'
   });
 
-  meetingsHistory$: Observable<PastMeetings[]> | undefined;
+  meetingsHistory$: Observable<MeetingTableView[]> | undefined;
 
 
 

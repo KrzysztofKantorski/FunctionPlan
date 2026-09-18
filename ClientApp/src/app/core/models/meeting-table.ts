@@ -1,4 +1,4 @@
-export interface PastMeetings
+export interface MeetingTableView
 {
     id: number;
     title: string;

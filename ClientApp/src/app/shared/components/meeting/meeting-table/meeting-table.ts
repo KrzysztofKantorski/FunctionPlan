@@ -3,7 +3,7 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { PastMeetings } from '../../../../core/models/meeting-history';
+import { MeetingTableView } from '../../../../core/models/meeting-table';
 import { Observable } from 'rxjs';
 
 
@@ -19,10 +19,10 @@ export class MeetingTable {
   private router = inject(Router);
 
   //Datesource
-  dataSource = new MatTableDataSource<PastMeetings>([]);
+  dataSource = new MatTableDataSource<MeetingTableView>([]);
 
   @Input({ required: true }) 
-  set data(value: PastMeetings[] | undefined) 
+  set data(value: MeetingTableView[] | undefined) 
   {
     this.dataSource.data = value ?? [];
   }

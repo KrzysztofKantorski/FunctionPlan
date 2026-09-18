@@ -6,7 +6,7 @@ import { Meeting } from '../models/meeting';
 import { Observable } from 'rxjs';
 import { MeetingDetails } from '../models/meeting-details';
 import { MeetingParticipant } from '../models/meeting-participant';
-import { PastMeetings } from '../models/meeting-history';
+import { MeetingTableView } from '../models/meeting-table';
 
 @Injectable({
   providedIn: 'root',
@@ -75,10 +75,10 @@ export class MeetingService {
 
 
   //Get past meetings
-  getPastMeetings(filters: MeetingFilters): Observable<PastMeetings[]>
+  getPastMeetings(filters: MeetingFilters): Observable<MeetingTableView[]>
   {
     const params = this.buildMeetingParams(filters);
-    return this.http.get<PastMeetings[]>(`${this.apiUrl}/meetings/history`, {params});
+    return this.http.get<MeetingTableView[]>(`${this.apiUrl}/meetings/history`, {params});
   }
 
 

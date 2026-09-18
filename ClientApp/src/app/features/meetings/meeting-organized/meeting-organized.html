@@ -1,20 +1,4 @@
-<div class="flex h-screen flex-col bg-background font-sans overflow-hidden">
-    <navbar>
-      <navbar-btn-group></navbar-btn-group>
-      <navbar-search (searchChanged)="onSearchChanged($event)"></navbar-search>
-      <user-menu></user-menu>
-    </navbar>
-
-
-    <div class="flex flex-1 overflow-hidden">
-        <div class="w-64 flex-shrink-0 bg-primary-container overflow-y-auto relative">
-            <sidebar (filtersChanged)="onFiltersUpdated($event)"></sidebar>
-        </div>
-        <main class="flex-1 overflow-y-auto p-10">
-           <meeting-table [data]="(meetingOrganized$ | async) ?? []"></meeting-table>
-        </main>
-    </div>
-
-    
-</div>
+<meeting-table-layout 
+      [fetchFn]="fetchOrganizedMeetings">
+</meeting-table-layout>
 

@@ -19,4 +19,8 @@ export class NavbarBtnGroup {
   goToMain(){
     this.router.navigate(['/main-page'])
   }
+
+  goToOrganized(){
+    this.router.navigate(['/meeting-organized'])
+  }
 }

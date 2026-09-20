@@ -40,22 +40,25 @@
 
                 <div class="mt-4 mb-4">
                     <meeting-subtitle>Participants</meeting-subtitle>
-                    @for (user of meetingParticipants; track user.id) 
-                    {
-                        <div (click)="openParticipantDetails(user)">
-                            <user-avatar
-                                [userId]="user.id"
-                                [username]="user.username">
-                            </user-avatar>
-                        </div>
-                       
-                    } 
+                    <div class="flex flex-row flex-wrap items-center justify-start -space-x-3 mt-2">
 
-                    @empty 
-                    {
-                        <meeting-text>No participants yet.</meeting-text>
-                    }
+                        @for (user of meetingParticipants; track user.id) 
+                        {
+                            <div (click)="openParticipantDetails(user)" class="relative rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105">
+                                <user-avatar
+                                    [userId]="user.id"
+                                    [username]="user.username">
+                                </user-avatar>
+                            </div>
+                        
+                        } 
 
+                        @empty 
+                        {
+                            <meeting-text>No participants yet.</meeting-text>
+                        }
+
+                    </div>
                 </div>
 
                 <div class="mb-4">

@@ -1,11 +1,12 @@
 @if(avatarUrl)
 {
-    <img [src]="avatarUrl" [alt]="username" class="mt-4 w-10 h-10 rounded-full object-cover cursor-pointer hover:opacity-80 transition" />
+    <img [src]="avatarUrl" [alt]="username" 
+    class="opacity-95 w-10 h-10 rounded-full object-cover cursor-pointer hover:opacity-100 transition" />
 }
 @else
 {
-    <div class="mt-4 w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center 
-    font-bold text-on-surface-variant cursor-pointer hover:opacity-80 transition">
+    <div class="opacity-95 w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center font-bold 
+    text-on-surface-variant cursor-pointer hover:opacity-100 transition">
         {{ username.charAt(0).toUpperCase() }}
     </div>
 }

@@ -41,7 +41,7 @@ namespace Application.Users.Queries.GetAnotherUserAvatar
             //Check if image exists
             if (string.IsNullOrWhiteSpace(imageId) || !Guid.TryParse(imageId, out var fileId))
             {
-                throw new ImageNotFound("User image not found");
+                return null;
             }
 
             //Get file from azure blob

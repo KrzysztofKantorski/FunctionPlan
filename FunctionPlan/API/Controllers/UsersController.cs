@@ -72,6 +72,12 @@ namespace API.Controllers
 
             var fileResponse = await _sender.Send(query, cancellationToken);
 
+            //Return 404 if user does not have image
+            if (fileResponse is null)
+            {
+                return NotFound(); 
+            }
+
             return File(fileResponse.Stream, fileResponse.ContentType);
         }
 

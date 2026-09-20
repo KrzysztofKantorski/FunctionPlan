@@ -23,7 +23,7 @@ namespace Application.Common.Helpers
 
             if (endDate.HasValue)
             {
-                conditions.Add($"{columnName} >= @StartDate");
+                conditions.Add($"{columnName} < @EndDate");
                 parameters.Add("EndDate", endDate.Value.Date.AddDays(1));
             }
         }
@@ -31,16 +31,20 @@ namespace Application.Common.Helpers
 
 
         //Add sorting order
-        public static void ApplySorting(string sql, string columnName, string? sortOrder)
+        public static string ApplySorting(string sql, string columnName, string? sortOrder)
         {
             var sortDirection = sortOrder?.ToLower() == "desc" ? "DESC" : "ASC";
-            sql += $"\nORDER BY {columnName} {sortDirection}";
+            return $"{sql}\nORDER BY {columnName} {sortDirection}";
         }
 
 
         //Apply search term LIKE condition
-        public static void ApplySearchTerm(string sql, string columnName, string? searchTerm, 
-            List<string> conditions, DynamicParameters parameters)
+        public static void ApplySearchTerm(
+            this List<string> conditions,
+            DynamicParameters parameters,
+            string columnName, 
+            string? searchTerm 
+        )
         {
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {

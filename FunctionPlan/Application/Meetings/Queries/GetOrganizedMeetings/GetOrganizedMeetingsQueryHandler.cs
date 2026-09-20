@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Data;
+using Application.Common.Helpers;
 using Application.Exceptions;
 using Application.Meetings.Queries.GetAttendeedMeetings;
 using Application.Meetings.Queries.GetOrganizedMeetings;
@@ -34,40 +35,11 @@ namespace Application.Meetings.Queries.GetAttendedMeetings
             conditions.Add("m.\"OrganizerId\" = @userId");
             parameters.Add("userId", request.userId);
 
-            //Check if user provided proper date range
-            if (request.StartDate.HasValue && request.EndDate.HasValue && request.StartDate > request.EndDate)
-            {
-                throw new InvalidRequestData("StartDate cannot be later than EndDate.");
-            }
+            conditions.AddDateRangeFilter(parameters, "m.\"ScheduledFor\"", request.StartDate, request.EndDate);
+            conditions.ApplySearchTerm(parameters, "m.\"Title\"", request.SearchTerm);
 
-            if (request.StartDate.HasValue)
-            {
-                conditions.Add("m.\"ScheduledFor\" >= @StartDate");
-                parameters.Add("StartDate", request.StartDate.Value);
-            }
-
-            if (request.EndDate.HasValue)
-            {
-                conditions.Add("m.\"ScheduledFor\" <= @EndDate");
-                parameters.Add("EndDate", request.EndDate.Value.Date.AddDays(1).AddTicks(-1));
-            }
-
-            //Search by meeting title
-            if (!string.IsNullOrWhiteSpace(request.SearchTerm))
-            {
-                conditions.Add("m.\"Title\" ILIKE @SearchTerm");
-                parameters.Add("SearchTerm", $"%{request.SearchTerm}%");
-            }
-
-            //Add conditions
-            if (conditions.Any())
-            {
-                sql += " WHERE " + string.Join(" AND ", conditions);
-            }
-
-            //Sorting type
-            var sortDirection = request.SortOrder?.ToLower() == "desc" ? "DESC" : "ASC";
-            sql += $"\nORDER BY m.\"ScheduledFor\" {sortDirection}";
+            sql = SqlExtensions.ApplyWhereConditions(sql, conditions);
+            sql = SqlExtensions.ApplySorting(sql, "m.\"ScheduledFor\"", request.SortOrder);
 
 
             var meetings = await connection.QueryAsync<MeetingListDto>(sql, parameters);

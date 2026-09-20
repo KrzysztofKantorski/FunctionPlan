@@ -35,6 +35,6 @@ namespace Application.Meetings.Queries.GetMyMeetings
             );
 
             return myMeetings.ToList();
-        }
+        } 
     }
 }

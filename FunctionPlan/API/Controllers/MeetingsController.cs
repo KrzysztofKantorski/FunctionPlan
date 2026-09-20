@@ -1,4 +1,5 @@
 ﻿using API.Extensions;
+using Application.Common.Dto;
 using Application.Meetings.Commands.CancellMeetingCommand;
 using Application.Meetings.Commands.CancelMeetingAttendance.cs;
 using Application.Meetings.Commands.ChangeCoordinates;
@@ -79,7 +80,8 @@ namespace API.Controllers
             CancellationToken cancellation
             )
         {
-            var query = new GetMeetingsQuery(User.GetUserId(), SearchTerm, StartDate, EndDate, SortOrder);
+            var filters = new MeetingFiltersDto(SearchTerm, SortOrder, StartDate, EndDate);
+            var query = new GetMeetingsQuery(filters, User.GetUserId());
 
             var result = await _sender.Send(query);
 
@@ -97,7 +99,8 @@ namespace API.Controllers
            CancellationToken cancellation
            )
         {
-            var query = new GetPastMeetingsQuery(SearchTerm, SortOrder, StartDate, EndDate);
+            var filters = new MeetingFiltersDto(SearchTerm, SortOrder, StartDate, EndDate);
+            var query = new GetPastMeetingsQuery(filters);
 
             var result = await _sender.Send(query);
 
@@ -130,7 +133,8 @@ namespace API.Controllers
             CancellationToken cancellationToken
             )
         {
-            var command = new GetMyMeetingsQuery(User.GetUserId(), SearchTerm, SortOrder, StartDate, EndDate);
+            var filters = new MeetingFiltersDto(SearchTerm, SortOrder, StartDate, EndDate);
+            var command = new GetMyMeetingsQuery(filters, User.GetUserId());
             var result = await _sender.Send(command, cancellationToken);
             return Ok(result);
         }
@@ -145,7 +149,8 @@ namespace API.Controllers
             CancellationToken cancellationToken
             )
         {
-            var command =  new GetOrganizedMeetingsQuery(SearchTerm, SortOrder, StartDate, EndDate, User.GetUserId());
+            var filters = new MeetingFiltersDto(SearchTerm, SortOrder, StartDate, EndDate);
+            var command =  new GetOrganizedMeetingsQuery(filters, User.GetUserId());
             var result = await _sender.Send(command, cancellationToken);
             return Ok(result);
         }

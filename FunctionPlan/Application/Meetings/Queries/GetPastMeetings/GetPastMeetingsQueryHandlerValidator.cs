@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Application.Common.Validators;
+using FluentValidation;
 
 
 namespace Application.Meetings.Queries.GetPastMeetings
@@ -7,32 +8,8 @@ namespace Application.Meetings.Queries.GetPastMeetings
     {
         public GetPastMeetingsQueryHandlerValidator() 
         {
-            RuleFor(x => x.SearchTerm)
-                .MaximumLength(100).WithMessage("Incorrect search phrase");
-
-            RuleFor(x => x.SortOrder)
-                .Must(x => string.IsNullOrWhiteSpace(x) || x.ToLower() == "asc" || x.ToLower() == "desc")
-                .WithMessage("Incorrect sort order");
-
-            When(x => x.Status != null, () =>
-            {
-                RuleFor(x => x.Status)
-                    .IsInEnum().WithMessage("Incorrect meeting status.");
-            });
-
-            When(x => x.StartDate != null, () =>
-            {
-                RuleFor(x => x.StartDate!.Value)
-                  .NotEmpty()
-                  .WithMessage("Start date cannot be empty.");
-            });
-
-            When(x => x.EndDate != null, () =>
-            {
-                RuleFor(x => x.EndDate!.Value)
-                  .NotEmpty()
-                  .WithMessage("End date cannot be empty.");
-            });
+            RuleFor(x => x.Filters)
+                .SetValidator(new MeetingFiltersDtoValidator());
         }
     }
 }

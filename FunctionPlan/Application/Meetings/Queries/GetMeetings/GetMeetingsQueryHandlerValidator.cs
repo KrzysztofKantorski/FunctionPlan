@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Application.Common.Validators;
+using FluentValidation;
 
 namespace Application.Meetings.Queries.GetMeetings
 {
@@ -6,12 +7,8 @@ namespace Application.Meetings.Queries.GetMeetings
     {
         public GetMeetingsQueryHandlerValidator() 
         {
-            RuleFor(x => x.SearchTerm)
-                .MaximumLength(100).WithMessage("Incorrect search phrase");
-
-            RuleFor(x => x.SortOrder)
-                .Must(x => string.IsNullOrWhiteSpace(x) || x.ToLower() == "asc" || x.ToLower() == "desc")
-                .WithMessage("Incorrect sort order");
+            RuleFor(x => x.Filters)
+                 .SetValidator(new MeetingFiltersDtoValidator());
         }
     }
 }

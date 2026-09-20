@@ -45,34 +45,14 @@ namespace Application.Meetings.Queries.GetMeetings
                 """);
 
             parameters.Add("UserId", request.UserId);
+
             //Get allowed meeting statuses
             var allowedStatuses = new List<int> { (int)MeetingStatus.Planned, (int)MeetingStatus.InProgress };
 
-            //Check if user provided proper date range
-            if (request.StartDate.HasValue && request.EndDate.HasValue && request.StartDate > request.EndDate)
-            {
-                throw new InvalidRequestData("StartDate cannot be later than EndDate.");
-            }
-
-            if (request.Status.HasValue)
-            {
-                if (allowedStatuses.Contains(request.Status.Value))
-                {
-                    conditions.Add("m.\"Status\" = @RequestedStatus");
-                    parameters.Add("RequestedStatus", request.Status.Value);
-                }
-                else
-                {
-                    throw new Exception("Incorrect meeting status");
-                }
-            }
-            else
-            {
-                //Get meetings in progress and planned
-                conditions.Add("m.\"Status\" IN (@Planned, @InProgress)");
-                parameters.Add("Planned", (int)MeetingStatus.Planned);
-                parameters.Add("InProgress", (int)MeetingStatus.InProgress);
-            }
+            //Get meetings in progress and planned
+            conditions.Add("m.\"Status\" IN (@Planned, @InProgress)");
+            parameters.Add("Planned", (int)MeetingStatus.Planned);
+            parameters.Add("InProgress", (int)MeetingStatus.InProgress);
 
             conditions.AddDateRangeFilter(parameters, "m.\"ScheduledFor\"", request.StartDate, request.EndDate);
             conditions.ApplySearchTerm(parameters, "m.\"Title\"", request.SearchTerm);

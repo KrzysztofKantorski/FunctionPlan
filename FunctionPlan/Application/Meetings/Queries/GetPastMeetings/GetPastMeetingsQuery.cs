@@ -1,11 +1,9 @@
 ﻿using Application.Abstractions.Messaging;
+using Application.Common.Dto;
 
 namespace Application.Meetings.Queries.GetPastMeetings
 {
     public sealed record GetPastMeetingsQuery(
-        string? SearchTerm,
-        string? SortOrder,
-        DateTime? StartDate,
-        DateTime? EndDate
+        MeetingFiltersDto Filters
     ) : ICommand<List<MeetingListDto>>;
 }

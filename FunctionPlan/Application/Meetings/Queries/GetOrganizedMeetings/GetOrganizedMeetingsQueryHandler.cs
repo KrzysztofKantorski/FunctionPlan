@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Application.Meetings.Queries.GetAttendedMeetings
 {
-    internal sealed class GetOrganizedMeetingsQueryHandler: IRequestHandler<GetOrganizedMeetingsQuery, List<MeetingListDto>>
+    internal sealed class GetOrganizedMeetingsQueryHandler: IRequestHandler<GetOrganizedMeetingsQuery, List<OrganizedMeetingListDto>>
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
@@ -17,7 +17,7 @@ namespace Application.Meetings.Queries.GetAttendedMeetings
         {
             _sqlConnectionFactory = sqlConnectionFactory;
         }
-        public async Task<List<MeetingListDto>> Handle(GetOrganizedMeetingsQuery request, CancellationToken cancellationToken)
+        public async Task<List<OrganizedMeetingListDto>> Handle(GetOrganizedMeetingsQuery request, CancellationToken cancellationToken)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateDbConnection();
 
@@ -35,14 +35,14 @@ namespace Application.Meetings.Queries.GetAttendedMeetings
             conditions.Add("m.\"OrganizerId\" = @userId");
             parameters.Add("userId", request.userId);
 
-            conditions.AddDateRangeFilter(parameters, "m.\"ScheduledFor\"", request.StartDate, request.EndDate);
-            conditions.ApplySearchTerm(parameters, "m.\"Title\"", request.SearchTerm);
+            conditions.AddDateRangeFilter(parameters, "m.\"ScheduledFor\"", request.Filters.StartDate, request.Filters.EndDate);
+            conditions.ApplySearchTerm(parameters, "m.\"Title\"", request.Filters.SearchTerm);
 
             sql = SqlExtensions.ApplyWhereConditions(sql, conditions);
-            sql = SqlExtensions.ApplySorting(sql, "m.\"ScheduledFor\"", request.SortOrder);
+            sql = SqlExtensions.ApplySorting(sql, "m.\"ScheduledFor\"", request.Filters.SortOrder);
 
 
-            var meetings = await connection.QueryAsync<MeetingListDto>(sql, parameters);
+            var meetings = await connection.QueryAsync<OrganizedMeetingListDto>(sql, parameters);
             return meetings.ToList();
         }
     }

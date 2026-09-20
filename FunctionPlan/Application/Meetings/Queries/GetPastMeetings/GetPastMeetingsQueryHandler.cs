@@ -41,11 +41,11 @@ namespace Application.Meetings.Queries.GetPastMeetings
             parameters.Add("Completed", (int)MeetingStatus.Completed);
 
             //Apply filters, conditions
-            conditions.AddDateRangeFilter(parameters, "m.\"ScheduledFor\"", request.StartDate, request.EndDate);
-            conditions.ApplySearchTerm(parameters, "m.\"Title\"", request.SearchTerm);
+            conditions.AddDateRangeFilter(parameters, "m.\"ScheduledFor\"", request.Filters.StartDate, request.Filters.EndDate);
+            conditions.ApplySearchTerm(parameters, "m.\"Title\"", request.Filters.SearchTerm);
 
             sql = SqlExtensions.ApplyWhereConditions(sql, conditions);
-            sql = SqlExtensions.ApplySorting(sql, "m.\"ScheduledFor\"", request.SortOrder);
+            sql = SqlExtensions.ApplySorting(sql, "m.\"ScheduledFor\"", request.Filters.SortOrder);
 
             var meetings = await connection.QueryAsync<MeetingListDto>(sql, parameters);
             return meetings.ToList();

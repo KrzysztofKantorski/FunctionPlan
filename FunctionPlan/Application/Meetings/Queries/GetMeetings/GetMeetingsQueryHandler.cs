@@ -54,11 +54,11 @@ namespace Application.Meetings.Queries.GetMeetings
             parameters.Add("Planned", (int)MeetingStatus.Planned);
             parameters.Add("InProgress", (int)MeetingStatus.InProgress);
 
-            conditions.AddDateRangeFilter(parameters, "m.\"ScheduledFor\"", request.StartDate, request.EndDate);
-            conditions.ApplySearchTerm(parameters, "m.\"Title\"", request.SearchTerm);
+            conditions.AddDateRangeFilter(parameters, "m.\"ScheduledFor\"", request.Filters.StartDate, request.Filters.EndDate);
+            conditions.ApplySearchTerm(parameters, "m.\"Title\"", request.Filters.SearchTerm);
 
             sql = SqlExtensions.ApplyWhereConditions(sql, conditions);
-            sql = SqlExtensions.ApplySorting(sql, "m.\"ScheduledFor\"", request.SortOrder);
+            sql = SqlExtensions.ApplySorting(sql, "m.\"ScheduledFor\"", request.Filters.SortOrder);
 
             var meetings = await connection.QueryAsync<MeetingListDto>(sql, parameters);
             return meetings.ToList();

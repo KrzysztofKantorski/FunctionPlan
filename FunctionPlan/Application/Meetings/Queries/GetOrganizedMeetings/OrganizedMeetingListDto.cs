@@ -1,6 +1,6 @@
 ﻿namespace Application.Meetings.Queries.GetOrganizedMeetings
 {
-    public sealed class MeetingListDto
+    public sealed class OrganizedMeetingListDto
     {
         public int Id { get; init; }
         public string Title { get; init; }

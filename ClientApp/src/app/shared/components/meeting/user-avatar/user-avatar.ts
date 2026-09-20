@@ -27,7 +27,7 @@ export class UserAvatar {
 
 
       //Get blob object
-      this.userService.getUserImage().subscribe({
+      this.userService.getAnotherUserImage(this.userId).subscribe({
 
         next: (blob: Blob) => 
         {

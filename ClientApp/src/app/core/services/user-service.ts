@@ -26,4 +26,13 @@ export class UserService {
     })
   }
 
+
+  //Get another users image
+  getAnotherUserImage(userId: number): Observable<Blob>
+  {
+    return this.http.get(`${this.apiUrl}/users/${userId}/avatar`, {
+      responseType: 'blob'
+    })
+  }
+
 }

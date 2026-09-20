@@ -74,13 +74,12 @@ namespace API.Controllers
         public async Task<IActionResult> GetMeetings(
             [FromQuery] string? SearchTerm,
             [FromQuery] string? SortOrder,
-            [FromQuery] int? Status,
             [FromQuery] DateTime? StartDate, 
             [FromQuery] DateTime? EndDate,
             CancellationToken cancellation
             )
         {
-            var query = new GetMeetingsQuery(User.GetUserId(), SearchTerm, StartDate, EndDate, SortOrder, Status );
+            var query = new GetMeetingsQuery(User.GetUserId(), SearchTerm, StartDate, EndDate, SortOrder);
 
             var result = await _sender.Send(query);
 
@@ -95,11 +94,10 @@ namespace API.Controllers
            [FromQuery] string? SortOrder,
            [FromQuery] DateTime? StartDate,
            [FromQuery] DateTime? EndDate,
-           [FromQuery] int? Status,
            CancellationToken cancellation
            )
         {
-            var query = new GetPastMeetingsQuery(SearchTerm, SortOrder, StartDate, EndDate, Status);
+            var query = new GetPastMeetingsQuery(SearchTerm, SortOrder, StartDate, EndDate);
 
             var result = await _sender.Send(query);
 

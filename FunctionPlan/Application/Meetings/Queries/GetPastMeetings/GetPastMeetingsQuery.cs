@@ -6,7 +6,6 @@ namespace Application.Meetings.Queries.GetPastMeetings
         string? SearchTerm,
         string? SortOrder,
         DateTime? StartDate,
-        DateTime? EndDate,
-        int? Status
+        DateTime? EndDate
     ) : ICommand<List<MeetingListDto>>;
 }

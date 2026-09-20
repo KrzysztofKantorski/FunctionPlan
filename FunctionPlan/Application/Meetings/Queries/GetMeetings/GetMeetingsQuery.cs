@@ -8,7 +8,6 @@ namespace Application.Meetings.Queries.GetMeetings
         string? SearchTerm,
         DateTime? StartDate,
         DateTime? EndDate,
-        string? SortOrder,
-        int? Status
+        string? SortOrder
     ): ICommand<List<MeetingListDto>>;
 }

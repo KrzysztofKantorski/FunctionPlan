@@ -120,13 +120,19 @@ namespace API.Controllers
             return Ok(result);
         }
 
+   
+
         //Get meetings that user attendeed
         [HttpGet("attended")]
         public async Task<IActionResult> GetAttendedMeetings(
+            [FromQuery] string? SearchTerm,
+            [FromQuery] string? SortOrder,
+            [FromQuery] DateTime? StartDate,
+            [FromQuery] DateTime? EndDate,
             CancellationToken cancellationToken
             )
         {
-            var command = new GetMyMeetingsQuery(User.GetUserId());
+            var command = new GetMyMeetingsQuery(User.GetUserId(), SearchTerm, SortOrder, StartDate, EndDate);
             var result = await _sender.Send(command, cancellationToken);
             return Ok(result);
         }

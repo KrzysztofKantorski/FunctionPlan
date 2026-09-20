@@ -1,6 +1,6 @@
 ﻿using Application.Abstractions.Data;
 using Application.Common.Dto;
-using Application.Meetings.Queries.GetMeetingAttendeesQuery;
+using Application.Common.Helpers;
 using Dapper;
 using MediatR;
 using System.Data;
@@ -26,13 +26,22 @@ namespace Application.Meetings.Queries.GetMyMeetings
                     FROM "Meetings" m
                     INNER JOIN "MeetingUser" mu ON m."Id" = mu."MeetingsId"
                     INNER JOIN "Users" org ON m."OrganizerId" = org."Id"
-                    WHERE mu."UsersId" = @userId
                 """;
 
-            var myMeetings = await connection.QueryAsync<MeetingListDto>(
-                sql,
-                new { request.userId }
-            );
+            var conditions = new List<string>();
+            var parameters = new DynamicParameters();
+
+            //User must be meeting participant
+            conditions.Add("mu.\"UsersId\" = @userId");
+            parameters.Add("userId", request.userId);
+
+            conditions.AddDateRangeFilter(parameters, "m.\"ScheduledFor\"", request.StartDate, request.EndDate);
+            conditions.ApplySearchTerm(parameters, "m.\"Title\"", request.SearchTerm);
+
+            sql = SqlExtensions.ApplyWhereConditions(sql, conditions);
+            sql = SqlExtensions.ApplySorting(sql, "m.\"ScheduledFor\"", request.SortOrder);
+
+            var myMeetings = await connection.QueryAsync<MeetingListDto>(sql, parameters);
 
             return myMeetings.ToList();
         } 

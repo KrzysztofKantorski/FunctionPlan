@@ -82,6 +82,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
       else if (error.status === 404) 
       {
+        //User did not upload image
+        if (req.url.includes('/avatar')) 
+        {
+           return throwError(() => error);
+        }
+
         errorMessage = 'Url address not found';
       }
 

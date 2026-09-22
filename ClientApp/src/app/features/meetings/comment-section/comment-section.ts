@@ -12,9 +12,11 @@ import { UserDialog } from '../../../shared/components/meeting/user-dialog/user-
 import { CommentMessage } from '../../../core/models/comment/comment';
 import { EmptyComments } from '../../../shared/components/comment/empty-comments/empty-comments';
 import { DatePipe } from '@angular/common';
+import { CommentForm } from '../../../shared/components/comment/comment-form/comment-form';
+
 @Component({
   selector: 'comment-section',
-  imports: [CommentHeader, AsyncPipe, UserAvatar, DatePipe, CommentTree, EmptyComments],
+  imports: [CommentHeader, AsyncPipe, UserAvatar, DatePipe, CommentTree, EmptyComments, CommentForm],
   templateUrl: './comment-section.html'
 })
 export class CommentSection {

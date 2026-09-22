@@ -1,4 +1,4 @@
-export interface newComment{
+export interface CommentRequest{
     content: string;
     parentCommentId: number | null;
 }

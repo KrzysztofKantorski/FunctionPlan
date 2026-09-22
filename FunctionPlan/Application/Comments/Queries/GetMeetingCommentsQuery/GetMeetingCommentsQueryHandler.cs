@@ -26,6 +26,7 @@ namespace Application.Comments.Queries.GetMeetingCommentsQuery
                     c."Content",
                     c."CreatedAt", 
                     c."ParentCommentId",
+                    u."Id" AS "UserId",
                     u."Username" 
                     FROM "Comments" c
                     INNER JOIN "Users" u ON c."AuthorId" = u."Id"

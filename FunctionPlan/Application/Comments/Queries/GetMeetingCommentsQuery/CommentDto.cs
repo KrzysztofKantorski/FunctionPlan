@@ -3,6 +3,7 @@
     public sealed class CommentDto
     {
         public int Id { get; init; }
+        public int UserId { get; init; }
         public string Username { get; init; }
         public string Content { get; init; }
         public DateTime CreatedAt { get; init; }

@@ -45,6 +45,11 @@ export class CommentSection {
     );
   }
 
+  //Refresh comment view after adding new comment
+  onCommentAdded(): void {
+    this.refreshSubject.next();
+  }
+
 
   openParticipantDetails(user: CurrentUser): void 
   {

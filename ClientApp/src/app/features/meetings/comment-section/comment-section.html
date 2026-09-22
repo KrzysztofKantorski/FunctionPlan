@@ -12,7 +12,11 @@
                 </user-avatar>
             </div>
 
-            <comment-form></comment-form>
+            <comment-form
+                [meetingId]="meetingId" 
+                (commentAdded)="onCommentAdded()"
+            >
+            </comment-form>
         </div>
 
 

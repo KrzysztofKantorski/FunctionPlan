@@ -5,5 +5,5 @@ export interface CommentMessage{
     content: string;
     createdAt: Date;
     parentCommentId: number | null;
-    replies: Comment[] | null;
+    replies: CommentMessage[] | null;
 }

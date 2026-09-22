@@ -2,7 +2,54 @@
     <comment-header></comment-header>
 
     <!-- New comment form -->
-    <div>
-        
-    </div>
+    @if(currentUser$ | async; as user)
+    {
+        <div class="flex gap-3 items-center">
+            <div (click)="openParticipantDetails(user)" class="relative rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105">
+                <user-avatar
+                    [userId]="user.id"
+                    [username]="user.username">
+                </user-avatar>
+            </div>
+
+            <div>
+                Add new comment
+            </div>
+        </div>
+
+
+        <div>
+            @if (comments$ | async; as comments) 
+            {
+                @for(comment of comments; track comment.id)
+                {
+                    <div class="flex flex-col gap-2">
+                        
+                        <div class="flex items-start gap-3">
+                            <div (click)="openParticipantDetails(user)" class="relative rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105">
+                                 <user-avatar 
+                                    [userId]="comment.userId" 
+                                    [username]="comment.username">
+                                </user-avatar>
+                            </div>
+                          
+                            
+                            <div class="bg-gray-100 p-3 rounded-lg flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold text-sm">{{ comment.username }}</span>
+                                    <span class="text-xs text-gray-500">{{ comment.createdAt | date:'short' }}</span>
+                                </div>
+                                <p class="text-gray-800 text-sm">{{ comment.content }}</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }   
+            @else 
+            {
+                <div>Loading comments...</div>
+            }
+        </div>
+    }
+   
 </div>

@@ -89,5 +89,6 @@
    
 </div>
 
-
-<comment-section></comment-section>
+@if (meetingDetails) {
+    <comment-section [meetingId]="meetingDetails.id"></comment-section>
+}

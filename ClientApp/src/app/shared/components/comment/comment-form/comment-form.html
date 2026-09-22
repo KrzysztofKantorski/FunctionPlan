@@ -1,19 +1,27 @@
 <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" 
-      class="flex items-end w-full bg-on-primary rounded-xl p-1.5 transition-colors">
+      class="flex flex-col w-full bg-on-primary rounded-xl p-2 transition-colors">
     
-    <textarea 
-        formControlName="content"
-        rows="1"
-        placeholder="Write comment..." 
-        class="flex-1 bg-transparent px-3 py-1.5 text-sm placeholder-gray-400 focus:outline-none min-w-0"
-    ></textarea>
+    <div class="flex items-end w-full gap-2">
+        <textarea 
+            formControlName="commentContent"
+            rows="1"
+            placeholder="Write comment..." 
+            class="flex-1 bg-transparent px-3 py-1.5 text-sm placeholder-gray-400 focus:outline-none"
+        ></textarea>
 
-    <button 
-        type="submit" 
-        [disabled]="commentForm.invalid"
-        class="shrink-0 px-4 py-2 text-xs font-semibold rounded-lg bg-secondary text-on-primary hover:bg-[#ffcdd7] 
-        disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer">
-        Submit
-    </button>
+        <button 
+            type="submit" 
+            [disabled]="commentForm.invalid"
+            class="shrink-0 px-4 py-2 text-xs font-semibold rounded-lg bg-secondary text-on-primary
+                   disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer">
+            Submit
+        </button>
+    </div>
+
+    @if(commentContent.hasError('required') && commentContent.touched)
+    {
+        <span class="text-xs text-red-400 px-3 pt-1">Comment content is required</span>
+    }
 
 </form>
+

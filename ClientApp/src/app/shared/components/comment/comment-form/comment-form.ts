@@ -12,10 +12,15 @@ export class CommentForm {
 
   //Form fields
   commentForm = this.fb.nonNullable.group({
-    content: ['', 
+    commentContent: ['', 
       [Validators.required]
     ]
   });
+
+  get commentContent()
+  {
+    return this.commentForm.controls.commentContent;
+  }
 
   onSubmit(){
     console.log("siyt")

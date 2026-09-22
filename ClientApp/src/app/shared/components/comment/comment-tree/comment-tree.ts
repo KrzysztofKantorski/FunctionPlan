@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReplyButton } from '../reply-button/reply-button';
 @Component({
   selector: 'comment-tree',
-  imports: [DatePipe, UserAvatar, ReplyButton],
+  imports: [DatePipe, UserAvatar, ReplyButton, CommentTree],
   templateUrl: './comment-tree.html'
 })
 export class CommentTree {

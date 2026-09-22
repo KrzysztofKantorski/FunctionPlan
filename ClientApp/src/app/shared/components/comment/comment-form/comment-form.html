@@ -1,12 +1,12 @@
 <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" 
-      class="flex flex-col w-full bg-on-primary rounded-xl p-2 transition-colors">
+      class="flex flex-col w-full rounded-xl p-2 transition-colors">
     
-    <div class="flex items-end w-full gap-2">
+    <div class="flex items-center w-full gap-2">
         <textarea 
             formControlName="commentContent"
             rows="1"
             placeholder="Write comment..." 
-            class="flex-1 bg-transparent px-3 py-1.5 text-sm placeholder-gray-400 focus:outline-none"
+            class="flex-1 min-w-0 bg-transparent px-3 py-1.5 text-sm placeholder-gray-400 focus:outline-none resize-none"
         ></textarea>
 
         <button 

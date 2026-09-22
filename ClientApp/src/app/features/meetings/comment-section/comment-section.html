@@ -31,7 +31,11 @@
         {
             @for(comment of comments; track comment.id)
             {
-                <comment-tree [comment]="comment"></comment-tree>
+                <comment-tree 
+                    [comment]="comment"
+                    [meetingId]="meetingId"
+                    (replyAdded)="onCommentAdded()"
+                ></comment-tree>
             }
             @empty{
                 <empty-comments></empty-comments>

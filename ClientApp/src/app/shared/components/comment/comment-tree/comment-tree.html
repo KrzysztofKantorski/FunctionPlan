@@ -28,7 +28,9 @@
 
             <div class=" bg-on-primary shrink-0 flex flex-col items-end justify-end pl-2">
                 <span class="text-xs text-right">{{ comment.createdAt | date:'short' }}</span>  
-                <reply-button class="mt-auto text-right mt-3">Reply</reply-button>
+                <reply-button class="mt-auto text-right mt-3" (click)="toggleReply()">
+                    {{isReplying? 'Cancel': 'Reply'}}
+                </reply-button>
             </div>
         </div>
         
@@ -38,13 +40,28 @@
        
     </div>
 
+    @if (isReplying) 
+    {
+        <div class="w-full pl-12 pr-2 py-2">
+            <comment-form 
+                [meetingId]="meetingId" 
+                [parentCommentId]="comment.id"
+                (commentAdded)="onReplySuccess()">
+            </comment-form>
+        </div>
+    }
+
     <!-- Comment replies section -->
     @if(comment.replies && comment.replies.length > 0)
     {
        <div class="flex flex-col gap-2 w-full pl-6 sm:pl-8">
             @for (reply of comment.replies; track reply.id) 
             {
-                <comment-tree [comment]="reply"></comment-tree>
+                <comment-tree 
+                    [comment]="reply"
+                    [meetingId]="meetingId"
+                    (replyAdded)="replyAdded.emit()">
+                </comment-tree>
             }
         </div>
     }

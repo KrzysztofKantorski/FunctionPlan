@@ -3,7 +3,7 @@ import { CommentHeader } from '../../../shared/components/comment/comment-header
 import { UserAvatar } from '../../../shared/components/meeting/user-avatar/user-avatar';
 import { CommentTree } from '../../../shared/components/comment/comment-tree/comment-tree';
 import { CommentService } from '../../../core/services/comment-service';
-import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay, switchMap, tap } from 'rxjs';
 import { AuthService } from '../../../core/auth/auth-service';
 import { AsyncPipe } from '@angular/common';
 import { CurrentUser } from '../../../core/models/user/currentUser';
@@ -40,8 +40,8 @@ export class CommentSection {
 
     this.comments$ = this.refreshSubject.pipe(
       switchMap(() => this.commentService.getComments(this.meetingId)),
-      tap(comments => console.log('Pobrane komentarze:', comments))
-      
+      tap(comments => console.log('Pobrane komentarze:', comments)),
+      shareReplay(1)
     );
   }
 

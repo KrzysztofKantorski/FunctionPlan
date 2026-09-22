@@ -19,11 +19,18 @@ export class UserAvatar {
   private cdr = inject(ChangeDetectorRef);
 
   avatarUrl: SafeUrl | null = null;
+  private static missingAvatarUserIds = new Set<number>();
   private rawObjectUrl: string | null = null;
 
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
+
+      //User does not have image - dont send request
+      if (UserAvatar.missingAvatarUserIds.has(this.userId)) {
+        this.avatarUrl = null;
+        return;
+      }
 
 
       //Get blob object
@@ -43,6 +50,8 @@ export class UserAvatar {
 
         error: () => 
         {
+          //Update set
+          UserAvatar.missingAvatarUserIds.add(this.userId);
           this.avatarUrl = null;
         }
       });
@@ -53,5 +62,13 @@ export class UserAvatar {
     if (this.rawObjectUrl) {
       URL.revokeObjectURL(this.rawObjectUrl);
     }
+  }
+
+
+    onAvatarError(event: Event): void {
+    //Server returned 404
+    const imgElement = event.target as HTMLImageElement;
+    //Stop infinite loop
+    imgElement.onerror = null; 
   }
 }

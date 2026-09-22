@@ -21,22 +21,26 @@
         </div>
         <div class="h-0 w-[98%] border-2 border-solid border-primary"></div>
 
-        <div class="w-full">
-            @if (comments$ | async; as comments) 
-            {
-                @for(comment of comments; track comment.id)
-                {
-                  <comment-tree [comment]="comment"></comment-tree>
-                }
-                @empty{
-                    <empty-comments></empty-comments>
-                }
-            }   
-            @else 
-            {
-                <div>Loading comments...</div>
-            }
-        </div>
+        
     }
+
+
+
+    <div class="w-full">
+        @if (comments$ | async; as comments) 
+        {
+            @for(comment of comments; track comment.id)
+            {
+                <comment-tree [comment]="comment"></comment-tree>
+            }
+            @empty{
+                <empty-comments></empty-comments>
+            }
+        }   
+        @else 
+        {
+            <div>Loading comments...</div>
+        }
+    </div>
    
 </div>

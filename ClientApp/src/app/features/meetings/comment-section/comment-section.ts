@@ -10,10 +10,11 @@ import { CurrentUser } from '../../../core/models/user/currentUser';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialog } from '../../../shared/components/meeting/user-dialog/user-dialog';
 import { CommentMessage } from '../../../core/models/comment/comment';
+import { EmptyComments } from '../../../shared/components/comment/empty-comments/empty-comments';
 import { DatePipe } from '@angular/common';
 @Component({
   selector: 'comment-section',
-  imports: [CommentHeader, AsyncPipe, UserAvatar, DatePipe, CommentTree],
+  imports: [CommentHeader, AsyncPipe, UserAvatar, DatePipe, CommentTree, EmptyComments],
   templateUrl: './comment-section.html'
 })
 export class CommentSection {

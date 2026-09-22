@@ -25,6 +25,9 @@
                 {
                   <comment-tree [comment]="comment"></comment-tree>
                 }
+                @empty{
+                    <empty-comments></empty-comments>
+                }
             }   
             @else 
             {

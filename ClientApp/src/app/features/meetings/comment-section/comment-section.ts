@@ -1,6 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
-import { CommentHeader } from '../../../shared/components/comment-header/comment-header';
+import { CommentHeader } from '../../../shared/components/comment/comment-header/comment-header';
 import { UserAvatar } from '../../../shared/components/meeting/user-avatar/user-avatar';
+import { CommentTree } from '../../../shared/components/comment/comment-tree/comment-tree';
 import { CommentService } from '../../../core/services/comment-service';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { AuthService } from '../../../core/auth/auth-service';
@@ -12,7 +13,7 @@ import { CommentMessage } from '../../../core/models/comment/comment';
 import { DatePipe } from '@angular/common';
 @Component({
   selector: 'comment-section',
-  imports: [CommentHeader, AsyncPipe, UserAvatar, DatePipe],
+  imports: [CommentHeader, AsyncPipe, UserAvatar, DatePipe, CommentTree],
   templateUrl: './comment-section.html'
 })
 export class CommentSection {

@@ -1,1 +1,26 @@
-<p>comment-tree works!</p>
+<div class="flex flex-col gap-2 bg-on-primary mt-10 p-6">
+                        
+    <div class="flex items-center justify-start gap-5 rounded-full">
+        <div (click)="openParticipantDetails(comment.userId, comment.username)" 
+        class="relative rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105 shrink-0 self-start">
+                <user-avatar 
+                    [userId]="comment.userId" 
+                    [username]="comment.username">
+                </user-avatar>
+        </div>
+                                 
+        <div class="flex-1 min-w-0 flex flex-col justify-center ">
+            <div class="flex items-start gap-2 flex-col">
+                <span class="font-bold text-sm">{{ comment.username }}</span>
+                <p class="text-sm break-words">{{ comment.content }}</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col justify-between items-end self-stretch shrink-0 pl-2">
+            <span class="text-xs">{{ comment.createdAt | date:'short' }}</span>  
+            <reply-button class="mt-auto">Reply</reply-button>
+        </div>
+            
+       
+    </div>
+</div>

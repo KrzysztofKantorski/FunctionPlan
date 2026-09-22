@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { LoginRequest, LoginResponse } from '../models/auth/login-models';
+import { CurrentUser } from '../models/user/currentUser';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,14 @@ export class AuthService {
   private http = inject(HttpClient);
   private readonly apiUrl = environment.apiUrl;
   private readonly TOKEN_KEY = 'access_token';
+
+
+  //User data
+  private currentUserSubject = new BehaviorSubject<CurrentUser | null>(null);
+
+  //Expose to component
+  public currentUserSubject$ = this.currentUserSubject.asObservable();
+  
 
   //Check if user is logged in
   private loggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
@@ -30,8 +39,23 @@ export class AuthService {
       tap(response =>{
         this.setToken(response.accessToken)
         this.loggedInSubject.next(true)
+
+        // Save user data after login
+        this.fetchCurrentUser().subscribe();
       })
     );
+  }
+
+
+  //Get user profile data
+  fetchCurrentUser(): Observable<CurrentUser>
+  {
+    return this.http.get<CurrentUser>(`${this.apiUrl}/users/me`).pipe(
+      tap((user)=>{
+        //Save user data
+        this.currentUserSubject.next(user);
+      })
+    )
   }
 
 
@@ -53,6 +77,9 @@ export class AuthService {
   {
     localStorage.removeItem(this.TOKEN_KEY);
     this.loggedInSubject.next(false)
+    
+    //Clear user data after logout
+    this.currentUserSubject.next(null);
   }
 
   

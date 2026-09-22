@@ -21,7 +21,7 @@ import { MeetingParticipant } from '../../../core/models/meeting/meeting-partici
 import { UserAvatar } from '../../../shared/components/meeting/user-avatar/user-avatar';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialog } from '../../../shared/components/meeting/user-dialog/user-dialog';
-
+import { CommentSection } from '../comment-section/comment-section';
 
 @Component({
   selector: 'app-meeting-info',
@@ -29,7 +29,7 @@ import { UserDialog } from '../../../shared/components/meeting/user-dialog/user-
   [
     Navbar, NavbarBtnGroup, UserMenu, BackButton, MeetingHeader, 
     MatButtonModule, MeetingMap, DatePipe, MeetingSubtitle, MeetingText, 
-    MatIconModule, UserAvatar
+    MatIconModule, UserAvatar, CommentSection
   ],
   templateUrl: './meeting-info.html'
 })

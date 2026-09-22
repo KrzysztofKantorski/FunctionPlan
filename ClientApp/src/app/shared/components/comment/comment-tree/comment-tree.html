@@ -1,25 +1,39 @@
-<div class="flex flex-col gap-2 bg-on-primary mt-10 p-6">
+<div class="flex flex-col mt-5">
                         
-    <div class="flex items-center justify-start gap-5 rounded-full">
-        <div (click)="openParticipantDetails(comment.userId, comment.username)" 
-        class="relative rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105 shrink-0 self-start">
+    <div class="flex items-center gap-3 w-full  p-3">
+
+
+        @if (comment.parentCommentId) 
+        {
+            <div class="flex items-center justify-center shrink-0 select-none pl-1">
+               <mat-icon fontIcon="subdirectory_arrow_right"></mat-icon>
+            </div>
+        }
+
+        <div class=" bg-on-primary flex-1 flex items-center justify-between gap-4 px-5 py-3.5 rounded-lg">
+            <div (click)="openParticipantDetails(comment.userId, comment.username)" 
+            class="relative rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105 shrink-0 self-start">
                 <user-avatar 
                     [userId]="comment.userId" 
                     [username]="comment.username">
                 </user-avatar>
-        </div>
+            </div>
                                  
-        <div class="flex-1 min-w-0 flex flex-col justify-center ">
-            <div class="flex items-start gap-2 flex-col">
-                <span class="font-bold text-sm">{{ comment.username }}</span>
-                <p class="text-sm break-words">{{ comment.content }}</p>
+            <div class=" bg-on-primary flex-1 min-w-0 flex flex-col justify-center ">
+                <div class="flex items-start gap-2 flex-col">
+                    <span class="font-bold text-sm">{{ comment.username }}</span>
+                    <p class="text-sm break-words">{{ comment.content }}</p>
+                </div>
+            </div>
+
+            <div class=" bg-on-primary shrink-0 flex flex-col items-end justify-end pl-2">
+                <span class="text-xs text-right">{{ comment.createdAt | date:'short' }}</span>  
+                <reply-button class="mt-auto text-right mt-3">Reply</reply-button>
             </div>
         </div>
+        
 
-        <div class="flex flex-col justify-between items-end self-stretch shrink-0 pl-2">
-            <span class="text-xs">{{ comment.createdAt | date:'short' }}</span>  
-            <reply-button class="mt-auto">Reply</reply-button>
-        </div>
+        
             
        
     </div>
@@ -27,10 +41,9 @@
     <!-- Comment replies section -->
     @if(comment.replies && comment.replies.length > 0)
     {
-        <div class="mt-3 ml-4 sm:ml-8 pl-3 sm:pl-4 border-l-2 border-surface-variant/40 flex flex-col gap-3">
+       <div class="flex flex-col gap-2 w-full pl-6 sm:pl-8">
             @for (reply of comment.replies; track reply.id) 
             {
-                <!-- Call component itself -->
                 <comment-tree [comment]="reply"></comment-tree>
             }
         </div>

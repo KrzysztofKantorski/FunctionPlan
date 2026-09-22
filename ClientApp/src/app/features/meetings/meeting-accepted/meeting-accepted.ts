@@ -1,8 +1,8 @@
 import { Component, inject, Input } from '@angular/core';
 import { MeetingService } from '../../../core/services/meeting-service';
-import { MeetingFilters } from '../../../core/models/meeting-filters';
+import { MeetingFilters } from '../../../core/models/meeting/meeting-filters';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
-import { Meeting } from '../../../core/models/meeting';
+import { Meeting } from '../../../core/models/meeting/meeting';
 import { MeetingCard } from '../../../shared/components/meeting/meeting-card/meeting-card';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { MainHeader } from '../../../shared/components/main-header/main-header';

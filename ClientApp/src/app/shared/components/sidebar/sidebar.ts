@@ -5,7 +5,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MeetingFilters } from '../../../core/models/meeting-filters';
+import { MeetingFilters } from '../../../core/models/meeting/meeting-filters';
 import { debounce, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({

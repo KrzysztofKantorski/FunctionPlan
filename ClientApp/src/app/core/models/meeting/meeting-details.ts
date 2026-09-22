@@ -1,4 +1,4 @@
-import { Organizer } from "./organizer";
+import { Organizer } from "../user/organizer";
 
 export interface MeetingDetails
 {

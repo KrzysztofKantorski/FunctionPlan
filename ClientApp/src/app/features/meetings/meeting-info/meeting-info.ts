@@ -12,12 +12,12 @@ import { BackButton } from '../../../shared/components/nav/back-button/back-butt
 import { MeetingHeader } from '../../../shared/components/meeting/meeting-header/meeting-header';
 import {MatButtonModule} from '@angular/material/button';
 import { MeetingService } from '../../../core/services/meeting-service';
-import { MeetingDetails } from '../../../core/models/meeting-details';
+import { MeetingDetails } from '../../../core/models/meeting/meeting-details';
 import { MeetingMap } from '../../../shared/components/meeting/meeting-map/meeting-map';
 import { MeetingSubtitle } from '../../../shared/components/meeting/meeting-subtitle/meeting-subtitle';
 import { MeetingText } from '../../../shared/components/meeting/meeting-text/meeting-text';
 import {MatIconModule} from '@angular/material/icon';
-import { MeetingParticipant } from '../../../core/models/meeting-participant';
+import { MeetingParticipant } from '../../../core/models/meeting/meeting-participant';
 import { UserAvatar } from '../../../shared/components/meeting/user-avatar/user-avatar';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialog } from '../../../shared/components/meeting/user-dialog/user-dialog';

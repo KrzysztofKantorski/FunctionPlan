@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { MeetingFilters } from '../models/meeting-filters';
-import { Meeting } from '../models/meeting';
+import { MeetingFilters } from '../models/meeting/meeting-filters';
+import { Meeting } from '../models/meeting/meeting';
 import { Observable } from 'rxjs';
-import { MeetingDetails } from '../models/meeting-details';
-import { MeetingParticipant } from '../models/meeting-participant';
-import { MeetingTableView } from '../models/meeting-table';
+import { MeetingDetails } from '../models/meeting/meeting-details';
+import { MeetingParticipant } from '../models/meeting/meeting-participant';
+import { MeetingTableView } from '../models/meeting/meeting-table';
 
 @Injectable({
   providedIn: 'root',

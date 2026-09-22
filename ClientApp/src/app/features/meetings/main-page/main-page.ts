@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MainHeader } from '../../../shared/components/main-header/main-header';
 import { UserService } from '../../../core/services/user-service';
-import { UserProfile } from '../../../core/models/user-model';
+import { UserProfile } from '../../../core/models/user/user-model';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Navbar } from '../../../shared/components/nav/navbar/navbar';
@@ -9,10 +9,10 @@ import { NavbarBtnGroup } from '../../../shared/components/nav/navbar-btn-group/
 import { NavbarSearch } from '../../../shared/components/nav/navbar-search/navbar-search';
 import { Sidebar } from '../../../shared/components/sidebar/sidebar';
 import { MeetingCard } from '../../../shared/components/meeting/meeting-card/meeting-card';
-import { MeetingFilters } from '../../../core/models/meeting-filters';
+import { MeetingFilters } from '../../../core/models/meeting/meeting-filters';
 import { MatButtonModule } from '@angular/material/button';
 import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
-import { Meeting } from '../../../core/models/meeting';
+import { Meeting } from '../../../core/models/meeting/meeting';
 import { MeetingService } from '../../../core/services/meeting-service';
 import { DatePipe } from '@angular/common';
 @Component({

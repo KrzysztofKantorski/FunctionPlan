@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MeetingFilters } from '../../../core/models/meeting-filters';
-import { MeetingTableView } from '../../../core/models/meeting-table';
+import { MeetingFilters } from '../../../core/models/meeting/meeting-filters';
+import { MeetingTableView } from '../../../core/models/meeting/meeting-table';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { Navbar } from '../../../shared/components/nav/navbar/navbar';
 import { NavbarBtnGroup } from '../../../shared/components/nav/navbar-btn-group/navbar-btn-group';

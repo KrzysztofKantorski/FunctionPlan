@@ -3,7 +3,7 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { MeetingTableView } from '../../../../core/models/meeting-table';
+import { MeetingTableView } from '../../../../core/models/meeting/meeting-table';
 import { Observable } from 'rxjs';
 
 

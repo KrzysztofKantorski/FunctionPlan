@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { LoginRequest, LoginResponse } from '../models/auth/login-models';
 import { CurrentUser } from '../models/user/currentUser';
 
@@ -39,10 +39,11 @@ export class AuthService {
       tap(response =>{
         this.setToken(response.accessToken)
         this.loggedInSubject.next(true)
+      }),
 
-        // Save user data after login
-        this.fetchCurrentUser().subscribe();
-      })
+      switchMap(response => this.fetchCurrentUser().pipe(
+          map(() => response)
+      ))
     );
   }
 

@@ -5,6 +5,7 @@
         public int Id { get; init; }
         public int UserId { get; init; }
         public string Username { get; init; }
+        public string? ProfilePictureUrl { get; init; }
         public string Content { get; init; }
         public DateTime CreatedAt { get; init; }
         public int? ParentCommentId { get; init; }

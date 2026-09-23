@@ -53,35 +53,19 @@ export class MeetingInfo implements OnInit {
   { 
    
     if(isPlatformBrowser(this.platformId)){
-       const meetingId = Number(this.id);
+      const meetingId = Number(this.id);
 
-        forkJoin({
-
-          //Excecute two request and wait for both responses
-          details: this.meetingService.getMeetingDetails(meetingId),
-          participants: this.meetingService.getMeetingParticipants(meetingId)
-
-        })
-        .subscribe({
-          next: ({details, participants}) =>
-          {
-            this.meetingParticipants = participants;
-            this.meetingDetails = details;
-            this.isLoading = false;
-
-            //Force browser reload
-            this.cdr.detectChanges();
-          },
-
-          error: () => 
-          {
-            this.isLoading = false;
-            this.cdr.detectChanges();
-          }
-        
+      this.meetingService.getMeetingDetails(meetingId).subscribe({
+        next: (details) => {
+          this.meetingDetails = details;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Cannot get meeting details:', err);
+          this.isLoading = false;
+        }
       })
     }
-   
   }
 
 

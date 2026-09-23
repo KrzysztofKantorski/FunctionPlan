@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, Input, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, PLATFORM_ID, SimpleChanges } from '@angular/core';
 import { UserService } from '../../../../core/services/user-service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
@@ -13,62 +13,86 @@ export class UserAvatar {
   @Input({ required: true }) userId!: number;
   @Input({ required: true }) username!: string;
 
+  @Input({required: true}) profilePictureUrl: string | null = null;
+
   private userService = inject(UserService);
   private sanitizer = inject(DomSanitizer);
   private platformId = inject(PLATFORM_ID);
   private cdr = inject(ChangeDetectorRef);
 
   avatarUrl: SafeUrl | null = null;
-  private static missingAvatarUserIds = new Set<number>();
   private rawObjectUrl: string | null = null;
 
+  onChanges(changes: SimpleChanges): void{
 
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    if (!isPlatformBrowser(this.platformId))
+    {
+      return;
+    } 
 
-      //User does not have image - dont send request
-      if (UserAvatar.missingAvatarUserIds.has(this.userId)) {
-        this.avatarUrl = null;
-        return;
-      }
+    //User does not have image
+    if (!this.profilePictureUrl) 
+    {
+      this.cleanupUrl();
+      this.avatarUrl = null;
+      return;
+    }
+
+    //User has an image, changes were made
+    if (changes['userId'] || changes['profilePictureUrl']) 
+    {
+      this.loadAvatarBlob();
+    }
 
 
-      //Get blob object
-      this.userService.getAnotherUserImage(this.userId).subscribe({
+  }
 
-        next: (blob: Blob) => 
-        {
-          this.rawObjectUrl = URL.createObjectURL(blob);
-          const safeUrl = this.sanitizer.bypassSecurityTrustUrl(this.rawObjectUrl);
 
-          setTimeout(() => {
-            this.avatarUrl = safeUrl;
-            this.cdr.markForCheck();
-          });
-          
-        },
+  
 
-        error: () => 
-        {
-          //Update set
-          UserAvatar.missingAvatarUserIds.add(this.userId);
-          this.avatarUrl = null;
-        }
-      });
+  private cleanupUrl(): void {
+    if (this.rawObjectUrl) {
+      URL.revokeObjectURL(this.rawObjectUrl);
+      this.rawObjectUrl = null;
     }
   }
 
-  ngOnDestroy(): void {
+
+  private loadAvatarBlob(): void {
+    this.cleanupUrl();
+
+    //Get image
+    this.userService.getAnotherUserImage(this.userId)
+    .subscribe({
+      next: (blob: Blob) => {
+        this.rawObjectUrl = URL.createObjectURL(blob);
+        this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(this.rawObjectUrl);
+        this.cdr.markForCheck();
+      },
+      error: () => {
+
+        // Clear user image
+        this.cleanupUrl();
+        this.avatarUrl = null;
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  ngOnDestroy(): void 
+  {
     if (this.rawObjectUrl) {
       URL.revokeObjectURL(this.rawObjectUrl);
     }
   }
 
 
-    onAvatarError(event: Event): void {
+  onAvatarError(event: Event): void 
+  {
     //Server returned 404
     const imgElement = event.target as HTMLImageElement;
     //Stop infinite loop
     imgElement.onerror = null; 
   }
+
 }

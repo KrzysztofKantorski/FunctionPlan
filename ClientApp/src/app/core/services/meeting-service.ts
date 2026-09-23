@@ -105,9 +105,4 @@ export class MeetingService {
     return this.http.get<MeetingDetails>(`${this.apiUrl}/meetings/${meetingId}`);
   }
 
-  //Get meeting participants
-  getMeetingParticipants(meetingId: number): Observable<MeetingParticipant[]>
-  {
-    return this.http.get<MeetingParticipant[]>(`${this.apiUrl}/meetings/${meetingId}/attendees`);
-  }
 }

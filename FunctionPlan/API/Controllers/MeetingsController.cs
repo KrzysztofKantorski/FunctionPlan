@@ -7,7 +7,6 @@ using Application.Meetings.Commands.ConfirmAttendenceCommand;
 using Application.Meetings.Commands.CreateMeetingCommand;
 using Application.Meetings.Commands.RescheduleMeetingCommand;
 using Application.Meetings.Queries.GetAttendeedMeetings;
-using Application.Meetings.Queries.GetMeetingAttendeesQuery;
 using Application.Meetings.Queries.GetMeetingById;
 using Application.Meetings.Queries.GetMeetings;
 using Application.Meetings.Queries.GetMyMeetings;
@@ -103,20 +102,6 @@ namespace API.Controllers
             var query = new GetPastMeetingsQuery(filters);
 
             var result = await _sender.Send(query);
-
-            return Ok(result);
-        }
-
-
-        //Get meeting attendees
-        [HttpGet("{MeetingID}/attendees")]
-        public async Task<IActionResult> MeetingAttendees(
-            [FromRoute] int MeetingId,
-            CancellationToken cancellationToken
-            )
-        {
-            var command = new GetMeetingAttendeesQuery(MeetingId);
-            var result = await _sender.Send(command, cancellationToken);
 
             return Ok(result);
         }

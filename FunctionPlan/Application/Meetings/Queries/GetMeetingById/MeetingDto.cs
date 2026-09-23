@@ -9,5 +9,7 @@
         public double Latitude { get; init; }
         public double Longitude { get; init; }
         public OrganizerDto Organizer { get; set; } = null!;
+
+        public List<AttendeeDto> Attendees { get; set; } = [];
     }
 }

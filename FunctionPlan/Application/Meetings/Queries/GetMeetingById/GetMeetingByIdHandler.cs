@@ -1,7 +1,7 @@
 ﻿using Application.Abstractions.Data;
+using Dapper;
 using MediatR;
 using System.Data;
-using Dapper;
 namespace Application.Meetings.Queries.GetMeetingById
 {
     internal sealed class GetMeetingByIdHandler : IRequestHandler<GetMeetingByIdQuery, MeetingDto>
@@ -19,26 +19,46 @@ namespace Application.Meetings.Queries.GetMeetingById
             var sql =
                 """
                     SELECT 
-                    m."Id", m."Title", m."Description",  m."ScheduledFor", m."Latitude", m."Longitude",
-                    u."Id", u."Username"
+                        m."Id", m."Title", m."Description", m."ScheduledFor", m."Latitude", m."Longitude",
+                        u."Id", u."Username"
                     FROM "Meetings" m
                     INNER JOIN "Users" u ON m."OrganizerId" = u."Id"
-                    WHERE m."Id" = @MeetingId
+                    WHERE m."Id" = @MeetingId;
+
+                    SELECT 
+                        u."Id", 
+                        u."Username",
+                        u."ProfilePictureUrl"
+                    FROM "Users" u
+                    INNER JOIN "MeetingUser" mu ON u."Id" = mu."UsersId"
+                    WHERE mu."MeetingsId" = @MeetingId;
                 """;
 
+            //Execute queries
+            using var multi = await connection.QueryMultipleAsync(sql, new { request.MeetingId });
 
-            var result = await connection.QueryAsync<MeetingDto, OrganizerDto, MeetingDto>(
-                sql,
-                (meeting, organizer) =>
+            //Map first query
+            var meeting = multi.Read<MeetingDto, OrganizerDto, MeetingDto>(
+                (m, organizer) =>
                 {
-                    meeting.Organizer = organizer; 
-                    return meeting;
+                    m.Organizer = organizer;
+                    return m;
                 },
-                new {request.MeetingId},
                 splitOn: "Id"
-            );
+            ).FirstOrDefault();
 
-            return result.FirstOrDefault();
+            if (meeting is null)
+            {
+                return null;
+            }
+
+            //Map meeting attendees
+            var attendees = (await multi.ReadAsync<AttendeeDto>()).ToList();
+            meeting.Attendees = attendees;
+
+
+            //Return one meeting object
+            return meeting;
         }
     }
 }

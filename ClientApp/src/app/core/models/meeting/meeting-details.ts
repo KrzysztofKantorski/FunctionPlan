@@ -1,4 +1,5 @@
 import { Organizer } from "../user/organizer";
+import { MeetingParticipant } from "./meeting-participant";
 
 export interface MeetingDetails
 {
@@ -9,4 +10,5 @@ export interface MeetingDetails
     latitude: number;
     longitude: number;
     organizer: Organizer;
+    attendees: MeetingParticipant[];
 }

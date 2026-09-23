@@ -8,7 +8,9 @@
             <div (click)="openParticipantDetails(user)" class="relative rounded-full ring-2 ring-white cursor-pointer shrink-0 hover:z-10 transition-transform hover:scale-105">
                 <user-avatar
                     [userId]="user.id"
-                    [username]="user.username">
+                    [username]="user.username"
+                    [profilePictureUrl]="user.profilePictureUrl"
+                    >
                 </user-avatar>
             </div>
 

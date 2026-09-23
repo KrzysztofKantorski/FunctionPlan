@@ -59,6 +59,7 @@ export class MeetingInfo implements OnInit {
         next: (details) => {
           this.meetingDetails = details;
           this.isLoading = false;
+          this.cdr.markForCheck();
         },
         error: (err) => {
           console.error('Cannot get meeting details:', err);

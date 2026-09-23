@@ -23,7 +23,7 @@ export class UserAvatar {
   avatarUrl: SafeUrl | null = null;
   private rawObjectUrl: string | null = null;
 
-  onChanges(changes: SimpleChanges): void{
+  ngOnChanges(changes: SimpleChanges): void{
 
     if (!isPlatformBrowser(this.platformId))
     {
@@ -68,6 +68,7 @@ export class UserAvatar {
         this.rawObjectUrl = URL.createObjectURL(blob);
         this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(this.rawObjectUrl);
         this.cdr.markForCheck();
+        console.log(this.avatarUrl);
       },
       error: () => {
 

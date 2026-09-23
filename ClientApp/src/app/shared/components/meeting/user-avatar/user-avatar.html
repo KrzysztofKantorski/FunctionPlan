@@ -1,6 +1,6 @@
-@if(profilePictureUrl)
+@if(avatarUrl)
 {
-    <img [src]="profilePictureUrl" [alt]="username" 
+    <img [src]="avatarUrl" [alt]="username" 
     (error)="onAvatarError($event)"
     class="opacity-95 w-10 h-10 rounded-full object-cover cursor-pointer hover:opacity-100 transition" />
 }

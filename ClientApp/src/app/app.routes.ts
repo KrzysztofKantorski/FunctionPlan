@@ -13,6 +13,7 @@ import { MeetingAccepted } from './features/meetings/meeting-accepted/meeting-ac
 
 import { guestGuard } from './core/guards/guest-guard';
 import { authGuard } from './core/guards/auth-guard';
+import { ImageGallery } from './shared/components/media-gallery/image-gallery/image-gallery';
 
 
 
@@ -60,6 +61,11 @@ export const routes: Routes = [
     {
         path:"meeting-accepted", 
         component: MeetingAccepted,
+        canActivate: [authGuard]
+    },
+    {
+        path:"meeting-media", 
+        component: ImageGallery,
         canActivate: [authGuard]
     }
 ];

@@ -12,6 +12,7 @@
   "packageManager": "npm@11.14.0",
   "dependencies": {
     "@abacritt/angularx-social-login": "^2.6.0",
+    "@angular/animations": "^20.1.8",
     "@angular/cdk": "^21.2.14",
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
@@ -20,7 +21,8 @@
     "@angular/material": "^21.2.14",
     "@angular/platform-browser": "^21.2.0",
     "@angular/router": "^21.2.0",
-    "mapbox-gl": "^2.15.0",
+    "mapbox-gl": "^3.31.0",
+    "ng-gallery": "^12.0.0",
     "ngx-mapbox-gl": "^14.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

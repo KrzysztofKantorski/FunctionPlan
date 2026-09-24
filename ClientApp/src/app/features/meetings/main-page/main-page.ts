@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Input } from '@angular/core';
 import { MainHeader } from '../../../shared/components/main-header/main-header';
 import { UserService } from '../../../core/services/user-service';
 import { UserProfile } from '../../../core/models/user/user-model';
@@ -15,6 +15,8 @@ import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
 import { Meeting } from '../../../core/models/meeting/meeting';
 import { MeetingService } from '../../../core/services/meeting-service';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { MeetingInfoDialog } from '../../../shared/components/meeting/meeting-info-dialog/meeting-info-dialog';
 @Component({
   selector: 'app-main-page',
   imports: 
@@ -29,6 +31,9 @@ export class MainPage {
 
   private userService = inject(UserService);
   private meetingService = inject(MeetingService);
+
+
+  private dialog = inject(MatDialog)
 
   //Filters state
   private filtersSubject = new BehaviorSubject<MeetingFilters>
@@ -86,14 +91,30 @@ export class MainPage {
   onJoinMeeting(meetingId: number){
     this.meetingService.joinMeeting(meetingId).subscribe({
       next: ()=>{
+        this.openDialog("You have successfully joined meeting")
+
         this.refreshMeetings()
       },
-      error: (err) => console.error('Could not join meeting:', err)
+      error: (err) =>
+      {
+        this.openDialog("Failed to join the meeting")
+        console.error('Could not join meeting:', err)
+      }
+         
     })
   }
 
 
   private refreshMeetings(): void{
     this.filtersSubject.next(this.filtersSubject.getValue())
+  }
+
+  private openDialog(messageToDisplay: string){
+     this.dialog.open(MeetingInfoDialog, {
+      data: {
+        message: messageToDisplay
+      },
+      width: '380px'
+    });
   }
 }

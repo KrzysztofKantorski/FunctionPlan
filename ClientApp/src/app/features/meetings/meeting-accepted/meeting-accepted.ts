@@ -12,6 +12,8 @@ import { Sidebar } from '../../../shared/components/sidebar/sidebar';
 import { MatButtonModule } from '@angular/material/button';
 import { NavbarSearch } from '../../../shared/components/nav/navbar-search/navbar-search';
 import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
+import { MeetingInfoDialog } from '../../../shared/components/meeting/meeting-info-dialog/meeting-info-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-meeting-accepted',
@@ -26,7 +28,9 @@ export class MeetingAccepted {
 
 
   private meetingService = inject(MeetingService);
-  
+  private dialog = inject(MatDialog)
+
+
   //Filters state
   private filtersSubject = new BehaviorSubject<MeetingFilters>
   ({
@@ -76,10 +80,12 @@ export class MeetingAccepted {
   onCancelAttendance(meetingId: number){
     this.meetingService.cancelAttendance(meetingId).subscribe({
       next: ()=>{
+        this.openDialog("Meeting attendance has been cancelled")
         this.refreshMeetings();
         console.log("siup super")
       },
       error: (err)=>{
+        this.openDialog("Cannot canell meeting attendance")
         console.log("Could not cancel", err)
       }
     })
@@ -89,5 +95,16 @@ export class MeetingAccepted {
 
   private refreshMeetings(): void{
     this.filtersSubject.next(this.filtersSubject.getValue());
+  }
+
+
+
+  private openDialog(messageToDisplay: string){
+    this.dialog.open(MeetingInfoDialog, {
+      data: {
+        message: messageToDisplay
+      },
+      width: '380px'
+    });
   }
 }

@@ -8,7 +8,7 @@ import { forkJoin } from 'rxjs';
 import { Navbar } from '../../../shared/components/nav/navbar/navbar';
 import { NavbarBtnGroup } from '../../../shared/components/nav/navbar-btn-group/navbar-btn-group';
 import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
-import { BackButton } from '../../../shared/components/nav/back-button/back-button';
+import { BackButton } from '../../../shared/components/back-button/back-button';
 import { MeetingHeader } from '../../../shared/components/meeting/meeting-header/meeting-header';
 import {MatButtonModule} from '@angular/material/button';
 import { MeetingService } from '../../../core/services/meeting-service';

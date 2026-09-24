@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 @Component({
   selector: 'back-button',
@@ -8,8 +9,17 @@ import { Router } from '@angular/router';
 })
 export class BackButton {
   private router = inject(Router);
-
-  goToMeetings(){
-    this.router.navigate(['/main-page']);
+  private location = inject(Location)
+  goBack(): void
+  {
+    //Previous address saved in history
+    if(window.history.length > 1)
+    {
+      this.location.back()
+    }
+    else
+    {
+      this.router.navigate(['/main-page'])
+    }
   }
 }

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { GalleryModule, GalleryItem, ImageItem} from 'ng-gallery';
+import { Navbar } from '../../nav/navbar/navbar';
+import { BackButton } from '../../back-button/back-button';
 @Component({
   selector: 'app-image-gallery',
-  imports: [GalleryModule],
+  imports: [GalleryModule, Navbar, BackButton],
   templateUrl: './image-gallery.html'
 })
 export class ImageGallery {

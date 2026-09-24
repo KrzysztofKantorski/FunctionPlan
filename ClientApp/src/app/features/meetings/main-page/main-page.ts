@@ -80,4 +80,20 @@ export class MainPage {
       searchTerm: searchTerm
     });
   }
+
+
+
+  onJoinMeeting(meetingId: number){
+    this.meetingService.joinMeeting(meetingId).subscribe({
+      next: ()=>{
+        this.refreshMeetings()
+      },
+      error: (err) => console.error('Could not join meeting:', err)
+    })
+  }
+
+
+  private refreshMeetings(): void{
+    this.filtersSubject.next(this.filtersSubject.getValue())
+  }
 }

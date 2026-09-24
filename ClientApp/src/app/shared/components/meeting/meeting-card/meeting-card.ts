@@ -28,4 +28,11 @@ export class MeetingCard {
   {
     this.router.navigate(['/meeting-info', meetingId])
   }
+
+  //Forwart join event to main page
+  onJoinClick()
+  {
+    this.joinMeeting.emit(this.meeting.id);
+  }
+
 }

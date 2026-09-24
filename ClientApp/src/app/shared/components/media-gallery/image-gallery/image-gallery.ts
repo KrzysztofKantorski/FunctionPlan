@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { GalleryModule, GalleryItem, ImageItem, VideoItem, YoutubeItem, IframeItem } from 'ng-gallery';
-
+import { GalleryModule, GalleryItem, ImageItem} from 'ng-gallery';
 @Component({
   selector: 'app-image-gallery',
   imports: [GalleryModule],

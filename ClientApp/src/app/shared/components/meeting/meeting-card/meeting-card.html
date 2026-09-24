@@ -21,7 +21,7 @@
     
     @if(isAcceptedView)
     {
-      <button matButton>Cancel attendance</button>
+      <button matButton (click)="onCancelClick()">Cancel attendance</button>
     }
     @else
     {

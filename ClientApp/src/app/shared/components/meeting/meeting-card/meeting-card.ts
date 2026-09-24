@@ -35,4 +35,10 @@ export class MeetingCard {
     this.joinMeeting.emit(this.meeting.id);
   }
 
+  //Forward cancel event to main page
+  onCancelClick()
+  {
+    this.cancelAttendance.emit(this.meeting.id);
+  }
+
 }

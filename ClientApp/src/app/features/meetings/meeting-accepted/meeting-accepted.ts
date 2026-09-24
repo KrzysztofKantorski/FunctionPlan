@@ -72,4 +72,22 @@ export class MeetingAccepted {
       searchTerm: searchTerm
     });
   }
+
+  onCancelAttendance(meetingId: number){
+    this.meetingService.cancelAttendance(meetingId).subscribe({
+      next: ()=>{
+        this.refreshMeetings();
+        console.log("siup super")
+      },
+      error: (err)=>{
+        console.log("Could not cancel", err)
+      }
+    })
+  }
+
+
+
+  private refreshMeetings(): void{
+    this.filtersSubject.next(this.filtersSubject.getValue());
+  }
 }

@@ -105,4 +105,11 @@ export class MeetingService {
     return this.http.get<MeetingDetails>(`${this.apiUrl}/meetings/${meetingId}`);
   }
 
+
+  //Join meeting
+  joinMeeting(meetingId: number)
+  {
+    return this.http.post(`${this.apiUrl}/meetings/${meetingId}/attendees`, {});
+  }
+
 }

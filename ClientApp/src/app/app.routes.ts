@@ -64,7 +64,7 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
-        path:"meeting-media", 
+        path:"meeting-info/:id/media", 
         component: ImageGallery,
         canActivate: [authGuard]
     }

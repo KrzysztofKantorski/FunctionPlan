@@ -112,4 +112,11 @@ export class MeetingService {
     return this.http.post(`${this.apiUrl}/meetings/${meetingId}/attendees`, {});
   }
 
+
+  //Cancel attendance
+  cancelAttendance(meetingId: number)
+  {
+    return this.http.delete(`${this.apiUrl}/meetings/${meetingId}/attendees`, {});
+  }
+
 }

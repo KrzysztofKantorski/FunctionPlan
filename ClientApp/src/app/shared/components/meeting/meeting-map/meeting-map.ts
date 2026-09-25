@@ -29,8 +29,14 @@ export class MeetingMap implements AfterViewInit, OnDestroy {
     if(isPlatformBrowser(this.platformId))
     {
 
-      //Import mapbox
       const mapboxgl = (await import('mapbox-gl')).default;
+
+      //Force import 
+      (mapboxgl as any).workerClass = class extends Worker {
+        constructor() {
+          super('/mapbox-gl-csp-worker.js');
+        }
+      };
 
       mapboxgl.accessToken = environment.mapboxToken;
 

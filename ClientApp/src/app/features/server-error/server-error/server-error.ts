@@ -13,8 +13,9 @@ export class ServerError {
     loop: true,                 
     autoplay: true              
   };
+  
   ngOnInit()
   {
-    //window.location.href= '/main-page';
+    window.location.href= '/main-page';
   }
 }

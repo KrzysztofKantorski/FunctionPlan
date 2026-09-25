@@ -60,7 +60,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
 
       if (error.status === 0) {
-        errorMessage = 'Cannot connect to server.';
+        if(!router.url.includes('/server-error'))
+        {
+          router.navigate(['/server-error']);
+        }
+        return throwError(() => error);
       }
 
       if (error.status === 401)   

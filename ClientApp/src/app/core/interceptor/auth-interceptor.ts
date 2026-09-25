@@ -94,7 +94,7 @@ const handle401Error = (request: HttpRequest<unknown>, next: HttpHandlerFn, auth
   }
   else{
     return refreshTokenSubject.pipe(
-      filter(token => token !== null),
+      filter(token => !!token),
       take(1),
       switchMap(token => {
         //Send request again with token

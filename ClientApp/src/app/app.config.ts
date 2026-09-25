@@ -10,7 +10,7 @@ import { authInterceptor } from './core/interceptor/auth-interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
+    provideHttpClient(withInterceptors([errorInterceptor, authInterceptor])),
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     provideAnimationsAsync(),
   ]

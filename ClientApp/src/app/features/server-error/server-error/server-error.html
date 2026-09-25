@@ -3,5 +3,17 @@
           [options]="lottieOptions" 
           class="max-h-[80vh] w-auto max-w-[600px] block">
     </ng-lottie>
+    <button 
+        mat-flat-button 
+        color="primary" 
+        class="!rounded-xl !px-8 !py-3 !min-h-[48px] flex items-center justify-center"
+        [disabled]="isChecking()"
+        (click)="retry()">
+        @if (isChecking()) {
+            <mat-spinner diameter="20" class="mr-2"></mat-spinner>
+        } @else {
+            <span>Try again</span>
+        }
+    </button>
 </div>
 

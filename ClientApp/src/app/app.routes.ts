@@ -10,7 +10,6 @@ import { MeetingHistory } from './features/meetings/meeting-history/meeting-hist
 import { MeetingOrganized } from './features/meetings/meeting-organized/meeting-organized';
 import { MeetingAccepted } from './features/meetings/meeting-accepted/meeting-accepted';
 
-
 import { guestGuard } from './core/guards/guest-guard';
 import { authGuard } from './core/guards/auth-guard';
 import { ImageGallery } from './shared/components/media-gallery/image-gallery/image-gallery';
@@ -22,6 +21,10 @@ export const routes: Routes = [
         path :"", 
         component: WelcomePage,
         canActivate: [guestGuard]
+    },
+    {
+        path: 'server-error',
+        loadComponent: () => import('./features/server-error/server-error/server-error').then(m => m.ServerError)
     },
     {
         path :"login",

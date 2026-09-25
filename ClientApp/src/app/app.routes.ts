@@ -70,5 +70,9 @@ export const routes: Routes = [
         path:"meeting-info/:id/media", 
         component: ImageGallery,
         canActivate: [authGuard]
+    },
+    {
+        path: '**',
+        loadComponent: () => import('./features/server-error/page-not-found/page-not-found').then(m => m.PageNotFound),
     }
 ];

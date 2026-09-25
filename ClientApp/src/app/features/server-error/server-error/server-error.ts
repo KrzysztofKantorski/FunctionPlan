@@ -1,12 +1,12 @@
 import { Component, inject, Input, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 import { HealthService } from '../../../core/services/health-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ServerErrorAnimation } from '../../../shared/components/server-error-animation/server-error-animation';
 @Component({
   selector: 'server-error',
-  imports: [LottieComponent, MatButtonModule, MatProgressSpinnerModule],
+  imports: [ServerErrorAnimation, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './server-error.html'
 })
 export class ServerError {
@@ -15,12 +15,6 @@ export class ServerError {
   private snackBar = inject(MatSnackBar);
 
   isChecking = signal<boolean>(false);
-  
-  readonly lottieOptions: AnimationOptions = {
-    path: '/server-error.json', 
-    loop: true,                 
-    autoplay: true              
-  };
   
   retry(){
     if (this.isChecking()) return;

@@ -7,11 +7,16 @@ import { errorInterceptor } from './core/interceptor/error-interceptor';
 import { GlobalErrorHandler } from './core/handlers/global-error-handler';
 import { authInterceptor } from './core/interceptor/auth-interceptor';
 
+import { provideLottieOptions } from 'ngx-lottie';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([errorInterceptor, authInterceptor])),
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     provideAnimationsAsync(),
+    provideLottieOptions({
+      player: () => import('lottie-web'),
+    }),
   ]
 };

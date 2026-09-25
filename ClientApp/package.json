@@ -21,8 +21,10 @@
     "@angular/material": "^21.2.14",
     "@angular/platform-browser": "^21.2.0",
     "@angular/router": "^21.2.0",
+    "lottie-web": "^5.13.0",
     "mapbox-gl": "^3.31.0",
     "ng-gallery": "^12.0.0",
+    "ngx-lottie": "^22.0.0",
     "ngx-mapbox-gl": "^14.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

@@ -129,6 +129,26 @@ export class MeetingInfo implements OnInit {
 
 
 
+  
+  joinMeeting(){
+    const meetingId = Number(this.id)
+
+    this.meetingService.joinMeeting(meetingId).pipe(take(1)).subscribe({
+
+      next: ()=>{
+        this.openMeetingDialog("Meeting attendance saved");
+        this.router.navigate([`/meeting-accepted`])
+      },
+
+      error: (err)=>{
+       this.openMeetingDialog(`Meeting attendance cannot be saved: ${err.message}`)
+      }
+    })
+
+  }
+
+
+
 
 
   openMeetingDialog(message: string){

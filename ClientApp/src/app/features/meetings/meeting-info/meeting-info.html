@@ -83,15 +83,22 @@
                 </div>
 
                 <div>
-                    <button mat-fab extended (click)="cancelAttendance()">
-                        Leave
-                    </button>
+                  
                     @if (isAcceptedView) 
                     {
-                     <button mat-fab extended (click)="goToMedia(meetingDetails.id)" class="ml-2">
-                        Image gallery
-                    </button>
+                        <button mat-fab extended (click)="cancelAttendance()">
+                            Leave
+                        </button>
+
+                        <button mat-fab extended (click)="goToMedia(meetingDetails.id)" class="ml-2">
+                            Image gallery
+                        </button>
                     
+                    }
+                    @else{
+                        <button mat-fab extended (click)="joinMeeting()">
+                            Join
+                        </button>
                     }
                 </div>
             </div>

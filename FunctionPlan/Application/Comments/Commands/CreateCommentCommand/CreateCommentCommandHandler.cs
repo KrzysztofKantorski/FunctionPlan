@@ -34,7 +34,7 @@ namespace Application.Comments.Commands.CreateCommentCommand
                 throw new UserNotFoundException("User not found");
             }
 
-            var meeting = await _meetingRepository.GetByIdAsync(request.MeetingId);
+            var meeting = await _meetingRepository.GetByIdWithUsersAsync(request.MeetingId);
 
             if (meeting == null)
             {
@@ -50,9 +50,15 @@ namespace Application.Comments.Commands.CreateCommentCommand
                 {
                     throw new CommentNotFoundException("Parent comment not found");
                 }
+
+
+                if(parentComment.MeetingId != meeting.Id)
+                {
+                    throw new Exception("Parent comment belongs to a different meeting");
+                }
             }
 
-            meeting.AddComment(user, request.Content, request.ParentCommentId);
+            meeting.AddComment(user.Id, request.Content, request.ParentCommentId);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }

@@ -194,14 +194,30 @@ namespace Domain.Meetings
 
 
         //Add comment
-        public void AddComment(User user, string content, int? parentCommentId = null)
+        public void AddComment(int userId, string content, int? parentCommentId = null)
         {
-            if(user is null)
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                throw new Exception("Comment content cannot be empty");
+            }
+
+            if(userId <=0)
             {
                 throw new InvalidUserException("Incorrect user");
             }
 
-            var comment = new Comment(this.Id, user.Id, content, parentCommentId);
+            if (Status == MeetingStatus.Cancelled)
+            {
+                throw new InvalidMeetingStatus("Cannot add media to a cancelled meeting.");
+            }
+
+            //Check if user belongs to meeting
+            if (!(userId == OrganizerId) && !_users.Any(x => x.Id == userId))
+            {
+                throw new InvalidUserException("User does not belong to meeting");
+            }
+
+            var comment = new Comment(this.Id, userId, content, parentCommentId);
 
             _comments.Add(comment);
         }

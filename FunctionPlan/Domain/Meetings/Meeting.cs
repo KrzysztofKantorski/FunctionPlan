@@ -223,7 +223,7 @@ namespace Domain.Meetings
 
             if (Status == MeetingStatus.Cancelled)
             {
-                throw new Exception("Cannot add media to a cancelled meeting.");
+                throw new InvalidMeetingStatus("Cannot add media to a cancelled meeting.");
             }
 
 
@@ -256,12 +256,12 @@ namespace Domain.Meetings
 
             if(fileToRemove is null)
             {
-                throw new Exception("File does not exist");
+                throw new IncorrectFileName("File does not exist");
             }
 
             if(OrganizerId != userId && fileToRemove.UploaderId!=userId)
             {
-                throw new Exception("You dont have permision to delete this file");
+                throw new InvalidUserException("You dont have permision to delete this file");
             }
 
             _mediaFiles.Remove(fileToRemove);
@@ -282,12 +282,12 @@ namespace Domain.Meetings
 
             if (file is null)
             {
-                throw new Exception("File does not exist");
+                throw new IncorrectFileName("File does not exist");
             }
 
             if (OrganizerId != userId && file.UploaderId != userId)
             {
-                throw new Exception("You dont have permision to delete this file");
+                throw new InvalidUserException("You dont have permision to delete this file");
             }
 
 

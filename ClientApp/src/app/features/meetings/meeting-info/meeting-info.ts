@@ -22,6 +22,7 @@ import { UserAvatar } from '../../../shared/components/meeting/user-avatar/user-
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialog } from '../../../shared/components/meeting/user-dialog/user-dialog';
 import { CommentSection } from '../comment-section/comment-section';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-meeting-info',
@@ -39,7 +40,7 @@ export class MeetingInfo implements OnInit {
   private meetingService = inject(MeetingService);
   private cdr = inject(ChangeDetectorRef);
   private dialog = inject(MatDialog);
-
+  private router = inject(Router);
 
   //Get meeting id from route
   @Input() id!: string;
@@ -49,9 +50,19 @@ export class MeetingInfo implements OnInit {
 
   isLoading = true;
 
+  isAcceptedView = false;
+
   ngOnInit() 
   { 
-   
+
+    //Check if accepted view
+    const fromUrl = history.state?.fromUrl as string | undefined;
+
+    if(fromUrl?.includes('meeting-accepted'))
+    {
+      this.isAcceptedView = true;  
+    }
+
     if(isPlatformBrowser(this.platformId)){
       const meetingId = Number(this.id);
 
@@ -79,4 +90,10 @@ export class MeetingInfo implements OnInit {
       width: '320px'
     });
   }
+
+  goToMedia(meetingId: number)
+  {
+    this.router.navigate([`/meeting-info/${meetingId}/media`])
+  }
+
 }

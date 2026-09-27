@@ -86,6 +86,13 @@
                     <button mat-fab extended>
                         JOIN
                     </button>
+                    @if (isAcceptedView) 
+                    {
+                     <button mat-fab extended (click)="goToMedia(meetingDetails.id)" class="ml-2">
+                        Image gallery
+                    </button>
+                    
+                    }
                 </div>
             </div>
 

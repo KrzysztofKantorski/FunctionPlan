@@ -26,7 +26,12 @@ export class MeetingCard {
   //Navigate to meeting details
   goToDetails(meetingId: number)
   {
-    this.router.navigate(['/meeting-info', meetingId])
+    this.router.navigate(['/meeting-info', meetingId],
+      {
+        //Give previous route (/main-page or /meeting-accepted) for conditional rendering
+        state: { fromUrl: this.router.url } 
+      }
+    );
   }
 
   //Forwart join event to main page

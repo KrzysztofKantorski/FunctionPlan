@@ -62,7 +62,9 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.status === 0) {
         if(!router.url.includes('/server-error'))
         {
-          router.navigate(['/server-error']);
+          //Navigate to error page and delete url history 
+          //user cannot go to previous page with back button
+          router.navigate(['/server-error'], {replaceUrl: true});
         }
         return throwError(() => error);
       }

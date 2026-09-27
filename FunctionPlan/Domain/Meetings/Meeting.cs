@@ -208,10 +208,10 @@ namespace Domain.Meetings
 
 
         //Add media
-        public void AddMedia(User user, Guid fileName, string? description)
+        public void AddMedia(int userId, Guid fileName, string? description)
         {
             
-            if(user is null)
+            if(userId <= 0)
             {
                 throw new InvalidUserException("incorrect user id");
             }
@@ -221,15 +221,21 @@ namespace Domain.Meetings
                 throw new IncorrectFileName("incorrect file name");
             }
 
+            if (Status == MeetingStatus.Cancelled)
+            {
+                throw new Exception("Cannot add media to a cancelled meeting.");
+            }
+
+
             string fileNameString = fileName.ToString();
 
             //Check if user belongs to meeting
-            if (!(user.Id == OrganizerId) && !_users.Any(x=> x.Id == user.Id)) 
+            if (!(userId== OrganizerId) && !_users.Any(x=> x.Id == userId)) 
             {
                 throw new InvalidUserException("User does not belong to meeting");    
             }
 
-            var newMediaFile = new MediaFile(this.Id, user.Id, fileNameString, description);
+            var newMediaFile = new MediaFile(this.Id, userId, fileNameString, description);
 
             _mediaFiles.Add(newMediaFile);
         }

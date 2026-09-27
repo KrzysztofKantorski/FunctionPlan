@@ -46,7 +46,7 @@ namespace Application.Media.Commands.AddMediaFile
             var fileName = Guid.NewGuid();
 
             //Call domain metohod
-            meeting.AddMedia(uploader, fileName, request.Description);
+            meeting.AddMedia(uploader.Id, fileName, request.Description);
 
 
             //Save file to azure storage

@@ -13,6 +13,7 @@ import { MeetingAccepted } from './features/meetings/meeting-accepted/meeting-ac
 import { guestGuard } from './core/guards/guest-guard';
 import { authGuard } from './core/guards/auth-guard';
 import { ImageGallery } from './shared/components/media-gallery/image-gallery/image-gallery';
+import { serverErrorGuard } from './core/guards/server-error-guard';
 
 
 
@@ -24,7 +25,8 @@ export const routes: Routes = [
     },
     {
         path: 'server-error',
-        loadComponent: () => import('./features/server-error/server-error/server-error').then(m => m.ServerError)
+        loadComponent: () => import('./features/server-error/server-error/server-error').then(m => m.ServerError),
+        canDeactivate: [serverErrorGuard]
     },
     {
         path :"login",

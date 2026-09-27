@@ -54,7 +54,7 @@ namespace Application.Comments.Commands.CreateCommentCommand
 
                 if(parentComment.MeetingId != meeting.Id)
                 {
-                    throw new Exception("Parent comment belongs to a different meeting");
+                    throw new IncorrectChildCommentException("Parent comment belongs to a different meeting");
                 }
             }
 

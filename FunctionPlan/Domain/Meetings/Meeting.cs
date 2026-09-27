@@ -198,7 +198,7 @@ namespace Domain.Meetings
         {
             if (string.IsNullOrWhiteSpace(content))
             {
-                throw new Exception("Comment content cannot be empty");
+                throw new InvalidCommentContentException("Comment content cannot be empty");
             }
 
             if(userId <=0)

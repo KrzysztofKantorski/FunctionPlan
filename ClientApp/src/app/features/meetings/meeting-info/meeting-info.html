@@ -83,8 +83,8 @@
                 </div>
 
                 <div>
-                    <button mat-fab extended>
-                        JOIN
+                    <button mat-fab extended (click)="cancelAttendance()">
+                        Leave
                     </button>
                     @if (isAcceptedView) 
                     {

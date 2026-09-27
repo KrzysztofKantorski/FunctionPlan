@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { DatePipe } from '@angular/common';
-import { forkJoin } from 'rxjs';
+import { forkJoin, take } from 'rxjs';
 
 
 
@@ -23,6 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserDialog } from '../../../shared/components/meeting/user-dialog/user-dialog';
 import { CommentSection } from '../comment-section/comment-section';
 import { Router } from '@angular/router';
+import { MeetingDialog } from '../../../shared/components/meeting/meeting-dialog/meeting-dialog';
 
 @Component({
   selector: 'app-meeting-info',
@@ -51,6 +52,9 @@ export class MeetingInfo implements OnInit {
   isLoading = true;
 
   isAcceptedView = false;
+
+
+
 
   ngOnInit() 
   { 
@@ -82,6 +86,17 @@ export class MeetingInfo implements OnInit {
 
 
 
+
+
+  goToMedia(meetingId: number)
+  {
+    this.router.navigate([`/meeting-info/${meetingId}/media`])
+  }
+
+
+
+
+
   openParticipantDetails(participant: MeetingParticipant): void 
   {
     this.dialog.open(UserDialog, 
@@ -91,9 +106,37 @@ export class MeetingInfo implements OnInit {
     });
   }
 
-  goToMedia(meetingId: number)
+
+
+
+  cancelAttendance()
   {
-    this.router.navigate([`/meeting-info/${meetingId}/media`])
+    const meetingId = Number(this.id)
+
+    this.meetingService.cancelAttendance(meetingId).pipe(take(1)).subscribe({
+
+      next: ()=>{
+        this.openMeetingDialog("Meeting attendance has been cancelled");
+        this.router.navigate([`/meeting-accepted`])
+      },
+
+      error: (err)=>{
+       this.openMeetingDialog(`Meeting attendance cannot be cancelled: ${err.message}`)
+      }
+    })
+    
+  }
+
+
+
+
+
+  openMeetingDialog(message: string){
+    this.dialog.open(MeetingDialog, 
+    {
+      data: message,
+      width: '320px'
+    });
   }
 
 }

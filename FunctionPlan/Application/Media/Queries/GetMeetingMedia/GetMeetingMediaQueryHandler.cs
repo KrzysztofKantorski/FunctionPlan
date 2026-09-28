@@ -67,6 +67,7 @@ namespace Application.Media.Queries.GetMeetingMedia
                     md."FileName", 
                     md."Description", 
                     md."CreatedAt",
+                    u."Id" AS "UploaderId",
                     u."Username" AS "UploaderName",
                     u."ProfilePictureUrl" AS "UploaderAvatarId"
                 FROM "MediaFiles" md

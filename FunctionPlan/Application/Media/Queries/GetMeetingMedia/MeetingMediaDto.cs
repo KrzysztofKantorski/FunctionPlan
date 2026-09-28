@@ -4,6 +4,7 @@
         string FileName,
         string? Description,
         DateTime CreatedAt,
+        int UploaderId,
         string UploaderName,
         string? UploaderAvatarId
     );

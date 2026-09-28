@@ -6,9 +6,11 @@ import { MediaService } from '../../../../core/services/media-service';
 import { MeetingMediaUrlsResponse } from '../../../../core/models/media/meetingMediaUrlsResponse';
 import { isPlatformBrowser } from '@angular/common';
 import { catchError, forkJoin, map, of, switchMap, take } from 'rxjs';
+import { UserAvatar } from '../../meeting/user-avatar/user-avatar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-image-gallery',
-  imports: [GalleryModule, Navbar, BackButton],
+  imports: [GalleryModule, Navbar, BackButton, UserAvatar, MatProgressSpinnerModule],
   templateUrl: './image-gallery.html'
 })
 export class ImageGallery {
@@ -51,6 +53,7 @@ export class ImageGallery {
       {
         return of([]);
       }
+      console.log(this.mediaInfo);
 
       //Get media images
       const blobRequests = this.mediaInfo.map((item) =>

@@ -4,7 +4,7 @@
     @if(isLoading)
     {
         <div class="w-full h-full flex items-center justify-center">
-            <mat-spinner diameter="40"></mat-spinner>
+            <mat-spinner></mat-spinner>
         </div>
     }
     @else if(images.length == 0){
@@ -14,14 +14,17 @@
     }
     @else{
         <div class="w-full h-full flex items-center justify-center bg-background">
+
             <div (click)="openParticipantDetails(user)" 
                 class="relative rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105">
                 <user-avatar
-                    [userId]="user.id"
-                    [username]="user.username"
-                    [profilePictureUrl]="user.profilePictureUrl">
+                    [userId]="mediaInfo.uploaderId"
+                    [username]="mediaInfo.uploaderName"
+                    [profilePictureUrl]="mediaInfo.uploaderAvatarId">
                 </user-avatar>
             </div>
+
+
             <gallery 
             [items]="images" 
             bullets 
@@ -29,6 +32,11 @@
             (indexChange)="onIndexChange($event)"
             >
             </gallery>
+
+
+            <div>
+                {{mediaInfo.description}}
+            </div>
         </div>
     }
 

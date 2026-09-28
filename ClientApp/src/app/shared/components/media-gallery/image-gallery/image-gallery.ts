@@ -1,9 +1,11 @@
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Input, PLATFORM_ID } from '@angular/core';
 import { GalleryModule, GalleryItem, ImageItem} from 'ng-gallery';
 import { Navbar } from '../../nav/navbar/navbar';
 import { BackButton } from '../../back-button/back-button';
 import { MediaService } from '../../../../core/services/media-service';
 import { MeetingMediaUrlsResponse } from '../../../../core/models/media/meetingMediaUrlsResponse';
+import { isPlatformBrowser } from '@angular/common';
+import { catchError, forkJoin, map, of, switchMap, take } from 'rxjs';
 @Component({
   selector: 'app-image-gallery',
   imports: [GalleryModule, Navbar, BackButton],
@@ -15,27 +17,81 @@ export class ImageGallery {
   @Input() id!: string;
 
   private mediaService = inject(MediaService)
+  private cdr = inject(ChangeDetectorRef)
+  private platformId = inject(PLATFORM_ID)  
   
   images: GalleryItem[] = [];
   mediaInfo: MeetingMediaUrlsResponse[] = [];
 
+  //For ngOnDestroy
+  private rawObjectUrls: string[] = [];
+
+  currentIndex = 0;
   isLoading = true;
+
+
   ngOnInit() {
+
+  //Check browser
+  if(!isPlatformBrowser(this.platformId))
+  {
+    return;
+  }
+
 
   const meetingId = Number(this.id);
 
-  this.mediaService.getMeetingMedia(meetingId).subscribe({
-    next: (data)=>{
-      this.mediaInfo = data;
-      console.log(this.mediaInfo);
-      this.isLoading = false;
-    },
-    error: (err)=>{
-      console.error("cannot get media", err);
-      this.isLoading = false;
-    }
 
+  //Get media metadata
+  this.mediaService.getMeetingMedia(meetingId).pipe(
+    take(1),
+    switchMap((data)=>{
+      this.mediaInfo = data ?? [];
+      if (this.mediaInfo.length === 0) 
+      {
+        return of([]);
+      }
+
+      //Get media images
+      const blobRequests = this.mediaInfo.map((item) =>
+          this.mediaService.getMeetingImage(meetingId, item.fileName).pipe(
+            map((blob: Blob) => {
+              const url = URL.createObjectURL(blob);
+              this.rawObjectUrls.push(url);
+              return new ImageItem({ src: url, thumb: url });
+            }),
+            catchError((err) => {
+              console.error(`Could not get image: ${item.fileName}`, err);
+
+              //Empty image
+              return of(new ImageItem({ src: '', thumb: '' }));
+            })
+          )
+        );
+
+      //Wait for all requests to finish
+      return forkJoin(blobRequests);
+    })
+
+  ).subscribe
+    ({ 
+      next: (galleryItems)=>
+      {
+        //Assign blobs to gallery
+        this.images = galleryItems;
+        this.isLoading = false;
+        this.cdr.markForCheck();
+      },
+      error: (err)=>
+      {
+        console.error('Could not get images:', err);
+        this.isLoading = false;
+        this.cdr.markForCheck();
+      }
   })
+
+
+  
 
   // Set items array
   this.images = [
@@ -48,5 +104,21 @@ export class ImageGallery {
         thumb: 'https://picsum.photos/id/1015/200/120'
       })
     ];
+  }
+
+
+  onIndexChange(event: any): void {
+    this.currentIndex = event?.currIndex ?? 0;
+    this.cdr.markForCheck();
+  }
+
+
+
+  ngOnDestroy(): void {
+    //Clear blobs
+    for (const url of this.rawObjectUrls) {
+      URL.revokeObjectURL(url);
+    }
+    this.rawObjectUrls = [];
   }
 }

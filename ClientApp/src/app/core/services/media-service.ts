@@ -20,7 +20,7 @@ export class MediaService
   }
 
   //Get media image (as blob)
-  getUserImage(meetingId: number, imageId: number): Observable<Blob>
+  getMeetingImage(meetingId: number, imageId: string): Observable<Blob>
   {
     return this.http.get(`${this.apiUrl}/meetings/${meetingId}/media/${imageId}`, 
     {

@@ -13,31 +13,37 @@
         </div>
     }
     @else{
-        <div class="w-full h-full flex items-center justify-center bg-background">
+        
+        @if (mediaInfo[currentIndex]; as current) {
 
-            <div (click)="openParticipantDetails(user)" 
-                class="relative rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105">
-                <user-avatar
-                    [userId]="mediaInfo.uploaderId"
-                    [username]="mediaInfo.uploaderName"
-                    [profilePictureUrl]="mediaInfo.uploaderAvatarId">
-                </user-avatar>
+            <div class="w-full h-full flex flex-col items-center justify-center bg-background gap-4 relative">
+
+               
+                <div (click)="openParticipantDetails(current.uploaderId, current.uploaderName)" 
+                     class="rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105">
+                    <user-avatar
+                        [userId]="current.uploaderId"
+                        [username]="current.uploaderName"
+                        [profilePictureUrl]="current.uploaderAvatarId">
+                    </user-avatar>
+                </div>
+                <div class="w-[80%] h-[70vh] relative">
+                    <gallery 
+                        [items]="images" 
+                        bullets 
+                        class="w-full h-full block bg-primary"
+                        (indexChange)="onIndexChange($event)">
+
+                    </gallery>
+                    <div class="absolute bottom-5 right-5  bg-black z-[1000] p-5 text-sm">
+                        {{ current.description || 'No description' }}
+                    </div>
+                
+                </div>
+               
             </div>
-
-
-            <gallery 
-            [items]="images" 
-            bullets 
-            class="w-[80%] h-[80vh] block bg-primary"
-            (indexChange)="onIndexChange($event)"
-            >
-            </gallery>
-
-
-            <div>
-                {{mediaInfo.description}}
-            </div>
-        </div>
+            
+        }
     }
 
 </div>

@@ -8,6 +8,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { catchError, forkJoin, map, of, switchMap, take } from 'rxjs';
 import { UserAvatar } from '../../meeting/user-avatar/user-avatar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MeetingParticipant } from '../../../../core/models/meeting/meeting-participant';
+import { UserDialog } from '../../meeting/user-dialog/user-dialog';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-image-gallery',
   imports: [GalleryModule, Navbar, BackButton, UserAvatar, MatProgressSpinnerModule],
@@ -20,7 +23,8 @@ export class ImageGallery {
 
   private mediaService = inject(MediaService)
   private cdr = inject(ChangeDetectorRef)
-  private platformId = inject(PLATFORM_ID)  
+  private platformId = inject(PLATFORM_ID) 
+  private dialog = inject(MatDialog);
   
   images: GalleryItem[] = [];
   mediaInfo: MeetingMediaUrlsResponse[] = [];
@@ -92,21 +96,6 @@ export class ImageGallery {
         this.cdr.markForCheck();
       }
   })
-
-
-  
-
-  // Set items array
-  this.images = [
-      new ImageItem({
-        src: 'https://picsum.photos/id/1018/1000/600',
-        thumb: 'https://picsum.photos/id/1018/200/120'
-      }),
-      new ImageItem({
-        src: 'https://picsum.photos/id/1015/1000/600',
-        thumb: 'https://picsum.photos/id/1015/200/120'
-      })
-    ];
   }
 
 
@@ -123,5 +112,22 @@ export class ImageGallery {
       URL.revokeObjectURL(url);
     }
     this.rawObjectUrls = [];
+  }
+
+
+  openParticipantDetails(userId: number, userName: string): void 
+    {
+      const details: MeetingParticipant = 
+      {
+        id: userId, 
+        username: userName, 
+        profilePictureUrl: null
+      }
+
+      this.dialog.open(UserDialog, 
+      {
+        data: details,
+        width: '320px'
+      });
   }
 }

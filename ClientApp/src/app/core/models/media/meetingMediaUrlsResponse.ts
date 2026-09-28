@@ -5,5 +5,5 @@ export interface MeetingMediaUrlsResponse
     createdAt: Date;
     uploaderId: number;
     uploaderName: string;
-    uploaderAvatarId?: string | null;
+    uploaderAvatarId: string | null;
 }

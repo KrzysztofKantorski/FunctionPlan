@@ -1,14 +1,37 @@
 <div class="h-full w-full pl-5 pt-5 relative">
 
     <back-button class="absolute t-2 l-2"></back-button>
+    @if(isLoading)
+    {
+        <div class="w-full h-full flex items-center justify-center">
+            <mat-spinner diameter="40"></mat-spinner>
+        </div>
+    }
+    @else if(images.length == 0){
+        <div class="w-full h-full flex items-center justify-center bg-background">
+            <p>There is no images yet</p>
+        </div>
+    }
+    @else{
+        <div class="w-full h-full flex items-center justify-center bg-background">
+            <div (click)="openParticipantDetails(user)" 
+                class="relative rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105">
+                <user-avatar
+                    [userId]="user.id"
+                    [username]="user.username"
+                    [profilePictureUrl]="user.profilePictureUrl">
+                </user-avatar>
+            </div>
+            <gallery 
+            [items]="images" 
+            bullets 
+            class="w-[80%] h-[80vh] block bg-primary"
+            (indexChange)="onIndexChange($event)"
+            >
+            </gallery>
+        </div>
+    }
 
-    <div class="w-full h-full flex items-center justify-center bg-background">
-        <gallery 
-        [items]="images" 
-        bullets 
-        class="w-[80%] h-[80vh] block bg-primary">
-        </gallery>
-    </div>
 </div>
 
 

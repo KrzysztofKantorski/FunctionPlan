@@ -2,6 +2,6 @@
 
 namespace Application.Users.Queries.GetUserStats
 {
-    internal sealed record GetUserStatsQuery(
+    public sealed record GetUserStatsQuery(
         int UserId): IRequest<UserStatsDto>;
 }

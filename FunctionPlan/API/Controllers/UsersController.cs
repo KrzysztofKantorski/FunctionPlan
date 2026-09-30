@@ -6,10 +6,14 @@ using Application.Users.Queries.GetAnotherUserAvatar;
 using Application.Users.Queries.GetUserDetailsQuery;
 using Application.Users.Queries.GetUserImageQuery;
 using Application.Users.Queries.GetUsersQuery;
+using Application.Users.Queries.GetUserStats;
+using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace API.Controllers
@@ -144,6 +148,23 @@ namespace API.Controllers
             var image = await _sender.Send(query, cancellationToken);
 
             return File(image.Stream, image.ContentType);
+        }
+
+
+
+
+        //Get user stats
+        [HttpGet("{UserId}/stats")]
+        public async Task<IActionResult> GetUserStats(
+            [FromRoute] int UserId,
+            CancellationToken cancellationToken
+            )
+        {
+            var query = new GetUserStatsQuery(UserId);
+
+            var result = await _sender.Send(query, cancellationToken);
+
+            return Ok(result);
         }
     }
 }

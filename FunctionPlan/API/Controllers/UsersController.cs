@@ -5,6 +5,7 @@ using Application.Users.Commands.UploadUserImage;
 using Application.Users.Queries.GetAnotherUserAvatar;
 using Application.Users.Queries.GetUserDetailsQuery;
 using Application.Users.Queries.GetUserImageQuery;
+using Application.Users.Queries.GetUsersQuery;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,19 @@ namespace API.Controllers
             return Ok(result);
         }
 
+
+
+        //Get users
+        [HttpGet]
+        public async Task<IActionResult> GetUsers(
+            CancellationToken cancellationToken
+            )
+        {
+            var command = new GetUsersQuery(User.GetUserId());
+            var result = await _sender.Send(command, cancellationToken);
+
+            return Ok(result);
+        }
 
         //Get user avatar
         [HttpGet("avatar")]

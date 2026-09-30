@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Data;
+using Application.Exceptions;
 using Dapper;
 using MediatR;
 using System.Data;
@@ -25,9 +26,19 @@ namespace Application.Users.Queries.GetUserStats
                    (SELECT COUNT(*) FROM "MeetingUser" WHERE "UsersId" = @UserId) AS AttendedMeetingsCount,  
                    (SELECT COUNT(*) FROM "Comments" WHERE "AuthorId" = @UserId) AS CommentsCount,   
                    (SELECT COUNT(*) FROM "MediaFiles" WHERE "UploaderId" = @UserId) AS UploadedPhotosCount
+
+                   FROM "Users" u
+                   WHERE u."Id" = @UserId
                 """;
 
-            return await connection.QuerySingleAsync<UserStatsDto>(sql, new { request.UserId });
+            var stats = await connection.QuerySingleOrDefaultAsync<UserStatsDto>(sql, new { request.UserId });
+
+            if(stats == null)
+            {
+                throw new UserNotFoundException("User with provided id not found");
+            }
+
+            return stats;
         }
     }
 }

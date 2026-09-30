@@ -44,16 +44,6 @@ namespace Application.Auth.Commands.Login
                 throw new InvalidRequestData("Invalid email or password");
             }
 
-            string existingPassword = existingUser.PasswordHash!;
-
-            //Check password
-            var isPasswordValid = _passwordHasher.Verify(request.Password, existingUser.PasswordHash!);
-
-            if (!isPasswordValid)
-            {
-                throw new InvalidRequestData("Invalid email or password");
-            }
-
 
             //Check if user is registered with Google account
             if (existingUser.GoogleSubjectId != null)
@@ -71,6 +61,17 @@ namespace Application.Auth.Commands.Login
             if (!existingUser.IsVerified)
             {
                 throw new UserNotVerifiedException("Please verify your email address before logging in.");
+            }
+
+
+            string existingPassword = existingUser.PasswordHash!;
+
+            //Check password
+            var isPasswordValid = _passwordHasher.Verify(request.Password, existingUser.PasswordHash!);
+
+            if (!isPasswordValid)
+            {
+                throw new InvalidRequestData("Invalid email or password");
             }
 
             //generate access token

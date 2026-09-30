@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Data;
+using Application.Common.Dto;
 using Dapper;
 using MediatR;
 using System.Data;

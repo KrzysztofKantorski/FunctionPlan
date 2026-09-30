@@ -23,6 +23,7 @@ namespace Application.Users.Queries.GetUsersQuery
                 """
                     SELECT u."Id", u."Username", u."Email", u."ProfilePictureUrl"
                     FROM "Users" u WHERE u."Id" != @UserId AND u."IsBanned" = false
+                    ORDER BY u."Username" ASC
                 """;
 
                 var users = await connection.QueryAsync<UserProfileDetailsDto>(

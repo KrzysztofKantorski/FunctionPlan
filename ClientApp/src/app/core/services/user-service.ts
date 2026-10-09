@@ -18,6 +18,15 @@ export class UserService {
     return this.http.get<UserProfile>(`${this.apiUrl}/users/me`);
   }
 
+
+  //Get users details (all users) 
+  getUsersDetails(): Observable<UserProfile[]>
+  {
+    return this.http.get<UserProfile[]>(`${this.apiUrl}/users`);
+  }
+
+  
+
   //Get user image as blob
   getUserImage(): Observable<Blob>
   {

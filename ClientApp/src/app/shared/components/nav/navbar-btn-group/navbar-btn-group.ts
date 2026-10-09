@@ -29,7 +29,6 @@ export class NavbarBtnGroup {
   }
 
   goToUsers(){
-    console.log("Navigating to users")
     this.router.navigate(['/users'])
   }
 }

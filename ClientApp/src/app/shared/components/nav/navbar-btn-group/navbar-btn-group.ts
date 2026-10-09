@@ -27,4 +27,9 @@ export class NavbarBtnGroup {
   goToAccepted(){
     this.router.navigate(['/meeting-accepted'])
   }
+
+  goToUsers(){
+    console.log("Navigating to users")
+    this.router.navigate(['/users'])
+  }
 }

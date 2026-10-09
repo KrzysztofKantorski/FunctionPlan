@@ -14,6 +14,7 @@ import { guestGuard } from './core/guards/guest-guard';
 import { authGuard } from './core/guards/auth-guard';
 import { ImageGallery } from './shared/components/media-gallery/image-gallery/image-gallery';
 import { serverErrorGuard } from './core/guards/server-error-guard';
+import { UserTable } from './features/users/user-table/user-table';
 
 
 
@@ -71,6 +72,11 @@ export const routes: Routes = [
     {
         path:"meeting-info/:id/media", 
         component: ImageGallery,
+        canActivate: [authGuard]
+    },
+    {
+        path:"users", 
+        component: UserTable,
         canActivate: [authGuard]
     },
     {

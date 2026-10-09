@@ -9,9 +9,7 @@
     
     @if (isLoading) 
     {
-        <div class="text-center py-20 text-gray-500 text-lg">
-            Loading meeting...
-        </div>
+        <loading-spinner></loading-spinner>
     }
 
     @else if(meetingDetails)

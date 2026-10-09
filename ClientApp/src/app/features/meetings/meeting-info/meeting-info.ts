@@ -24,14 +24,14 @@ import { UserDialog } from '../../../shared/components/meeting/user-dialog/user-
 import { CommentSection } from '../comment-section/comment-section';
 import { Router } from '@angular/router';
 import { MeetingDialog } from '../../../shared/components/meeting/meeting-dialog/meeting-dialog';
-
+import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
 @Component({
   selector: 'app-meeting-info',
   imports: 
   [
     Navbar, NavbarBtnGroup, UserMenu, BackButton, MeetingHeader, 
     MatButtonModule, MeetingMap, DatePipe, MeetingSubtitle, MeetingText, 
-    MatIconModule, UserAvatar, CommentSection
+    MatIconModule, UserAvatar, CommentSection, LoadingSpinner
   ],
   templateUrl: './meeting-info.html'
 })

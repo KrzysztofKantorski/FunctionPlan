@@ -11,9 +11,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MeetingParticipant } from '../../../../core/models/meeting/meeting-participant';
 import { UserDialog } from '../../meeting/user-dialog/user-dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { LoadingSpinner } from '../../loading-spinner/loading-spinner';
 @Component({
   selector: 'app-image-gallery',
-  imports: [GalleryModule, Navbar, BackButton, UserAvatar, MatProgressSpinnerModule],
+  imports: [GalleryModule, Navbar, BackButton, UserAvatar, MatProgressSpinnerModule, LoadingSpinner ],
   templateUrl: './image-gallery.html'
 })
 export class ImageGallery {

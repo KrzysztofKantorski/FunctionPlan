@@ -17,13 +17,14 @@ import { MeetingService } from '../../../core/services/meeting-service';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MeetingInfoDialog } from '../../../shared/components/meeting/meeting-info-dialog/meeting-info-dialog';
+import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
 @Component({
   selector: 'app-main-page',
   imports: 
   [ 
     MainHeader, AsyncPipe, Navbar, NavbarBtnGroup, 
     Sidebar, MatButtonModule, NavbarSearch,
-    UserMenu, DatePipe, MeetingCard
+    UserMenu, DatePipe, MeetingCard, LoadingSpinner
   ],
   templateUrl: './main-page.html'
 })

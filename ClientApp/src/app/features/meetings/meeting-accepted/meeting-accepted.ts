@@ -14,11 +14,12 @@ import { NavbarSearch } from '../../../shared/components/nav/navbar-search/navba
 import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
 import { MeetingInfoDialog } from '../../../shared/components/meeting/meeting-info-dialog/meeting-info-dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-meeting-accepted',
   imports: [MainHeader, AsyncPipe, Navbar, NavbarBtnGroup, 
-    Sidebar, MatButtonModule, NavbarSearch,
+    Sidebar, MatButtonModule, NavbarSearch, LoadingSpinner,
     UserMenu, DatePipe, MeetingCard],
   templateUrl: './meeting-accepted.html'
 })

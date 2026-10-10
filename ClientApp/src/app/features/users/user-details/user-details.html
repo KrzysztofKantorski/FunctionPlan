@@ -6,6 +6,11 @@
     </navbar>
 
     <div class="flex w-full justify-center">
+        <user-avatar 
+                    [userId]="row.id" 
+                    [username]="row.username" 
+                    [profilePictureUrl]="row.profilePictureUrl">
+        </user-avatar>
         <div class="flex font-sans flex-grow flex-wrap items-center justify-center h-[80vh]">
              
             @if(stats$ | async; as stats)

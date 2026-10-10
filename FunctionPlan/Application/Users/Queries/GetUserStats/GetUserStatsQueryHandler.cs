@@ -21,12 +21,14 @@ namespace Application.Users.Queries.GetUserStats
 
             var sql =
                """
+                   
                 SELECT
+                   u."Id" AS "Id",
+                   u."Username" AS "Username",
                    (SELECT COUNT(*) FROM "Meetings" WHERE "OrganizerId" = @UserId) AS OrganizedMeetingsCount,   
                    (SELECT COUNT(*) FROM "MeetingUser" WHERE "UsersId" = @UserId) AS AttendedMeetingsCount,  
                    (SELECT COUNT(*) FROM "Comments" WHERE "AuthorId" = @UserId) AS CommentsCount,   
-                   (SELECT COUNT(*) FROM "MediaFiles" WHERE "UploaderId" = @UserId) AS UploadedPhotosCount,
-                   (SELECT "Username" FROM "Users" WHERE "Id" = @UserId)
+                   (SELECT COUNT(*) FROM "MediaFiles" WHERE "UploaderId" = @UserId) AS UploadedPhotosCount
 
                    FROM "Users" u
                    WHERE u."Id" = @UserId

@@ -25,7 +25,9 @@ export class UserTableView {
     this.dataSource.data = value ?? [];
   }
 
-
+  navigateToUserDetails(userId: number): void{
+    this.router.navigate(['/users', userId]);
+  }
 }
 
 

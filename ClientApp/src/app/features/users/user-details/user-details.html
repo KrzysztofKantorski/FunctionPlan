@@ -1,17 +1,44 @@
-<div class="flex w-full justify-center">
-    <div class="flex flex-col font-sans w-[60%]">
-        @if(stats$ | async; as stats)
-        {
-            <div>
-                <p>Organized meetings: {{ stats.organizedMeetingsCount }}</p>
-                <p>Attended meetings: {{ stats.attendedMeetingsCount }}</p>
-                <p>Written comments: {{ stats.commentsCount }}</p>
-                <p>Uploaded photos: {{ stats.uploadedPhotosCount }}</p>
-            </div>
-        }
-        @else
-        {
-            <loading-spinner></loading-spinner>
-        }
+<div class="flex h-screen flex-col bg-background w-full">
+    <navbar>
+        <back-button></back-button>
+        <navbar-btn-group></navbar-btn-group>
+        <user-menu></user-menu>
+    </navbar>
+
+    <div class="flex w-full justify-center">
+        <div class="flex font-sans flex-grow flex-wrap items-center justify-center h-[80vh]">
+             
+            @if(stats$ | async; as stats)
+            {
+                    <user-stats-card 
+                        title="Organized meetings" 
+                        [value]="stats.organizedMeetingsCount" 
+                        >
+                    </user-stats-card>
+                    <user-stats-card 
+                        title="Attended meetings" 
+                        [value]="stats.attendedMeetingsCount" 
+                        >
+                    </user-stats-card>
+
+                    <user-stats-card 
+                        title="Written comments" 
+                        [value]="stats.commentsCount" 
+                    >
+                    </user-stats-card>  
+                    <user-stats-card 
+                        title="Uploaded pictures" 
+                        [value]="stats.uploadedPhotosCount" 
+                        >
+                    </user-stats-card>
+            }
+            @else
+            {
+                <loading-spinner></loading-spinner>
+            }
+        </div>
     </div>
+
 </div>
+
+

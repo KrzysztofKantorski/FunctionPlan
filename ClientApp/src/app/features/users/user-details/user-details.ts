@@ -4,9 +4,14 @@ import { LoadingSpinner } from '../../../shared/components/loading-spinner/loadi
 import {AsyncPipe} from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs';
+import { BackButton } from '../../../shared/components/back-button/back-button';
+import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
+import { NavbarBtnGroup } from '../../../shared/components/nav/navbar-btn-group/navbar-btn-group';
+import { Navbar } from '../../../shared/components/nav/navbar/navbar';
+import { UserStatsCard } from '../../../shared/components/user/user-stats-card/user-stats-card';
 @Component({
   selector: 'user-details',
-  imports: [LoadingSpinner, AsyncPipe],
+  imports: [LoadingSpinner, AsyncPipe,  Navbar, NavbarBtnGroup, UserMenu, BackButton, UserStatsCard],
   templateUrl: './user-details.html'
 })
 export class UserDetails {

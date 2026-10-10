@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { UserTableView } from '../../../shared/components/user-table-view/user-table-view';
+import { UserTableView } from '../../../shared/components/user/user-table-view/user-table-view';
 import { UserService } from '../../../core/services/user-service';
 import { AsyncPipe } from '@angular/common';
 import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';

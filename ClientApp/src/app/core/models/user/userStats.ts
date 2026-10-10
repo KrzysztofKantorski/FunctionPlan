@@ -1,4 +1,4 @@
-export interface userStats 
+export interface UserStats 
 {
     organizedMeetingsCount: number;
     attendedMeetingsCount: number;

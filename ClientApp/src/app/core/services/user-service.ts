@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { UserProfile } from '../models/user/user-model';
 import { Observable } from 'rxjs';
-
+import { UserStats } from '../models/user/userStats';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +42,14 @@ export class UserService {
     return this.http.get(`${this.apiUrl}/users/${userId}/avatar`, {
       responseType: 'blob'
     })
+  }
+
+
+
+  //Get user stats
+  getUserStats(userId: number): Observable<UserStats>
+  {
+    return this.http.get<UserStats>(`${this.apiUrl}/users/${userId}/stats`);
   }
 
 }

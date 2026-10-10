@@ -4,6 +4,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { UserService } from '../../../../core/services/user-service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../core/auth/auth-service';
 @Component({
   selector: 'user-menu',
   imports: [MatMenuModule, MatButtonModule],
@@ -14,7 +16,8 @@ export class UserMenu implements OnInit, OnDestroy{
   private userService = inject(UserService);
   private sanitizer = inject(DomSanitizer);
   private platformId = inject(PLATFORM_ID);
-
+  private authService = inject(AuthService);
+  private router = inject(Router);
   avatarUrl: SafeUrl | null = null;
   private rawObjectUrl: string | null = null;
   
@@ -46,7 +49,12 @@ export class UserMenu implements OnInit, OnDestroy{
     }
   }
 
-
+  viewStatistics(): void {
+    const user = this.authService.currentUser;
+    if (user?.id) {
+      this.router.navigate(['/users', user.id]);
+    }
+  }
   ngOnDestroy() 
   {
     if (this.rawObjectUrl) 

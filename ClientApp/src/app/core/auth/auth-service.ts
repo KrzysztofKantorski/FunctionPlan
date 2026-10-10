@@ -30,6 +30,10 @@ export class AuthService {
   //Expose to component
   public isLoggedIn$ = this.loggedInSubject.asObservable();
 
+  //Method to get the current user value
+  get currentUser(): CurrentUser | null {
+    return this.currentUserSubject.value;
+  }
 
   //User login
   login(credentials: LoginRequest): Observable<LoginResponse>

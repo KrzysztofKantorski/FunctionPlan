@@ -1,1 +1,17 @@
-<p>user-details works!</p>
+<div class="flex w-full justify-center">
+    <div class="flex flex-col font-sans w-[60%]">
+        @if(stats$ | async; as stats)
+        {
+            <div>
+                <p>Organized meetings: {{ stats.organizedMeetingsCount }}</p>
+                <p>Attended meetings: {{ stats.attendedMeetingsCount }}</p>
+                <p>Written comments: {{ stats.commentsCount }}</p>
+                <p>Uploaded photos: {{ stats.uploadedPhotosCount }}</p>
+            </div>
+        }
+        @else
+        {
+            <loading-spinner></loading-spinner>
+        }
+    </div>
+</div>

@@ -13,10 +13,10 @@ import { CommentMessage } from '../../../core/models/comment/comment';
 import { EmptyComments } from '../../../shared/components/comment/empty-comments/empty-comments';
 import { DatePipe } from '@angular/common';
 import { CommentForm } from '../../../shared/components/comment/comment-form/comment-form';
-
+import {LoadingSpinner} from '../../../shared/components/loading-spinner/loading-spinner';
 @Component({
   selector: 'comment-section',
-  imports: [CommentHeader, AsyncPipe, UserAvatar, DatePipe, CommentTree, EmptyComments, CommentForm],
+  imports: [CommentHeader, AsyncPipe, UserAvatar, DatePipe, CommentTree, EmptyComments, CommentForm, LoadingSpinner],
   templateUrl: './comment-section.html'
 })
 export class CommentSection {

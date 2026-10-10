@@ -15,6 +15,7 @@ import { authGuard } from './core/guards/auth-guard';
 import { ImageGallery } from './shared/components/media-gallery/image-gallery/image-gallery';
 import { serverErrorGuard } from './core/guards/server-error-guard';
 import { UserTable } from './features/users/user-table/user-table';
+import { UserDetails } from './features/users/user-details/user-details';
 
 
 
@@ -77,6 +78,11 @@ export const routes: Routes = [
     {
         path:"users", 
         component: UserTable,
+        canActivate: [authGuard]
+    },
+    {
+        path:"users/:id", 
+        component: UserDetails,
         canActivate: [authGuard]
     },
     {

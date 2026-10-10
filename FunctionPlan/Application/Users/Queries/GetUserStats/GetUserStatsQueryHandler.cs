@@ -25,6 +25,7 @@ namespace Application.Users.Queries.GetUserStats
                 SELECT
                    u."Id" AS "Id",
                    u."Username" AS "Username",
+                   u."ProfilePictureUrl" AS "ProfilePictureUrl",
                    (SELECT COUNT(*) FROM "Meetings" WHERE "OrganizerId" = @UserId) AS OrganizedMeetingsCount,   
                    (SELECT COUNT(*) FROM "MeetingUser" WHERE "UsersId" = @UserId) AS AttendedMeetingsCount,  
                    (SELECT COUNT(*) FROM "Comments" WHERE "AuthorId" = @UserId) AS CommentsCount,   

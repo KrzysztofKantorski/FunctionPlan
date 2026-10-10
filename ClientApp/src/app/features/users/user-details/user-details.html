@@ -5,43 +5,60 @@
         <user-menu></user-menu>
     </navbar>
 
-    <div class="flex w-full justify-center">
-        <user-avatar 
-                    [userId]="row.id" 
-                    [username]="row.username" 
-                    [profilePictureUrl]="row.profilePictureUrl">
-        </user-avatar>
-        <div class="flex font-sans flex-grow flex-wrap items-center justify-center h-[80vh]">
-             
-            @if(stats$ | async; as stats)
-            {
-                    <user-stats-card 
-                        title="Organized meetings" 
-                        [value]="stats.organizedMeetingsCount" 
-                        >
-                    </user-stats-card>
-                    <user-stats-card 
-                        title="Attended meetings" 
-                        [value]="stats.attendedMeetingsCount" 
-                        >
-                    </user-stats-card>
+    <div class="flex-1 w-full flex justify-center items-start p-6 md:p-10">
+        @if(stats$ | async; as stats)
+        {
+        <div class="w-full flex flex-col items-center gap-8">
 
-                    <user-stats-card 
-                        title="Written comments" 
-                        [value]="stats.commentsCount" 
-                    >
-                    </user-stats-card>  
-                    <user-stats-card 
-                        title="Uploaded pictures" 
-                        [value]="stats.uploadedPhotosCount" 
-                        >
-                    </user-stats-card>
-            }
-            @else
-            {
-                <loading-spinner></loading-spinner>
-            }
+           <div class="flex flex-col items-center gap-3">
+                <div class="relative rounded-full ring-2 ring-white cursor-pointer hover:z-10 transition-transform hover:scale-105">
+                    <user-avatar 
+                        [userId]="stats.id" 
+                        [username]="stats.username" 
+                        [profilePictureUrl]="stats.profilePictureUrl">
+                    </user-avatar>
+                </div>
+                <h1 class="text-2xl font-bold">
+                    {{ stats.username }}
+                </h1>
+            </div>
+
+
+            <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+                <user-stats-card 
+                    title="Organized meetings" 
+                    [value]="stats.organizedMeetingsCount" 
+                >
+                </user-stats-card>
+                
+                <user-stats-card 
+                    title="Attended meetings" 
+                    [value]="stats.attendedMeetingsCount" 
+                >
+                </user-stats-card>
+
+                <user-stats-card 
+                    title="Written comments" 
+                    [value]="stats.commentsCount" 
+                >
+                </user-stats-card>  
+
+                <user-stats-card 
+                    title="Uploaded pictures" 
+                    [value]="stats.uploadedPhotosCount" 
+                >
+                </user-stats-card>
+            
+            </div>
         </div>
+        
+        }
+        @else
+        {
+            <loading-spinner></loading-spinner>
+        }
+        
     </div>
 
 </div>

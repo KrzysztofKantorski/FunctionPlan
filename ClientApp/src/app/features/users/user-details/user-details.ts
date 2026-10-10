@@ -9,9 +9,10 @@ import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
 import { NavbarBtnGroup } from '../../../shared/components/nav/navbar-btn-group/navbar-btn-group';
 import { Navbar } from '../../../shared/components/nav/navbar/navbar';
 import { UserStatsCard } from '../../../shared/components/user/user-stats-card/user-stats-card';
+import { UserAvatar } from '../../../shared/components/meeting/user-avatar/user-avatar';
 @Component({
   selector: 'user-details',
-  imports: [LoadingSpinner, AsyncPipe,  Navbar, NavbarBtnGroup, UserMenu, BackButton, UserStatsCard],
+  imports: [LoadingSpinner, AsyncPipe,  Navbar, NavbarBtnGroup, UserMenu, BackButton, UserStatsCard, UserAvatar],
   templateUrl: './user-details.html'
 })
 export class UserDetails {

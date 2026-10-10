@@ -4,4 +4,5 @@ export interface UserStats
     attendedMeetingsCount: number;
     commentsCount: number;
     uploadedPhotosCount: number;
+    username: string;
 }

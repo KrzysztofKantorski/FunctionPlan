@@ -4,6 +4,7 @@
         long OrganizedMeetingsCount,
         long AttendedMeetingsCount,
         long CommentsCount,
-        long UploadedPhotosCount
+        long UploadedPhotosCount,
+        string Username
     );
 }

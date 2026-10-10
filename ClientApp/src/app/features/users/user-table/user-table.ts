@@ -1,25 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { UserTableView } from '../../../shared/components/user-table-view/user-table-view';
-import { UserProfile } from '../../../core/models/user/user-model';
+import { UserService } from '../../../core/services/user-service';
+import { AsyncPipe } from '@angular/common';
+import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
+import { Navbar } from '../../../shared/components/nav/navbar/navbar';
+import { NavbarBtnGroup } from '../../../shared/components/nav/navbar-btn-group/navbar-btn-group';
+import { UserMenu } from '../../../shared/components/nav/user-menu/user-menu';
+import { BackButton } from '../../../shared/components/back-button/back-button';
 @Component({
   selector: 'user-table',
-  imports: [MatProgressSpinnerModule, UserTableView],
+  imports: [MatProgressSpinnerModule, UserTableView, AsyncPipe, LoadingSpinner, Navbar, NavbarBtnGroup, UserMenu, BackButton],
   templateUrl: './user-table.html'
 })
+
 export class UserTable {
-  mockUsers: UserProfile[] = [
-    {
-      id: 1,
-      username: 'JanKowalski',
-      email: 'jan@test.pl',
-      profilePictureUrl: null
-    },
-    {
-      id: 2,
-      username: 'AnnaNowak',
-      email: 'anna@test.pl',
-      profilePictureUrl: null
-    }
-  ];
+  private userService = inject(UserService);
+  users$ = this.userService.getUsersDetails();
 }

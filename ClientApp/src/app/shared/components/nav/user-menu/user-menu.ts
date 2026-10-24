@@ -49,11 +49,24 @@ export class UserMenu implements OnInit, OnDestroy{
     }
   }
 
+
+  //View user statistics
   viewStatistics(): void {
     const user = this.authService.currentUser;
     if (user?.id) {
       this.router.navigate(['/users', user.id]);
     }
+  }
+
+
+  //Logout user
+  logoutUser(){
+    //Service method
+    this.authService.logout();
+
+    //Refresh page
+    location.reload();
+    console.log("User logged out")
   }
   ngOnDestroy() 
   {

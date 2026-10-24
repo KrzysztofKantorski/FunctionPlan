@@ -78,15 +78,20 @@ export class AuthService {
 
   
 
-  //User logout
-  logout(): void
+  logout(): Observable<void>
   {
-    localStorage.removeItem(this.TOKEN_KEY);
-    this.loggedInSubject.next(false)
-    
-    //Clear user data after logout
-    this.currentUserSubject.next(null);
+    return this.http.post<void>(`${this.apiUrl}/auth/logout`, {}, { withCredentials: true })
+      .pipe(
+        tap(() => {
+          //Clear state and token
+          localStorage.removeItem(this.TOKEN_KEY);
+          this.loggedInSubject.next(false);
+          this.currentUserSubject.next(null);
+          console.log("siup")
+        })
+      );
   }
+
 
   
   getToken(): string | null

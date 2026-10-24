@@ -62,12 +62,17 @@ export class UserMenu implements OnInit, OnDestroy{
   //Logout user
   logoutUser(){
     //Service method
-    this.authService.logout();
-
-    //Refresh page
-    location.reload();
-    console.log("User logged out")
+    this.authService.logout().subscribe({
+      next: () => {
+      this.router.navigate(['/login']);
+    },
+    error: (err) => {
+      console.error('Error during logout:', err);
+      this.router.navigate(['/login']);
+    }
+  });
   }
+
   ngOnDestroy() 
   {
     if (this.rawObjectUrl) 

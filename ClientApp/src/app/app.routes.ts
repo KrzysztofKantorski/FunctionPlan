@@ -9,7 +9,7 @@ import { MeetingInfo } from './features/meetings/meeting-info/meeting-info';
 import { MeetingHistory } from './features/meetings/meeting-history/meeting-history';
 import { MeetingOrganized } from './features/meetings/meeting-organized/meeting-organized';
 import { MeetingAccepted } from './features/meetings/meeting-accepted/meeting-accepted';
-
+import { MeetingCreate } from './features/meetings/meeting-create/meeting-create';
 import { guestGuard } from './core/guards/guest-guard';
 import { authGuard } from './core/guards/auth-guard';
 import { ImageGallery } from './shared/components/media-gallery/image-gallery/image-gallery';
@@ -48,6 +48,11 @@ export const routes: Routes = [
     {
         path:"main-page", 
         component: MainPage,
+        canActivate: [authGuard]
+    },
+    {
+        path:"meeting-create", 
+        component: MeetingCreate,
         canActivate: [authGuard]
     },
     {

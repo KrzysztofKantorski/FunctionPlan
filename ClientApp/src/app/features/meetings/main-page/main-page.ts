@@ -18,6 +18,7 @@ import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MeetingInfoDialog } from '../../../shared/components/meeting/meeting-info-dialog/meeting-info-dialog';
 import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-main-page',
   imports: 
@@ -32,7 +33,7 @@ export class MainPage {
 
   private userService = inject(UserService);
   private meetingService = inject(MeetingService);
-
+  private router = inject(Router)
 
   private dialog = inject(MatDialog)
 
@@ -45,6 +46,12 @@ export class MainPage {
   userProfile$: Observable<UserProfile> | undefined;
   meetings$: Observable <Meeting[]> | undefined;
 
+
+  
+  //Go to meeting form
+  createMeeting(){
+     this.router.navigate([`/meeting-create`])
+  }
 
 
   ngOnInit(): void

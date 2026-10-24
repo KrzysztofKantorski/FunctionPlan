@@ -1,1 +1,41 @@
-<p>meeting-create works!</p>
+<div class="flex h-screen flex-col bg-background font-sans">
+
+    <navbar>
+        <back-button></back-button>
+        <navbar-btn-group></navbar-btn-group>
+        <user-menu></user-menu>
+    </navbar>
+
+    <div class="mt-[4rem] flex w-full h-full flex items-start justify-center">
+        <form [formGroup]="meetingForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+
+
+            <!-- Text inputs -->
+             
+            <form-input formControlName="title" type="text" placeholder="title"></form-input>
+            <form-input formControlName="description" type="text" placeholder="description"></form-input>
+            <form-input formControlName="date" type="date" placeholder="date"></form-input>
+
+
+            <!-- Date picker -->
+            
+           <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Date of meeting</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Choose date">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+
+            <!-- Meeting map -->
+
+            <div class="w-full md:w-[400px] order-2 md:order-1">
+                <meeting-map 
+                    [readOnly]="false"
+                    (locationSelected)="onLocationSelected($event)">
+                </meeting-map>
+            </div>
+        </form>
+    </div>
+  
+</div>

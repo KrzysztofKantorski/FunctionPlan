@@ -1,59 +1,82 @@
-# ClientApp
+# FUNCTION PLAN angular client app
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.23.
 
-## Development server
+## Architecture & Core Concepts
 
-To start a local development server, run:
+The frontend application follows Angular best practices, promoting separation of concerns, reactivity, and reusable component patterns.
 
-```bash
+
+## Key Frontend Features
+
+
+1. HTTP Interceptors (Pipeline Control)
+
+* **Auth Interceptor:** Automatically attaches Authorization: Bearer <token> to outgoing HTTP requests. Handles HTTP 401 errors by triggering JWT refresh requests.
+* **Error Interceptor:** Global error handling interceptor catching HTTP error responses and displaying notifications via Angular Material MatSnackBar.
+
+
+2. Reactive Data Streams (RxJS)
+
+State handling using BehaviorSubject and Observable streams for authentication status, current user profile, and active event filters.
+
+
+3. UI/UX & Styling (Angular Material)
+* **UI design** built with Angular Material components (MatCard, MatDialog, MatTable, MatFormField).
+
+
+4. Interactive Maps
+* **Integration with Mapbox** for real-time geolocation filtering and event location picking.
+
+
+
+## Tech Stack & Dependencies
+
+* Framework: Angular (v17+)
+
+* State & Reactive Programming: RxJS
+
+* UI Component Library: Angular Material
+
+* HTTP Client: Angular HttpClient with Interceptors
+
+* Maps Integration: Mapbox GL JS / Ngx-Mapbox
+
+* Routing: Angular Router with Lazy Loading modules/routes
+
+
+
+# Installation & Run
+
+1. Navigate to the frontend directory:
+   
+```
+cd src/ClientApp
+```
+
+
+2. Install dependencies
+
+```
+npm install
+```
+
+
+3. Configure Environment:
+   
+Update src/environments/environment.ts with your local API address and Mapbox token:
+
+```
+export const environment = {
+  production: false,
+  apiUrl: 'https://localhost:7001/api',
+  mapboxToken: 'YOUR_MAPBOX_ACCESS_TOKEN'
+};
+```
+
+
+4. Start frontend server
+
+```
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

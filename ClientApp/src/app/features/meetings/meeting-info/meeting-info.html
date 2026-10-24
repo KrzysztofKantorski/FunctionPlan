@@ -22,8 +22,8 @@
 
             <div class="w-full md:w-[400px] order-2 md:order-1">
                 <meeting-map 
-                    [lng]="meetingDetails.longitude" 
-                    [lat]="meetingDetails.latitude">
+                    [readOnly]="true"
+                    [initialCoordinates]="{ lng: meetingDetails.longitude, lat: meetingDetails.latitude }">
                 </meeting-map>
             </div>
 
